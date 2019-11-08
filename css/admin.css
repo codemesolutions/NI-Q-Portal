@@ -1,0 +1,673 @@
+::-webkit-scrollbar {
+    width: 8px;
+   
+}
+ 
+::-webkit-scrollbar-track {
+    background: #ccc; 
+}
+ 
+::-webkit-scrollbar-thumb {
+    
+    background: #999;
+    
+}
+
+::-webkit-scrollbar-thumb:hover{
+    background: #20b9ec;
+    
+}
+
+::horizontal{
+    height: 4px;
+}
+
+body{
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.form-control{
+    background: #fff;
+    border: #ddd 2px solid;
+}
+
+.form-control-dark{
+    background: #343434;
+    border: #000 1px solid;
+    color: #fff !important;
+}
+
+.form-control:focus{
+    background: #fff;
+    border: rgb(42, 112, 158) 2px solid;
+    box-shadow: none;
+}
+
+.form-control-dark:focus{
+    background: #333;
+    border: #000 1px solid;
+}
+
+select.form-control{
+    background: #fff;
+}
+
+.custom-control-label::before {
+    position: absolute;
+   
+    left: -1.5rem;
+    display: block;
+    width: 1rem;
+    height: 1rem;
+    pointer-events: none;
+    content: "";
+    background-color: #fff;
+    border: #adb5bd solid 2px;
+}
+
+.custom-control-input:focus ~ .custom-control-label::before {
+    box-shadow:none !important;
+}
+
+.custom-checkbox .custom-control-input:checked~.custom-control-label::after {
+   
+    width: 1.1rem;
+    height: 1.1rem;
+    border: #ccc 2px solid;
+}
+
+.contents{
+    background:#fff;
+    
+}
+
+.card{
+    border-radius: 0;
+}
+
+
+.sidebar::-webkit-scrollbar {
+    width: 6px;
+   
+}
+ 
+.sidebar::-webkit-scrollbar-track {
+    background: #222; 
+}
+ 
+.sidebar::-webkit-scrollbar-thumb {
+    
+    background: #222;
+    
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover{
+    background: #20b9ec;
+    
+}
+
+
+
+
+html,body{
+    height: 100%;
+    background: #222;
+    color: #09507e;
+}
+
+
+.invalid-feedback{
+    display: block;
+}
+
+.btn, .form-control, .custom-select{
+   border-radius: 0;
+   font-size: 0.8rem;
+   font-weight: 600;
+  
+   
+}
+
+a{font-size: 0.8rem; color: #20b9ec;font-weight: 600;}
+
+.bg-dark{
+    background-color: #222 !important;
+}
+
+.bg-teal{
+    background: #222 !important;
+    border-bottom: #000 1px solid;
+    color: #fff;
+    
+}
+
+.container-fluid h5{
+    font-size: 1rem;
+}
+
+.form-control-lg, .custom-select-lg{
+    height: calc(2.25em + 1rem + 2px);
+}
+
+.dropdown-toggle:after{
+    border:none;
+    margin:0;
+    content:none;
+}
+
+.dropdown-item{
+    font-size: 0.8rem;
+}
+
+label{
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.btn-primary{
+    background: #20b9ec;
+    border: #20b9ec 1px solid;
+    color: #fff;
+}
+
+.border-right-dark{
+    border-right: #000 1px solid;
+}
+
+.text-primary{
+    color: #20b9ec!important;
+}
+
+.text-dark{
+    color: #09507e!important;
+}
+
+
+.bg-primary{
+    background-color: #20b9ec!important;
+}
+
+.custom-checkbox .custom-control-label::before{
+    border-radius: 0;
+}
+
+.small{
+    font-weight: 600;
+    font-size: 0.7rem;
+}
+
+.alert-success{
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.btn-teal{
+    background: #12bdd0;
+    color: #fff;
+    letter-spacing: 1px;
+    font-weight: 500;
+    font-size: 0.8rem;
+    padding: .5rem 1rem;
+}
+
+.btn-teal-sm{
+    background: #12bdd0;
+    color: #fff;
+    letter-spacing: 1px;
+    font-weight: 500;
+    font-size: 0.8rem;
+    padding: .25rem .5rem;
+    margin-bottom: 0.25rem;
+}
+
+.list-group-item{
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+
+.modal-body, .modal-content{
+    
+}
+
+.navbar{
+ height: 77px;
+ background: #fff;
+ 
+ 
+  padding:0;
+  padding-right: 1rem;
+  position: relative;
+  z-index: 2;
+}
+
+.navbar-brand{
+    height:100%;
+    width: 300px;
+   border-right: #ddd 1px solid;
+  background: #fff;
+   
+  
+  
+}
+
+.navbar-brand img{
+    width: 80px;
+    height: auto;
+}
+
+.nav .nav-item .nav-link i{
+    color: #20b9ec;
+    margin: 0 0.5rem 0 0rem;
+}
+
+.navbar-toggler{
+    color: #343a40;
+}
+
+
+.sidebar .nav .nav-item .nav-link{
+    color: #fff;
+    font-weight: 600;
+    text-transform: capitalize;
+    font-size: 0.8rem;
+    border-radius: 0;
+    padding: 1.15rem 1rem;
+    background: #222;
+    border-bottom: #000 1px solid;
+    display:flex;
+    
+}
+
+.nav .nav-item .nav-link i{color: #20b9ec;}
+
+.nav .nav-link:hover{
+    background: #20b9ec;
+    color: #fff;
+}
+
+.nav .nav-link:hover i{
+    color: #fff;
+}
+
+.bg{
+    background: #fff;
+}
+
+.panel{padding: 0.25rem; }
+
+.panel .panel-inner{
+    background: #20b9ec;
+    border: #20a4cf 1px solid;
+    color: #fff;
+    
+}
+
+.panel .icon{
+    font-size: 2rem;
+    color: #fff;
+    
+}
+
+.panel h6{
+    color: #fff;
+    letter-spacing: 1px;
+    font-weight: 600;
+    font-size: .8rem;
+}
+
+.dataTables_wrapper{
+    width: 100%;
+}
+
+.searchable{
+    table-layout: fixed;
+    
+}
+
+.searchable th:first-of-type{
+    width: 50px;
+}
+
+
+.searchable th{
+    width: 200px;
+    text-align: center;
+}
+
+.searchable th i{
+    color: #ccc;
+}
+
+.searchable td{
+    text-align: center;
+    vertical-align: middle;
+}
+
+
+.table th{
+    border-top:none;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #09507e;
+    text-transform: uppercase;
+    background: linear-gradient(#fff, #f9f9f9);
+    cursor: pointer;
+    border-right: #eee 1px solid;
+    
+}
+
+.table thead th{
+    border-bottom: #eee 1px solid;
+}
+
+.table td{
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #09507e;
+    padding: 0.5rem;
+  
+    border-bottom: #eee 1px solid;
+}
+
+.table tr.hover:hover td{
+    cursor: pointer;
+    background: #000000;
+   color: #fff;
+}
+
+
+.select-box .select-box-item:hover{
+    background: #f7f7f7;
+}
+
+.select-box .select-box-item-active{
+    background: #f1f1f1;
+}
+
+p{
+    font-size: 0.8rem;
+    margin:0;
+    font-weight: 600;
+}
+
+
+.form-editor{
+    
+    background: #222;
+}
+
+.form-editor .form-editor-toolbar{
+    width: 100%;
+    background: #222;
+    border-bottom: #000 1px solid;
+    padding: 0.5rem;
+}
+
+.form-editor-container{
+    width: 100%;
+    padding: 0;
+    height: 100%;
+    
+}
+
+.form-editor-container .form-editor-sidebar{
+    padding:0;
+    background: #222;
+    border-right: #000 1px solid;
+    height: 100%;
+    width: 250px;
+}
+
+.form-editor-container .form-editor-sidebar .form-title{
+    background: #222;
+    border-bottom: #000 1px solid;
+    height: 46.2px;
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+    color: #fff;
+}
+
+.form-editor-container .form-editor-sidebar .form-editor-sidebar-block{
+    padding: 1rem;
+}
+
+.form-editor-container .form-editor-sidebar .form-editor-sidebar-block .nav{
+    
+    margin-top: 0.5rem;
+    
+}
+
+.form-editor-container .form-editor-sidebar .form-editor-sidebar-block .nav a.nav-item{
+    color: #fff;
+    font-size: 0.85rem;
+    padding:0rem 0.5rem;
+    display:flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.form-editor-container .form-editor-sidebar .form-editor-sidebar-block .nav a.nav-item button{
+    visibility: hidden;
+}
+
+.form-editor-container .form-editor-sidebar .form-editor-sidebar-block .nav a.nav-item:hover{
+    background: #111;
+}
+
+.form-editor-container .form-editor-sidebar .form-editor-sidebar-block .nav a.nav-item:hover button{
+    visibility: visible;
+}
+
+.form-editor-container .form-editor-sidebar .form-editor-sidebar-block .nav a.nav-item:last-of-type{
+    border-bottom: none;
+}
+
+.form-editor-container .form-editor-surface{
+    
+    height: 100%;
+    flex: 1;
+}
+
+.form-editor-container-editable{
+    height: calc(100% - 50.2px);
+}
+
+.form-editor-container .form-editor-editable{
+    height: 100%;
+    overflow: auto;
+}
+
+.form-editor-container .form-editor-editable-surface{
+    padding: 0 0 1rem 0;
+    background: #fff;
+    flex:1;
+    display: block;
+    
+}
+
+
+
+.form-editor-element-panel{
+    width: 350px;
+    height: 100%;
+    background:#222;
+    border-left: #000 1px solid;
+    
+}
+
+.sp-replacer{
+    background: #222;
+    border:none;
+    color: #999;
+}
+
+.sp-container{
+    background: #333;
+    border:#fff 1px solid;
+    color: #999;
+    box-shadow: 0px 0px 3px 2px rgba(0,0,0, 0.3);
+}
+
+.sp-picker-container{
+    border:none;
+}
+
+.sp-container button {
+    background-color: #20b9ec;
+    background-image:none;
+    border: 1px solid #20b9ec;
+    border-bottom:none;
+    border-radius: 0px;
+    color: #fff;
+    font-size: 12px;
+    line-height: 1;
+    padding: 5px 4px;
+    text-align: center;
+    text-shadow: none;;
+    vertical-align: middle;
+}
+
+.sp-preview, .sp-alpha, .sp-thumb-el{
+    background-image: none;
+    border: #000 1px solid;
+}
+
+.input{
+    height: 100%;
+    
+}
+
+.input li.nav-item{
+    padding: 0;
+}
+
+.input a.nav-link{
+    background: #222;
+    border: #222 1px solid;
+    color: #fff;
+    padding: 1rem 1rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.input a.nav-link:hover, .input li.nav-item .active{
+    background: #333;
+    border: #000 1px solid;
+}
+
+.input .tab-content{
+   
+    margin:0;
+    height: 100%;
+    overflow: auto;
+}
+
+.input .tab-content h6{
+    color:#fff;
+}
+
+.input .tab-content .btn-primary{
+    background: #222;
+    border: #222 1px solid;
+    box-shadow: none;
+    text-align: left;
+    border-bottom: #000 1px solid;
+}
+
+
+.input .tab-content .btn-primary:hover{
+    background: #111;
+}
+
+
+
+.input .tab-content .tab-content-block{
+    
+   
+}
+
+textarea{
+    min-height: 100px;
+}
+
+.editor-field{
+    background: #fff;
+    padding: 0;
+    border-bottom: #ddd 1px solid;
+    position: relative;
+    
+}
+
+.editor-field:hover{
+    box-shadow: 0px 0px 3px 2px rgba(0,0,0, 0.1);
+    z-index: 2
+    
+}
+
+.editor-field:hover .controls{
+    background: #f1f1f1;
+}
+
+.editor-field .controls{
+    background: #f9f9f9;
+    padding: 0.25rem 1rem;
+    border-bottom: #ddd 1px solid;
+    
+}
+
+.editor-field-content{
+   background: #fff;
+   padding: 1.5rem 1.5rem;
+    
+}
+
+
+.form-group{
+    margin:0;
+}
+
+
+.editor-content p, .editor-content h1, .editor-content h2, .editor-content h3, .editor-content h4, .editor-content h5, .editor-content h6{
+    margin:0;
+}
+
+
+
+.sidebar{
+    width: 300px;
+    background: #222;
+    border-right: #000 1px solid;
+    border-top:#000 1px solid;
+}
+
+.sidebar-sm{
+    width:  100px;
+    display:none;
+   
+}
+
+.sidebar-sm .nav-item{
+    width: 100%;
+}
+
+.sidebar-sm a{
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 0;
+}
+
+.sidebar-sm a i{
+    padding:0;
+    margin:0;
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+}
+
+.sidebar-sm a span{
+    font-size: 0.6rem;
+}

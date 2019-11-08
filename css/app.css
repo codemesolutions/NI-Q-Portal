@@ -1,0 +1,534 @@
+html{
+    height: 100%;
+}
+
+body{
+    height: 100%;
+    background: #fafafa;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 500;
+    font-size: 0.8rem;
+}
+
+.width-50{
+    width: 50%;
+}
+
+.border-top-thick-teal{
+    border-top: #12bdd0 5px solid;
+}
+
+.bg-dark{
+    background-color: #393c41!important;
+}
+
+.bg-image{
+    background: url(https://www.ni-q.com/wp-content/uploads/2017/06/donor_hold_header.jpg) 0 0 no-repeat !important;
+    
+}
+
+.bg-image-200{
+    background: url(https://www.ni-q.com/wp-content/uploads/2017/06/donor_hold_header.jpg) 0 -200px no-repeat !important;
+    
+}
+
+a.mk{
+    color: #333;
+}
+
+a.mk:hover{
+    text-decoration: underline;
+}
+
+
+.btn{
+    border-radius: 0;
+}
+
+.btn-dark{
+    letter-spacing: 1px;
+    font-weight: 500;
+    font-size: 0.8rem;
+    padding: .5rem 1rem;
+}
+
+.btn-teal{
+    background: #12bdd0;
+    color: #fff;
+    letter-spacing: 1px;
+    font-weight: 500;
+    font-size: 0.8rem;
+    padding: .5rem 1rem;
+}
+
+.btn-teal-sm{
+    background: #12bdd0;
+    color: #fff;
+    letter-spacing: 1px;
+    font-weight: 500;
+    font-size: 0.8rem;
+    padding: .25rem .5rem;
+    margin-bottom: 0.25rem;
+}
+
+.btn-teal-sm-outline{
+    background: transparent;
+    color: #12bdd0;
+    border: #12bdd0 1px solid;
+    letter-spacing: 1px;
+    font-weight: 500;
+    font-size: 0.8rem;
+    padding: .25rem .5rem;
+    margin-bottom: 0.25rem;
+}
+
+.btn-teal-sm-outline:hover{
+    color: #00e5ff;
+    border: #00e5ff 1px solid;
+}
+
+.btn-clean{
+    color: #fff;
+    letter-spacing: 1px;
+    font-weight: 600;
+    font-size: 0.7rem;
+    display: flex;
+    align-items: center;
+}
+
+.btn-clean i{
+    font-size: 1rem;
+    margin-right: 0.25rem;
+    position: relative;
+    top: 0.65px;
+}
+
+.btn-clean:hover{
+    color: #12c9dd;
+}
+
+.btn-clean:focus{
+    box-shadow: none;
+    color: #12c9dd;
+}
+
+.btn-danger{
+   
+    color: #fff;
+    letter-spacing: 1px;
+    font-weight: 500;
+    font-size: 0.8rem;
+    padding: .5rem 1rem;
+}
+
+.btn-teal-sm:hover, .btn-teal:hover{
+    background: #12c9dd;
+    color:#fff;
+}
+
+.btn-teal:focus{
+    background:#12a7b8;
+}
+
+.btn-lg{
+  
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 500;
+    font-size: 1rem;
+    padding: 1rem; 
+}
+
+.text-teal{
+    color: #12bdd0;
+}
+
+.bg-teal{
+    background: #12bdd0 !important;
+}
+
+.bg-danger{
+    background-color: #ff6d6d!important;
+}
+
+.bold{
+    font-weight: 600;
+}
+
+.form-control{
+    border-radius: 0;
+    background: #fafafa;
+    border: #ddd 1px solid;
+    font-weight: 500;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    padding: .5rem 1rem;
+    box-shadow: none;
+    outline:none;
+    transition: box-shadow 1s ease-in, border 1s ease-in-out;
+ 
+}
+
+.form-control[type=file]{
+    height: 100%;
+}
+
+.form-control:focus{
+    
+    box-shadow: -1px 0px 3px 1px rgba(0,0,0,0.05);
+    border: #12a7b8 1px solid;
+
+}
+
+.form-control-lg, .custom-select-lg{
+    height: calc(2.25em + 1rem + 2px);
+}
+
+.search-form-control{
+    font-weight: 500;
+    font-size: 0.8rem;
+    padding: 1.5rem 0;
+    letter-spacing: 1px;
+}
+
+.custom-select-big{
+    font-weight: 500;
+    font-size: 0.8rem;
+    background: #fff;
+    color: #495057;
+    height: 3.15rem;
+    border: #eee 1px solid;
+    letter-spacing: 1px;
+    border-radius: 5px;
+    padding:1rem 1.5rem;
+    border-radius: 0;
+}
+
+.custom-select{
+    font-weight: 500;
+    font-size: 0.8rem;
+    color: #495057;
+    border: #eee 1px solid;
+    letter-spacing: 1px;
+    border-radius: 0;
+    width: 100%;
+    height: calc(1.9em + .75rem + 2px);
+    background-color: #fff;
+}
+
+.custom-checkbox .custom-control-label::before{
+   
+}
+
+.ck-editor__editable_inline{
+    min-height: 100px;
+    background: #fff;
+    border:none;
+    outline:none;
+    width: auto;
+}
+
+
+.invalid-feedback{
+    display: block;
+}
+
+a{
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #12bdd0;
+    text-decoration: none;
+   
+}
+
+a:hover{
+    text-decoration: none;
+}
+
+label{
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #393c41;
+   
+}
+
+@media (min-width: 1200px){
+    .container {
+        max-width: 1170px;
+    }
+}
+
+
+.page-title{
+    font-weight: 700;
+    color: #495057;
+}
+
+.login-bg{
+    min-height: calc(100% - 165.83px);
+    background: url(https://www.ni-q.com/wp-content/uploads/2017/05/niq_nursing_mom_donor_p2.jpg) 90% center no-repeat;
+    background-size: cover;
+    padding-bottom: 10rem;
+    overflow-y: auto;
+}
+
+.topbar{
+    background: #393c41;
+    padding: 0.83rem 1rem;
+}
+
+.topbar p{
+    font-size: 0.81rem;
+    color: #898d8e;
+}
+
+.navbar{
+    padding: 1.878rem 1rem;
+    background: #fff;
+   
+}
+
+.navbar .nav-item{
+    padding:0;
+    padding-left: 40px;
+}
+
+.navbar .nav-link{
+    color: #12bdd0;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    display:inline-block;
+}
+
+.navbar .nav-link:hover{
+    color: #212529;
+}
+
+.navbar .nav-item::after{content:'';display:block;width:0px;height:2px;background:#333;transition: 0.2s;}
+.navbar .nav-item:hover::after{width:100%;color: #000;}
+.navbar-dark .navbar-nav .active > .nav-link, .navbar-dark .navbar-nav .nav-link.active, .navbar-dark .navbar-nav .nav-link.show, .navbar-dark .navbar-nav .show > .nav-link,.navbar-dark .navbar-nav .nav-link:focus, .navbar-dark .navbar-nav .nav-link:hover{color:#333;}
+.nav-link{padding:15px 5px;transition:0.2s;}
+.dropdown-item.active, .dropdown-item:active{color:#212529;}
+.dropdown-item:focus, .dropdown-item:hover{background:#333;}
+
+
+
+.jumbotron{
+    padding: 0;
+    background: #fff;
+    margin:0;
+}
+
+
+.donor-dashboard-jumbotron .container{
+    background: url(https://www.ni-q.com/wp-content/uploads/2017/05/niq_nursing_mom_donor_p2.jpg) 90% center no-repeat;
+    background-size: cover;
+    padding: 1rem 1rem;
+}
+
+.donor-dashboard-jumbotron h1{
+    font-weight: 300;
+    color: #393c41;
+    font-size: 3rem;
+    text-shadow: 1px 1px 1px rgba(0,0,0, 0.2);
+}
+
+.donor-dashboard-jumbotron h1 span{
+    font-weight: 700;
+}
+
+iframe{
+    overflow:hidden;
+}
+
+.login-jumbotron{
+    background:transparent;
+    background-size: cover;
+    padding: 5rem 1rem 0 1rem;
+}
+
+.login-jumbotron h1{
+    font-weight: 300;
+    color: #393c41;
+    font-size: 3rem;
+    text-shadow: 1px 1px 1px rgba(0,0,0, 0.2);
+    width: 400px;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.login-jumbotron h1 span{
+    font-weight: 700;
+}
+
+.login-bg .card{
+    border: #eee 1px solid;
+}
+
+.login-bg .card .card-header{
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+}
+
+.donor-nav-mobile{
+    display:block;
+    width: 100%;
+    margin: -2rem 0 0 0;
+    position: absolute;
+   
+    z-index: 3;
+    background: #393c41;
+}
+
+.donor-nav-dropdown{
+    box-shadow: 0px 2px 3px 1px rgba(0,0,0, 0.2);
+}
+
+.donor-nav-dropdown .nav-link{
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 1rem .5rem 1rem .8rem;
+    
+}
+
+.donor-nav-dropdown .nav-item:hover{
+    background: #313438;
+}
+
+.donor-nav-dropdown .nav-item{
+    border-bottom: #111 1px solid;
+}
+
+.donor-nav{
+    
+   background: #fff;
+  
+}
+
+.donor-nav .nav-item{
+    margin-right: 1rem;
+    padding:0;
+    border:none;
+}
+
+.donor-nav .nav-item:after{
+    height: 0;
+}
+
+.donor-nav .nav-link{
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: #fff;
+    border:none;
+}
+
+.donor-nav .nav-link:hover{
+    color: #12c9dd;
+}
+
+
+.donor-side-nav{
+   
+}
+
+.donor-side-nav .nav-item{
+    margin-right: 0.25rem;
+}
+
+.donor-side-nav .nav-link{
+    background: #12bdd0;
+    border: #eee 1px solid;
+    color: #fff;
+    padding: 0.75rem 1rem;
+    
+}
+
+.donor-side-nav .nav-link i{
+    color: #fff;
+    font-size: 1rem;
+    margin-right: 0.75rem;
+}
+
+
+footer .nav-link{
+    font-weight: 500;
+    letter-spacing: 1px;
+    font-size: 0.72rem;
+}
+
+.card{
+    border: #eee 1px solid;
+    font-family: 'Raleway', sans-serif;
+    border-radius: 0;
+    background: #fff;
+    padding: 0.5rem;
+    
+}
+
+.card-active{
+    background: #fafafa;
+}
+
+.documents .card{
+    
+}
+
+.documents .card:hover{
+    background: #fff;
+    
+}
+
+
+
+
+
+.notifications .card{
+    transition: padding 0.5s ease-in, border 0.5s ease-in-out;
+}
+
+.notifications .card:hover{
+   
+}
+
+.title{
+    padding:0;
+    margin:0;
+    font-weight: 800;
+    font-size: 0.8rem;
+    line-height: 1rem;
+    color: #495057;
+}
+
+.text{
+    margin:0;
+    font-weight: 500;
+    font-size: 0.7rem;
+    line-height: 0.8rem;
+    color: #999;
+}
+
+p{
+    margin:0;
+   line-height: 2;
+}
+
+.custom-control-label::before{
+    top: 0;
+}
+
+.custom-control-label::after{
+    top:0;
+}
+
+.custom-file-label{
+    border-radius:0;
+    background: #fafafa;
+    border: #ddd 1px solid;
+}
