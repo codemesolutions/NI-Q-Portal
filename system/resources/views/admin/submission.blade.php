@@ -1,11 +1,11 @@
 @extends('admin.layouts.app')
 
 @section('content')
- 
+
 <div class="bg-light h-100">
      <div class="bg-dark px-3 py-3 row m-0">
         <p class="m-0 text-uppercase text-white mr-auto" >{!!$title!!} </p>
-       
+
     </div>
     <div style="height: calc(100% - 51.2px);" class="overflow-auto">
         <div class="container-fluid  p-3 p-md-5">
@@ -16,11 +16,11 @@
                      <div class="row m-0 align-items-center mb-4">
                         <h5 class="m-0 mr-auto">Form Submission</h5>
                         <a href="#" class="btn btn-primary btn-sm  mr-1 "><i class="fas fa-print"></i> Print</a>
-                       
+
                     </div>
                     <div class="row bg-light border border-bottom-0 p-3 m-0 align-items-center mb-0">
                         <p class="m-0 mr-auto font-weight-bold">User Information</p>
-                     
+
                     </div>
                     <div class=" m-0 mb-4 ">
                         <table class="table table-bordered  bg-white">
@@ -42,9 +42,9 @@
                             </tbody>
                         </table>
                     </div>
-                   
+
                     @if(isset($datasets['list']))
-                        
+
                         @php $count = 1; @endphp
                         @foreach($datasets['list']['rows'] as $question)
                             <div class=" my-5">
@@ -52,19 +52,19 @@
 
                                 <table class="table table-bordered bg-white">
                                     <tbody>
-                                        @php 
-                                            $fcount = 1; 
-                                            $fields = []; 
+                                        @php
+                                            $fcount = 1;
+                                            $fields = [];
                                         @endphp
                                         @foreach($question->fields()->get() as $field)
-                                            @php 
+                                            @php
                                                 $answer = \App\QuestionAnswer::where('question_id', $question->id)->where('field_id', $field->id)->where('user_id', $submission->user_id->id)->first();
-            
+
                                             @endphp
                                             @if(!is_null($answer) && !isset($fields[$field->name]))
                                                 <tr>
                                                     @if($field['question_field_type_id']->id == 6)
-                                                        @php 
+                                                        @php
                                                             $ext = pathinfo($answer->answer, PATHINFO_EXTENSION);
                                                         @endphp
                                                         @if($ext == "doc" || $ext === "docx")
@@ -73,15 +73,15 @@
                                                         @else
                                                             <td class="pl-3"><a href="{{url('/')}}/file/{{$answer->answer}}">{{ucfirst($answer->answer)}}</a></td>
                                                         @endif
-                                                        
+
                                                     @else
                                                          <td class="pl-3">{{ucfirst($answer->answer)}}</td>
                                                     @endif
                                                 </tr>
-                                           
-                                            @endif  
 
-                                            @php 
+                                            @endif
+
+                                            @php
                                                 if(!isset($fields[$field->name])){
                                                         $fields[$field->name] = $answer;
                                                 }
@@ -89,7 +89,7 @@
                                         @endforeach
                                     </tbody>
                                 </table>
-                                
+
                             </div>
                         @endforeach
                     @endif
@@ -102,20 +102,20 @@
                                     <div class="custom-control custom-checkbox ml-2">
                                         <input name="forms[{{$form->id}}]" type="checkbox" class="custom-control-input" id="{{$form->id}}">
                                         <label class="custom-control-label" for=""></label>
-                                    </div> 
+                                    </div>
                                     <p class="m-0 ml-4">{{$form->name}}</p>
                                 </div>
                             @endforeach
                         </div>
                     </div>
-                   
+
                     <div class="row m-0 align-items-center mb-4">
-                        
+
                         <button type="submit" class="btn btn-success mr-1 ml-auto"><i class="fas fa-thumbs-up"></i> Approve</button>
-                        <a href="#" class="btn btn-danger  mr-1"><i class="fas fa-lock"></i> Deny</a>
+                        <a href="{{Route('admin.forms.submissions.deny', ['id' => $submission->id])}}" class="btn btn-danger  mr-1"><i class="fas fa-lock"></i> Deny</a>
                     </div>
                 </div>
-              
+
             </form>
         </div>
     </div>
@@ -148,5 +148,5 @@
     </div>
   </div>
 </div>
-    
+
 @endsection
