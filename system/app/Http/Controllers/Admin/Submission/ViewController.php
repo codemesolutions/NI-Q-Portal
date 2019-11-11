@@ -44,15 +44,15 @@ class ViewController extends Controller
 
         $form = Form::where('id', $form_id)->first();
 
-       
+
         if(is_null($form)){
             return redirect()->back()->with('error', 'Invalid Form Id');
         }
 
         $page = $this->getPage($request);
 
-        
-       
+
+
         $page['datasets']['list'] = [
             'columns' => [
                 'First Name' => function($row){
@@ -92,7 +92,7 @@ class ViewController extends Controller
                     $count = 0;
                     foreach($form->questions()->get() as $q){
                         $answer = QuestionAnswer::where('user_id', $row->user_id->id)->where('question_id', $q->id)->first();
-                        
+
                         if(is_null($answer)){
                             $count;
                             break;
@@ -124,20 +124,20 @@ class ViewController extends Controller
 
         $form = Form::where('name', $form_id)->first();
 
-       
+
         if(is_null($form)){
             return redirect()->back()->with('error', 'Invalid Form Id');
         }
-        
+
         $page = $this->getPage($request);
 
         $page['submission'] = FormSubmission::where('id', $submission)->first();
-        
-        
+
+
 
         $page['datasets']['list'] = [
             'columns' => [
-               
+
                 'Blocked' => 'blocked',
                 'Question' => 'question_id',
             ],
@@ -145,7 +145,7 @@ class ViewController extends Controller
             'rows' => $form->questions()->get()
         ];
 
-        $page['forms'] = Form::all();
+        $page['forms'] = Form::where('form_type_id', '!=', FormType::where('name', 'Lab')->first()->id)->where('active', true)->get();
 
 
         $page['form_action_route'] = 'admin.forms.questions.save';
@@ -175,9 +175,9 @@ class ViewController extends Controller
             'type' => 'hidden',
             'value' => $form->id,
         ];
-        
 
-        
+
+
         $page['fields'][] = [
             'name' => 'question',
             'type' => 'richtext',
@@ -186,7 +186,7 @@ class ViewController extends Controller
             'value' => old('question')
         ];
 
-       
+
 
         $page['fields'][] = [
             'name' => 'fields[]',
@@ -194,12 +194,12 @@ class ViewController extends Controller
             'button' => "Add Fields",
             'helper' => 'The name you want the menu to be referenced in the system',
             'field-types' => QuestionFieldType::all(),
-            'condition-types' => QuestionConditionType::all(), 
-            'validation-types' => QuestionFieldValidation::all() 
+            'condition-types' => QuestionConditionType::all(),
+            'validation-types' => QuestionFieldValidation::all()
         ];
 
 
-       
+
 
         $page['fields'][] = [
             'name' => 'why_field',
@@ -223,16 +223,16 @@ class ViewController extends Controller
             'checked' => false,
         ];
 
-       
+
 
         return view($page['template'], $page);
     }
 
     public function update(Request $request)
     {
-       
+
         $menu = Form::where('id', $request->query('id'))->firstOrFail();
-       
+
         $page = $this->getPage($request);
 
         $page['form_action_route'] = 'admin.form.update';
@@ -321,7 +321,7 @@ class ViewController extends Controller
 
         $form = Form::where('id', $submission->form_id)->first();
         $questions = $form->questions()->get();
-        
+
         $insert = [];
         foreach($questions as $question){
             $fields = $question->fields()->get();
@@ -331,7 +331,7 @@ class ViewController extends Controller
                     ->where('field_id', $field->id)->first();
 
                 if(!is_null($map)){
-                    
+
                     if(!isset($insert[$map->table])){
                         $insert[$map->table] = [];
                     }
@@ -355,7 +355,7 @@ class ViewController extends Controller
                         $insert[$map->table][$map->column] = null;
                     }
                 }
-                    
+
             }
         }
 
@@ -371,27 +371,27 @@ class ViewController extends Controller
         }
 
         else{
-           
+
             foreach($insert as $table => $col){
 
                 $inserted = \DB::table($table)->where('user_id', $submission->user_id->id)->update($col);
             }
         }
-       
 
 
-       
+
+
         $submission->user_id->permissions()->attach(Permission::where('name', 'Donor')->first()->id);
-        
+
         $submission->is_new = false;
         $submission->update();
-       
+
         if($request->has('forms')){
             foreach($request->input('forms') as $formId => $status){
-           
+
                 $_form = Form::where('id', $formId)->first();
                 $submission->user_id->forms()->attach($_form->id, ['action' => 'assign']);
-                
+
                 $user = new \App\Notifications();
                 $user->notification_type_id = \App\NotificationTypes::where('name', 'Form Assigned')->first()->id;
                 $user->message = 'You have been assigned form: ' . $_form->name;
@@ -400,12 +400,12 @@ class ViewController extends Controller
                 $user->users()->attach($submission->user_id->id);
             }
         }
-        
+
         if($form->name == 'Donor Application'){
 
             mail(
-                $submission->user_id->email, 
-                'NI-Q - Congradulations you have been approved!', 
+                $submission->user_id->email,
+                'NI-Q - Congradulations you have been approved!',
                 "Ni-Q has reviewed your application and we are excited to notify you that you have been accepted as a donor. The next step in the process is reading and signing the consent and financial forms.
                  Ni-Q requires these forms filled out. At the end of the year, Ni-Q will provide you with a 1099 form. It will be your responsibility to incorporate this in filing your taxes.
                  Thank you for choosing to donate with Ni-Q! \n <a href='https://portal.ni-q.com'>Click here to login into your donor account!</a>",
@@ -433,7 +433,7 @@ class ViewController extends Controller
                 "Active"=> $donor->active,
                 "Notes"=> ""
             ]);
-    
+
             $api->post('api/donor/'.$donor->donor_number.'/mailingaddress', [
                 "DonorId"=> $donor->donor_number,
                 "DonorUrl"=> null,
@@ -443,7 +443,7 @@ class ViewController extends Controller
                 "State"=> $donor->mailing_state,
                 "Zipcode"=> $donor->mailing_zipcode
             ]);
-    
+
             $api->post('api/donor/'.$donor->donor_number.'/shippingaddress', [
                 "DonorId"=> $donor->donor_number,
                 "DonorUrl"=> null,
@@ -453,9 +453,9 @@ class ViewController extends Controller
                 "State"=> $donor->shipping_state,
                 "Zipcode"=> $donor->shipping_zipcode
             ]);
-    
+
         }
-       
+
         $user = new \App\Notifications();
         $user->notification_type_id = \App\NotificationTypes::where('name', 'Donor Approved')->first()->id;
         $user->message = 'Congratuations you have been approved.';
@@ -463,9 +463,9 @@ class ViewController extends Controller
         $user->save();
         $user->users()->attach($submission->user_id->id);
 
-       
 
-        
+
+
 
         return redirect('/admin/forms/form?id='. $submission->form_id)->with('success', 'Submission was processed');
     }
