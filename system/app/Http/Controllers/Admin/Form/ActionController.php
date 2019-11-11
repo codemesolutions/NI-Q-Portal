@@ -33,7 +33,7 @@ class ActionController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'string', 'max:255'],
             'type' => ['required']
-            
+
         ]);
 
         if ($validator->fails()) {
@@ -49,16 +49,26 @@ class ActionController extends Controller
 
             $user = new \App\Form();
             $user->name = $request->input('name');
-            
-           
+
+
             $user->form_type_id = $request->input('type');
-        
-            $user->active = !is_null($request->input('status')) && $request->input('status') == 'on' ? true:false; 
+
+            $user->active = !is_null($request->input('status')) && $request->input('status') == 'on' ? true:false;
             $user->save();
 
             if(!is_null($request->input('users'))){
                 foreach($request->input('users') as $key => $value){
                     $user->users()->attach(User::where('id', $key)->first(), ['action' =>'assign']);
+                    mail(
+                        User::where('id', $key)->first()->email,
+                        'You have a new notification',
+                        "please log into your Ni-Q portal page to view. \n <a href='https://portal.ni-q.com'>Click here to login into your donor account!</a>",
+                        'From: erica@ni-q.com' . "\r\n" .
+                        'Reply-To: erica@ni-q.com' . "\r\n" .
+                        'X-Mailer: PHP/' . phpversion()."\r\n".
+                        'MIME-Version: 1.0' . "\r\n".
+                        'Content-type: text/html; charset=iso-8859-1' . "\r\n"
+                    );
                 }
             }
 
@@ -68,9 +78,9 @@ class ActionController extends Controller
                     $user->users()->attach(User::where('id', $key)->first(), ['action' => 'notify']);
                 }
             }
-            
-            
-           
+
+
+
 
             return redirect()->route('admin.form', ['id' => $user->id]);
         }
@@ -96,12 +106,12 @@ class ActionController extends Controller
             $user = \App\Form::where('id', $request->input('id'))->first();
             $user->name = $request->input('name');
             $user->form_type_id = $request->input('type');
-            $user->active = !is_null($request->input('status')) && $request->input('status') == 'on' ? true:false; 
+            $user->active = !is_null($request->input('status')) && $request->input('status') == 'on' ? true:false;
             $user->update();
 
             $users = [];
 
-            
+
             if(!is_null($request->input('donors'))){
                 foreach($request->input('donors') as $key => $value){
                     $users[] = ['user_id' => $key, 'action' => 'assign'];
@@ -114,37 +124,47 @@ class ActionController extends Controller
                     $notify->users()->attach($key);
                 }
 
-                
-               
+
+
             }
-           
+
             $users = [];
             if(!is_null($request->input('notify'))){
                 foreach($request->input('notify') as $key => $value){
-                    
+
                     $users[] = ['user_id' => $key, 'action' => 'notify'];
                 }
             }
-            
+
 
             if(!is_null($request->input('users'))){
                 foreach($request->input('users') as $key => $value){
-                    
+
                     $users[] = ['user_id' => $key, 'action' => 'assign'];
+                    mail(
+                        User::where('id', $key)->first()->email,
+                        'You have a new notification',
+                        "please log into your Ni-Q portal page to view. \n <a href='https://portal.ni-q.com'>Click here to login into your donor account!</a>",
+                        'From: erica@ni-q.com' . "\r\n" .
+                        'Reply-To: erica@ni-q.com' . "\r\n" .
+                        'X-Mailer: PHP/' . phpversion()."\r\n".
+                        'MIME-Version: 1.0' . "\r\n".
+                        'Content-type: text/html; charset=iso-8859-1' . "\r\n"
+                    );
                 }
             }
 
-           
+
             $user->users()->sync($users);
 
-           
 
-           
+
+
             return redirect()->route('admin.form', ['id' => $user->id])->with('success', "Form $user->name successfully updated");
         }
 
     }
 
 
-  
+
 }

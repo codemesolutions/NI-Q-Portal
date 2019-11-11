@@ -18,15 +18,17 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Left Side Of Navbar -->
             <ul class="navbar-nav ml-auto">
-                @foreach($site_menu->items()->get() as $item)
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ $item->path }}">{{ $item->name }}</a>
-                    </li>
-                @endforeach
+                @if(isset($site_menu))
+                    @foreach($site_menu->items()->get() as $item)
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ $item->path }}">{{ $item->name }}</a>
+                        </li>
+                    @endforeach
+                @endif
             </ul>
 
             <!-- Right Side Of Navbar -->
-           
+
         </div>
     </div>
 </nav>
