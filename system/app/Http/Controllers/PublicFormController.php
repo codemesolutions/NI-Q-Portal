@@ -21,14 +21,14 @@ class PublicFormController extends Controller
      */
     public function __construct()
     {
-    
+
     }
 
     public function form(Request $request)
     {
         $name = $request->query('name');
         $_question = $request->query('id');
-        
+
         $formTypePublic = FormType::where('name', 'public')->first();
         $form = Form::where('name', $name)->where('form_type_id', $formTypePublic->id)->where('active', true)->first();
 
@@ -41,7 +41,7 @@ class PublicFormController extends Controller
         if(!is_null($fs) && $fs->blocked){
             return redirect('/form/disqualified');
         }
-        
+
         elseif(!is_null($fs) && $fs->waited){
             return redirect('/form/waitlisted');
         }
@@ -50,7 +50,7 @@ class PublicFormController extends Controller
             return redirect('/form/thankyou');
         }
 
-        
+
         $questions = $form->questions()->where('id', $_question)->first();
 
         if(is_null($questions)){
@@ -61,13 +61,13 @@ class PublicFormController extends Controller
             }
         }
 
-        
+
         $answer = QuestionAnswer::where('user_id', $request->user()->id)->where('question_id', $questions->id)->first();
 
         $nextQ = $questions->id;
         $redirect = false;
         $thankyou = false;
-       
+
         if(!is_null($answer)){
             $qs = Question::where('form_id', $form->id)->orderBy('order')->get();
             foreach($qs as $k => $q){
@@ -82,7 +82,7 @@ class PublicFormController extends Controller
                         $redirect = true;
                         $thankyou = true;
                     }
-                    
+
                 }
             }
         }
@@ -111,7 +111,7 @@ class PublicFormController extends Controller
         $page['question'] = $questions;
         $page['title'] = $form->name;
         $page['form_id'] = $form->id;
- 
+
 
         return view($page['template'], $page);
     }
@@ -120,7 +120,7 @@ class PublicFormController extends Controller
         $validator = Validator::make($request->all(), [
             'question' => ['required', 'numeric'],
             'form' => ['required', 'string'],
-           
+
         ]);
 
         if ($validator->fails()) {
@@ -155,7 +155,7 @@ class PublicFormController extends Controller
         }
 
         $validateArray = [];
-       
+
         if(count($fieldValidations) > 0){
             foreach($fieldValidations as $name => $rules){
 
@@ -163,8 +163,8 @@ class PublicFormController extends Controller
                     if(!isset($validateArray[$name])){
                         $validateArray[$name] = [];
                     }
-                    
-                   
+
+
                     if(is_null($rule->pivot->value)){
                         $validateArray[$name][] = $rule->name;
                     }
@@ -172,17 +172,17 @@ class PublicFormController extends Controller
                     elseif($rule->name == "file"){
                         $validateArray[$name."*"][] = "mimes:" . $rule->pivot->value;
                     }
-    
+
                     else{
                         $validateArray[$name][] = $rule->name . ":" . $rule->pivot->value;
                     }
                 }
-               
-               
+
+
             }
         }
-        
-       
+
+
         $validator = Validator::make($request->all(), $validateArray);
 
         if ($validator->fails()) {
@@ -199,9 +199,9 @@ class PublicFormController extends Controller
                 if($request->has($fieldName)){
                     foreach($condition as $con){
                         if($request->input($fieldName) === $con->condition){
-                           
+
                             if($con->actions()->first()->name == "Disqualify"){
-                              
+
                                 $disqualified = true;
                                 break;
                             }
@@ -237,12 +237,12 @@ class PublicFormController extends Controller
                                 elseif($con->actions()->first()->name === "Wait 1 year"){
                                     $waitTime = (182 * 2);
                                 }
-                               
+
                             }
-                            
+
                         }
 
-                        
+
                     }
                 }
             }
@@ -251,11 +251,11 @@ class PublicFormController extends Controller
 
 
         foreach($fields as $field){
-           
+
             if($field->question_field_type_id->name ==='file upload'){
-               
+
                 $answer = $request->file($field->name)->store('submissions');
-               
+
                 if(!is_null($answer) && $answer !== false){
                     $qa = new QuestionAnswer();
                     $qa->form_id = $form->id;
@@ -263,16 +263,16 @@ class PublicFormController extends Controller
                     $qa->field_id = $field->id;
                     $qa->user_id = $request->user()->id;
                     $qa->answer = $answer;
-                   
+
                     $qa->save();
                 }
 
             }
 
             else{
-                
+
                 $answer = $request->input($field->name);
-            
+
                 if(!is_null($answer) && $answer !== false){
                     $qa = new QuestionAnswer();
                     $qa->form_id = $form->id;
@@ -296,7 +296,7 @@ class PublicFormController extends Controller
             $fs->save();
         }
 
-        
+
 
         if($disqualified){
             $fs->blocked = true;
@@ -314,14 +314,14 @@ class PublicFormController extends Controller
 
         $questions = $form->questions()->orderBy('order')->get();
         $nextQuestion = null;
-        
+
         foreach($questions as $index => $question){
-           
+
             if($question->id === $_question->id){
                 //check to see if there is a next question
                 if(isset($questions[$index + 1])){
                     $nextQuestion = $questions[$index + 1];
-                   
+
                     break;
                 }
             }
@@ -347,8 +347,8 @@ class PublicFormController extends Controller
             $notify->resource = '/admin/forms/submissions/submission?form='.$form->name.'&id=' . $fs->id;
             $notify->save();
 
-            
-            
+
+
             foreach($form->users()->where('action', 'notify')->get() as $user)
             {
                 $notify->users()->attach($user->id);
@@ -383,7 +383,18 @@ class PublicFormController extends Controller
 
 
     public function file(Request $request, $file){
-        return response()->download(storage_path() .'/app/form/'. $file);
+        if(file_exists(storage_path() .'/app/'. $file)){
+            return response()->download(storage_path() .'/app/'. $file);
+        }
+
+        elseif(file_exists(storage_path() .'/app/submissions/'. $file)){
+            return response()->download(storage_path() .'/app/submissions/'. $file);
+        }
+
+        else{
+            abort(404);
+        }
+
     }
 
 }

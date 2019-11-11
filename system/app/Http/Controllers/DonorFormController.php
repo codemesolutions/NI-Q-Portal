@@ -21,14 +21,14 @@ class DonorFormController extends Controller
      */
     public function __construct()
     {
-    
+
     }
 
     public function form(Request $request)
     {
         $name = $request->query('name');
         $_question = $request->query('id');
-        
+
         $form = Form::where('name', $name)->where('active', true)->first();
 
 
@@ -45,7 +45,7 @@ class DonorFormController extends Controller
         if(!is_null($fs) && $fs->blocked){
             return redirect('/form/disqualified');
         }
-        
+
         elseif(!is_null($fs) && $fs->waited){
             return redirect('/form/waitlisted');
         }
@@ -54,7 +54,7 @@ class DonorFormController extends Controller
             return redirect('/form/thankyou');
         }
 
-        
+
         $questions = $form->questions()->where('id', $_question)->first();
 
         if(is_null($questions)){
@@ -65,15 +65,15 @@ class DonorFormController extends Controller
             }
         }
 
-        
+
         $answer = QuestionAnswer::where('user_id', $request->user()->id)->where('question_id', $questions->id)->first();
 
         $nextQ = $questions->id;
         $redirect = false;
         $thankyou = false;
-       
+
         if(!is_null($answer)){
-            $qs = Question::orderBy('order')->get();
+            $qs = Question::where('form_id', $form->id)->orderBy('order')->get();
             foreach($qs as $k => $q){
                 if($q->id == $nextQ){
                     if(isset($qs[$k + 1])){
@@ -86,7 +86,7 @@ class DonorFormController extends Controller
                         $redirect = true;
                         $thankyou = true;
                     }
-                    
+
                 }
             }
         }
@@ -115,7 +115,7 @@ class DonorFormController extends Controller
         $page['question'] = $questions;
         $page['title'] = $form->name;
         $page['form_id'] = $form->id;
- 
+
 
         return view($page['template'], $page);
     }
@@ -159,7 +159,7 @@ class DonorFormController extends Controller
         }
 
         $validateArray = [];
-       
+
         if(count($fieldValidations) > 0){
             foreach($fieldValidations as $name => $rules){
 
@@ -167,8 +167,8 @@ class DonorFormController extends Controller
                     if(!isset($validateArray[$name])){
                         $validateArray[$name] = [];
                     }
-                    
-                   
+
+
                     if(is_null($rule->pivot->value)){
                         $validateArray[$name][] = $rule->name;
                     }
@@ -176,17 +176,17 @@ class DonorFormController extends Controller
                     elseif($rule->name == "file"){
                         $validateArray[$name."*"][] = "mimes:" . $rule->pivot->value;
                     }
-    
+
                     else{
                         $validateArray[$name][] = $rule->name . ":" . $rule->pivot->value;
                     }
                 }
-               
-               
+
+
             }
         }
-        
-       
+
+
         $validator = Validator::make($request->all(), $validateArray);
 
         if ($validator->fails()) {
@@ -238,9 +238,9 @@ class DonorFormController extends Controller
                                 elseif($con->actions()->first()->name === "Wait 1 year"){
                                     $waitTime = (182 * 2);
                                 }
-                               
+
                             }
-                            
+
                         }
                     }
                 }
@@ -250,11 +250,11 @@ class DonorFormController extends Controller
 
 
         foreach($fields as $field){
-           
+
             if($field->question_field_type_id->name ==='file upload'){
-               
+
                 $answer = $request->file($field->name)->store('submissions');
-               
+
                 if(!is_null($answer) && $answer !== false){
                     $qa = new QuestionAnswer();
                     $qa->form_id = $form->id;
@@ -262,16 +262,16 @@ class DonorFormController extends Controller
                     $qa->field_id = $field->id;
                     $qa->user_id = $request->user()->id;
                     $qa->answer = $answer;
-                   
+
                     $qa->save();
                 }
 
             }
 
             else{
-                
+
                 $answer = $request->input($field->name);
-            
+
                 if(!is_null($answer) && $answer !== false){
                     $qa = new QuestionAnswer();
                     $qa->form_id = $form->id;
@@ -311,14 +311,14 @@ class DonorFormController extends Controller
 
         $questions = $form->questions()->orderBy('order')->get();
         $nextQuestion = null;
-        
+
         foreach($questions as $index => $question){
-           
+
             if($question->id === $_question->id){
                 //check to see if there is a next question
                 if(isset($questions[$index + 1])){
                     $nextQuestion = $questions[$index + 1];
-                   
+
                     break;
                 }
             }
@@ -345,12 +345,12 @@ class DonorFormController extends Controller
             $notify->save();
 
             //dd($form->users()->where('action', 'notify')->get());
-            
+
             foreach($form->users()->where('action', 'notify')->get() as $user)
             {
                 $notify->users()->attach($user->id);
             }
-            
+
 
             return redirect('/');
         }
