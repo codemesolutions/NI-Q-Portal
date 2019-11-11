@@ -69,6 +69,7 @@ Route::get('/admin/users', 'Admin\User\ViewController@list')->name('admin.users'
 Route::get('/admin/users/user', 'Admin\User\ViewController@single')->name('admin.user');
 Route::get('/admin/user/create', 'Admin\User\ViewController@create')->name('admin.user.create');
 Route::get('/admin/user/update', 'Admin\User\ViewController@update')->name('admin.user.update');
+Route::post('/admin/user/account/update', 'Admin\User\ActionController@updateAccount')->name('admin.user.account.update');
 Route::get('/admin/user/delete', 'Admin\User\ActionController@delete')->name('admin.user.delete');
 Route::post('/admin/user/create', 'Admin\User\ActionController@create')->name('admin.user.create');
 Route::post('/admin/user/update', 'Admin\User\ActionController@update')->name('admin.user.update');

@@ -33,7 +33,7 @@ class ActionController extends Controller
             'last_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            
+
         ]);
 
         if ($validator->fails()) {
@@ -45,7 +45,7 @@ class ActionController extends Controller
 
         else{
             $user = new \App\User();
-        
+
             $user->name = $request->input('name');
             $user->first_name = $request->input('first_name');
             $user->last_name = $request->input('last_name');
@@ -58,15 +58,16 @@ class ActionController extends Controller
                     $user->permissions()->attach(\App\Permission::where('id', $key)->first());
                 }
             }
-            
-            
+
+
             return redirect('admin/users/user?id='.$user->id)->with('success','User created successfully!');
         }
 
     }
 
 
-    public function update(Request $request){ 
+    public function update(Request $request){
+
 
         $validator = Validator::make($request->all(), [
             'id' => ['required'],
@@ -77,16 +78,16 @@ class ActionController extends Controller
             'password' => ['sometimes', 'confirmed'],
         ]);
 
-        
+
 
         if ($validator->fails()) {
-           
+
             return redirect()->back()
                         ->withErrors($validator)
                         ->withInput();
         }
 
-    
+
 
         else{
             $user = \App\User::where('id', $request->input('id'))->first();
@@ -105,11 +106,55 @@ class ActionController extends Controller
                     $roles[] = $key;
                 }
             }
-           
+
 
             $user->permissions()->sync($roles);
 
             return redirect('admin/users/user?id='.$user->id)->with('success','User created successfully!');
+        }
+
+    }
+
+    public function updateAccount(Request $request){
+
+
+        $validator = Validator::make($request->all(), [
+
+            'first_name' => ['required', 'string', 'max:255'],
+            'last_name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255'],
+        ]);
+
+
+
+        if ($validator->fails()) {
+
+            return redirect()->back()
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+
+
+
+        else{
+            $user = \App\User::where('id', $request->input('id'))->first();
+            $user->name = $request->input('first_name')[0] . "." . $request->input('last_name');
+            $user->first_name = $request->input('first_name');
+            $user->last_name = $request->input('last_name');
+            $user->email = $request->input('email');
+            $user->home_phone = $request->input('home_phone');
+            $user->cell_phone = $request->input('cell_phone');
+
+            if(!is_null($request->input('password'))){
+                $user->password = bcrypt($request->input('password'));
+            }
+
+
+            $user->update();
+
+
+
+            return redirect('/account')->with('success','User updated successfully!');
         }
 
     }
@@ -120,5 +165,5 @@ class ActionController extends Controller
         $form->delete();
         return redirect()->route('admin.users')->with('success', 'Successfully deleted user');
      }
-  
+
 }
