@@ -104,7 +104,7 @@
                     @endif
 
                      @if($data_item->submissions()->where('is_new', true)->where('completed', true)->count() > 0)
-                     <div class="col-6">
+                     <div class="col-12">
                         <div class="bg-light border p-3 border-bottom-0">
                             <p>Form Submissions</p>
                         </div>

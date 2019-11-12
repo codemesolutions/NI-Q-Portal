@@ -26,6 +26,13 @@
                 <div class="col-3 p-1">
                     <div class="bg-white border  p-5 text-center">
 
+                        <h3 class="m-0">{{\App\FormSubmission::where('form_id', 1)->where('completed', true)->count()}}</h3>
+                        <p class="m-0 small font-weight-bold">Donor Application Completed</p>
+                    </div>
+                </div>
+                <div class="col-3 p-1">
+                    <div class="bg-white border  p-5 text-center">
+
                         <h3 class="m-0">{{\App\FormSubmission::where('form_id', 1)->where('blocked', true)->count()}}</h3>
                         <p class="m-0 small font-weight-bold">Donor Application Disqualified</p>
                     </div>
@@ -33,10 +40,11 @@
                  <div class="col-3 p-1">
                     <div class="bg-white border  p-5 text-center">
 
-                        <h3 class="m-0">{{\App\FormSubmission::where('form_id', 1)->where('completed', true)->count()}}</h3>
-                        <p class="m-0 small font-weight-bold">Donor Application Completed</p>
+                        <h3 class="m-0"><h3 class="m-0">{{\App\FormSubmission::where('form_id', 1)->where('waited', true)->count()}}</h3></h3>
+                        <p class="m-0 small font-weight-bold">Donor Application Waitlisted</p>
                     </div>
                 </div>
+
                 <div class="col-3 p-1">
                     <div class="bg-white border  p-5 text-center">
 
@@ -58,13 +66,7 @@
                         <p class="m-0 small font-weight-bold">Total Users</p>
                     </div>
                 </div>
-                 <div class="col-3 p-1">
-                    <div class="bg-white border  p-5 text-center">
 
-                        <h3 class="m-0">{{\App\Page::count()}}</h3>
-                        <p class="m-0 small font-weight-bold">Total Pages</p>
-                    </div>
-                </div>
                 <div class="col-7 p-1">
                     <div class=" bg-white text-dark border  p-5 row m-0 align-items-center justify-content-start">
                         <h6 class="text-uppercase m-0"> <i class="fas fa-bell bg-info p-2 text-white "></i> Notifications</h6>
