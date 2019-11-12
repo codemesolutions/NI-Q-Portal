@@ -13,7 +13,7 @@ class PagesController extends Controller
      */
     public function __construct()
     {
-       
+
     }
 
     /**
@@ -24,9 +24,9 @@ class PagesController extends Controller
     public function handler(Request $request)
     {
         $page = $this->getPage($request);
-       
 
-        if($page['type'] == 'public' || $page['type'] == 'donor'){
+
+        if($page['type'] === 'public' || $page['type'] === 'donor'){
             $type = 'site';
         }
 
@@ -37,5 +37,5 @@ class PagesController extends Controller
         return view($type . '/' . $page['template'], $page);
     }
 
- 
+
 }

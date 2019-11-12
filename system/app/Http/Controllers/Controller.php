@@ -30,11 +30,11 @@ class Controller extends BaseController
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
     public function getPage(Request $request){
-        
-        
+
+
         $savedPage = Page::where('slug', $request->path())->where('active', true)->first();
-       
-        
+
+
         if(is_null($savedPage)){
             abort(404);
         }
@@ -43,12 +43,12 @@ class Controller extends BaseController
         $accessGranted = false;
 
         if($perms->count() > 0 && is_null($request->user())){
-           
+
             abort(403);
         }
-        
+
         else if($perms->count() > 0 && !is_null($request->user())){
-            
+
             foreach($request->user()->permissions()->get() as $role){
                 foreach($perms as $permission){
                     if($role->id === $permission->id){
@@ -56,6 +56,7 @@ class Controller extends BaseController
                     }
                 }
             }
+
 
             // if they do not have permissions attached they are a prospect.
             if(!$accessGranted){
@@ -79,15 +80,17 @@ class Controller extends BaseController
             abort(403);
         }
 
+
+
         $page = [];
         $page['page'] = $savedPage;
-        
-        if(!is_null($savedPage)){
-            $page['type'] = $savedPage->page_type_id;
+
+        if(!is_null($page['page'])){
+            $page['type'] = $page['page']->page_type_id;
         }
-       
+
         $page['request'] = $request;
-        
+
         $page['title'] = $savedPage->title;
         $page['slug'] = $savedPage->slug;
         $page['template'] = $savedPage->template;
@@ -103,11 +106,11 @@ class Controller extends BaseController
         //$page['requests'] = DonorRequest::all();
         $page['pages'] = Page::all();
         $page['documents'] = Document::all();
-        
+
         $page['menus'] = Menu::all();
         $page['fields'] = [];
         $page['datasets'] = [];
-       
+
         $page['admin_menu'] = Menu::where('name', 'Admin Menu')->first();
         $page['site_menu'] = Menu::where('name', 'Site Menu')->first();
         $page['donor_menu'] = Menu::where('name', 'Donor Menu')->first();
@@ -115,12 +118,12 @@ class Controller extends BaseController
         if(!is_null($request->user())){
             $page['userPermissions'] = $request->user()->permissions()->get();
         }
-      
-       
+
+
         $page['pageTypes'] = PageType::all();
         $page['notificationTypes'] = NotificationTypes::all();
-       
-    
+
+
 
         return $page;
     }

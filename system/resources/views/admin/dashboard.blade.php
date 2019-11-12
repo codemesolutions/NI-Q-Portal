@@ -65,28 +65,37 @@
                         <p class="m-0 small font-weight-bold">Total Pages</p>
                     </div>
                 </div>
-                <div class="col-6 p-1">
+                <div class="col-7 p-1">
                     <div class=" bg-white text-dark border  p-5 row m-0 align-items-center justify-content-start">
                         <h6 class="text-uppercase m-0"> <i class="fas fa-bell bg-info p-2 text-white "></i> Notifications</h6>
                         <div class="w-100 mt-4 ">
 
                             <ul class="list-group ">
                                 @foreach($request->user()->notifications()->where('notifications.created_at', '>', \Carbon\Carbon::now()->subDays(30)->toDateTimeString())->orderBy('created_at', 'desc')->get() as $convo)
-                                <a
-                                    class="list-group-item rounded-0"
-                                    href="{{$convo->resource}}">
-                                    <span class="bg-dark d-inline-block text-center text-info mr-2 text-uppercase" style="height: 20px; width: 20px; ">
-                                        {{$convo->notification_type_id[0]}}
-                                    </span>
-                                        {{$convo->message}}
-                                    </a>
+                                    @if($convo->notification_type_id == "Message")
+                                        <a
+                                            class="list-group-item rounded-0 text-dark"
+                                            href="{{$convo->resource}}">
+
+                                                <i class="fas fa-comment mr-2"></i>{{$convo->message}}
+                                                <span class="text-muted small ml-2">{{$convo->created_at}}</span>
+                                        </a>
+                                    @else
+                                        <a
+                                            class="list-group-item rounded-0 text-dark"
+                                            href="{{$convo->resource}}">
+
+                                                <i class="fas fa-inbox mr-2"></i>{{$convo->message}}
+                                                <span class="text-muted small ml-2">{{$convo->created_at}}</span>
+                                        </a>
+                                    @endif
                                 @endforeach
 
                             </ul>
                         </div>
                     </div>
                 </div>
-                <div class="col-6 p-1">
+                <div class="col-5 p-1">
                     <div class=" bg-white text-dark border  p-5 row m-0 align-items-center justify-content-start">
                         <h6 class="text-uppercase m-0"> <i class="fas fa-inbox bg-primary p-2 text-white "></i> Messages</h6>
                         <div class="w-100 mt-4 ">

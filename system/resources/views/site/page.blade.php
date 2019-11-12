@@ -12,9 +12,12 @@
             </div>
         </div>
     @endif
-   
+
     <div class="container my-5">
-        <div class="p-5 ">
+        <div class="p-5 border bg-white">
+            @if($type == 'donor')
+                <h5>{!!$title!!}</h5>
+            @endif
             {!!$content!!}
         </div>
     </div>
