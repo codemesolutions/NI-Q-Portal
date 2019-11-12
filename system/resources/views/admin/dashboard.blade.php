@@ -9,13 +9,7 @@
         <div class="col-12 mb-5 p-0">
 
             <div class="row m-0 pb-5">
-                 <div class="col-3 p-1">
-                    <div class="bg-white border  p-5 text-center">
 
-                        <h3 class="m-0">{{\App\Donor::count()}}</h3>
-                        <p class="m-0 small font-weight-bold">Approved Donors</p>
-                    </div>
-                </div>
                  <div class="col-3 p-1">
                     <div class="bg-white border  p-5 text-center">
 
@@ -44,7 +38,13 @@
                         <p class="m-0 small font-weight-bold">Donor Application Waitlisted</p>
                     </div>
                 </div>
+                <div class="col-3 p-1">
+                        <div class="bg-white border  p-5 text-center">
 
+                            <h3 class="m-0">{{\App\Donor::count()}}</h3>
+                            <p class="m-0 small font-weight-bold">Approved Donors</p>
+                        </div>
+                    </div>
                 <div class="col-3 p-1">
                     <div class="bg-white border  p-5 text-center">
 
