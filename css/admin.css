@@ -374,8 +374,8 @@ label{
 
 .table tr.hover:hover td{
     cursor: pointer;
-    background: #000000;
-   color: #fff;
+    background: #eee;
+   color: #000;
 }
 
 
@@ -670,4 +670,13 @@ textarea{
 
 .sidebar-sm a span{
     font-size: 0.6rem;
+}
+
+.pagination{
+    margin:0;
+    color: #000;
+}
+
+.page-link{
+    color: #000;
 }

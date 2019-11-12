@@ -67,9 +67,11 @@
                                                         @php
                                                             $ext = pathinfo($answer->answer, PATHINFO_EXTENSION);
                                                         @endphp
-                                                        @if($ext == "doc" || $ext === "docx")
-                                                            <td class="pl-3"><iframe style="height: 500px;" class="w-100 border mb-3" src="https://docs.google.com/gview?url={{url('/')}}/file/{{$answer->answer}}&embedded=true" frameborder="0">
-</iframe></td>
+                                                        @if($ext == "doc" || $ext === "docx" || $ext === "pdf")
+                                                            <td class="pl-3">
+                                                                <iframe style="height: 500px;" class="w-100 border mb-3" src="https://docs.google.com/gview?url={{url('/')}}/file/{{$answer->answer}}&embedded=true" frameborder="0"></iframe>
+                                                                <a class="btn btn-primary btn-sm" href="{{url('/')}}/file/{{$answer->answer}}">Download</a>
+                                                            </td>
                                                         @else
                                                             <td class="pl-3"><a href="{{url('/')}}/file/{{$answer->answer}}">{{ucfirst($answer->answer)}}</a></td>
                                                         @endif

@@ -1,14 +1,14 @@
 @extends('admin.layouts.app')
 
 @section('content')
- 
+
 <div class="h-100 bg-light">
      <div class="bg-teal px-3 py-3 row m-0 align-items-center">
         <p class="m-0 text-uppercase" >{!!$title!!} </p>
         <div class="col p-0 form row m-0 ml-auto pl-5">
             <input type="search" name="search" class="form-control form-control-dark col table-search " placeholder="search"/>
-           
-                
+
+
             <div class="row align-items-center pl-5 m-0">
                 @if(isset($show_map) && $show_map && isset($map_route))
                 <a class="btn btn-warning text-white btn-sm ml-auto mr-1" href="{{$map_route}}"><i class="fas fa-sitemap"></i> map</a>
@@ -20,7 +20,7 @@
     </div>
     <div style="height: calc(100% - 66.2px);" class="overflow-auto">
         @if(Session::has('success'))
-           
+
             <div class="alert alert-success alert-dismissible fade show mb-4 rounded-0 " role="alert">
                 {{ Session::get('success') }}
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -29,11 +29,11 @@
             </div>
         @endif
        @if(!is_null($datasets['list']['rows']) && $datasets['list']['rows']->count() > 0)
-        
-        
+
+
 
          @if(Session::has('message'))
-           
+
             <div class="alert alert-danger alert-dismissible fade show mb-4 rounded-0 " role="alert">
                 {{ Session::get('message') }}
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -59,7 +59,7 @@
                             @endforeach
                         @endforeach
 
-                        
+
                     </tr>
                 </thead>
                 <tbody>
@@ -67,7 +67,7 @@
                     @foreach($datasets as $dataset)
                         @if(isset($dataset['rows']))
                             @foreach($dataset['rows'] as $user)
-                           
+
                             <tr class="hover " data-href="{{$view_route}}?id={{$user->id}}">
                                 <td class="px-5 clickable">
                                     <div class="custom-control custom-checkbox">
@@ -83,16 +83,19 @@
                                         <td class="clickable">{!!$user[$row]!!}</td>
                                     @endif
                                 @endforeach
-                               
+
                             </tr>
 
                             @endforeach
                         @endif
                     @endforeach
-                    
-                    
+
+
                 </tbody>
             </table>
+            @if($dataset['rows'] instanceof \Illuminate\Pagination\LengthAwarePaginator)
+            {{ $dataset['rows']->links() }}
+            @endif
         </div>
          @else
             <div class="mx-auto w-75 mt-5 p-5 text-center bg-white border">

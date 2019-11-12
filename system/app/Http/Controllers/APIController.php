@@ -29,7 +29,7 @@ class APIController extends Controller
 
         foreach($milkKits as $mk){
             $donor = \App\Donor::where('donor_number', $mk->DonorId)->first();
-            
+
             if(!is_null($donor)){
                 $m = \App\MilkKit::where('donor_id', $donor->id)->where('barcode', $mk->Barcode)->first();
 
@@ -83,15 +83,15 @@ class APIController extends Controller
                     $m->sample_pouches = is_null($mk->Lot->SamplePouches) ? 0 : $mk->Lot->SamplePouches;
                     $m->update();
                 }
-             
+
             }
         }
-        
+
 
         $milkKits = $api->get('api/BloodKit');
         foreach($milkKits as $mk){
             $donor = \App\Donor::where('donor_number', $mk->DonorId)->first();
-            
+
             if(!is_null($donor)){
                 $m = \App\BloodKit::where('donor_id', $donor->id)->where("din", $mk->Din)->first();
 
@@ -116,10 +116,10 @@ class APIController extends Controller
                     $m->recieve_date = $mk->ReceiveDate;
                     $m->shipping_service = $mk->ShippingService;
                     $m->tracking_number = $mk->TrackingNumber;
-                    $m->status = $mk->Status;
+                    $m->status = is_null($mk->Status) ? false:true;
                     $m->update();
                 }
-             
+
             }
         }
 

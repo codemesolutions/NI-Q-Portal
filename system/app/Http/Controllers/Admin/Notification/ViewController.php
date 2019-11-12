@@ -39,7 +39,7 @@ class ViewController extends Controller
                 },
                 'Created Date' => 'created_at'
             ],
-            'rows' => Notifications::all()
+            'rows' => Notifications::paginate(25)
         ];
 
         $page['view_route'] = "/admin/notifications/notification";
@@ -51,20 +51,20 @@ class ViewController extends Controller
 
     public function single(Request $request)
     {
-       
+
         $id = $request->query('id');
-        
+
         $page = $this->getPage($request);
 
-       
+
         $results = Notifications::where('id', $id)->first();
-       
-        
+
+
         if(is_null($results)){
             //abort(404);
         }
 
-        
+
         $page['data_item'] = $results;
 
         $page['view_route'] = "";
@@ -80,7 +80,7 @@ class ViewController extends Controller
         $page = $this->getPage($request);
 
         $page['form_action_route'] = 'admin.notification.create';
-        
+
         $page['fields']['type'] = [
             'name' => 'type',
             'type' => 'select',
@@ -113,7 +113,7 @@ class ViewController extends Controller
             'value' => old('resource')
         ];
 
-        
+
         $page['fields']['users'] = [
             'name' => 'users',
             'type' => 'checkbox-select',
@@ -135,9 +135,9 @@ class ViewController extends Controller
 
     public function update(Request $request)
     {
-       
+
         $menu = Notifications::where('id', $request->query('id'))->firstOrFail();
-       
+
         $page = $this->getPage($request);
 
         $page['form_action_route'] = 'admin.notification.update';
@@ -190,7 +190,7 @@ class ViewController extends Controller
         ];
 
         foreach(User::all() as $user){
-            
+
             if(!is_null($menu->users()->where('users.id', $user->id)->first())){
                 $page['fields']['users']['options'][] = [
                     'name' => $user->name,
@@ -204,10 +204,10 @@ class ViewController extends Controller
                     'name' => $user->name,
                     'value' => $user->id,
                     'selected' => false,
-                    
+
                 ];
             }
-           
+
         }
 
         return view($page['template'], $page);
