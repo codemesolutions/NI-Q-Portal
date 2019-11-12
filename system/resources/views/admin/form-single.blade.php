@@ -1,7 +1,7 @@
 @extends('admin.layouts.app')
 
 @section('content')
- 
+
 <div class="bg-light h-100">
      <div class="bg-dark px-3 py-3 row m-0 align-items-center">
         <p class="m-0 text-uppercase text-white" >{!!$title!!} </p>
@@ -16,7 +16,7 @@
     </div>
     <div style="height: calc(100% - 51.2px);" class="overflow-auto">
       @if(Session::has('success'))
-           
+
             <div class="alert alert-success alert-dismissible fade show mb-4 rounded-0 " role="alert">
                 {{ Session::get('success') }}
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -34,7 +34,7 @@
                             <tbody>
                                 @foreach($data_item->toArray() as $name => $val)
                                      @if($name == 'active')
-                                     
+
                                     <tr>
                                         <td>{{ucfirst(str_replace('_', ' ', $name))}}</td>
                                         <td>{!!$val == "Inactive" ? '<span class="badge badge-danger rounded-0">Inactive</span>':'<span class="badge badge-success rounded-0">Active</span>'!!}</td>
@@ -52,11 +52,11 @@
                                         </tr>
                                         @endif
                                     @endif
-                                    
+
                                 @endforeach
                             </tbody>
                         </table>
-                       
+
                     </div>
 
                     @if($data_item->users()->where('action', 'assign')->count() > 0)
@@ -67,15 +67,15 @@
                         <table class="table bg-white border-left border-right">
                             <tbody>
                                 @foreach($data_item->users()->where('action', 'assign')->get() as $val)
-                                
+
                                     <tr>
                                         <td>{{$val->first_name}}, {{$val->last_name}}</td>
                                     </tr>
-                                    
+
                                 @endforeach
                             </tbody>
                         </table>
-                       
+
                     </div>
                     @endif
 
@@ -83,23 +83,23 @@
                      <div class="col">
                         <div class="bg-light border p-3 border-bottom-0 row m-0 align-items-center">
                             <p class="m-0">Form Questions</p>
-                           
+
                             <a class="ml-1 btn btn-sm btn-primary ml-auto" href="/admin/forms/questions/create?id={{$data_item->id}}"><i class="fas fa-plus"></i> Create Question</a>
                         </div>
                         <table class="table bg-white border-left border-right">
                             <tbody>
                                 @foreach($data_item->questions()->orderBy('order')->get() as $k => $val)
 
-                                  
+
                                     <tr>
-                                        <td ><span class="mr-2">#{{$k + 1}}. </span><a class="text-dark" href="/admin/forms/questions/question?id={{$val->id}}">{{strip_tags($val->question)}}</a></td>
+                                        <td ><span class="mr-2"> </span><a class="text-dark" href="/admin/forms/questions/question?id={{$val->id}}">{{strip_tags($val->question)}}</a></td>
                                         <td>{{$val->order}}</td>
                                     </tr>
-                                    
+
                                 @endforeach
                             </tbody>
                         </table>
-                       
+
                     </div>
                     @endif
 
@@ -110,24 +110,24 @@
                         </div>
                         <table class="table bg-white border-left border-right text-center">
                             <tbody>
-                                
+
                                 @foreach($data_item->submissions()->where('is_new', true)->where('completed', true)->get() as $k => $val)
-                                
+
                                     <tr>
-                                        
-                                        <td><span>#{{$k}}</span><a href="/admin/forms/submissions/submission?form={{$data_item->name}}&id={{$val->id}}">{{strip_tags($val->user_id->first_name)}}, {{strip_tags($val->user_id->last_name)}}</a></td>
-                                        
-                                      
+                                        <td>#{{$k + 1}}.</td>
+                                        <td><a href="/admin/forms/submissions/submission?form={{$data_item->name}}&id={{$val->id}}">{{strip_tags($val->user_id->first_name)}}, {{strip_tags($val->user_id->last_name)}}</a></td>
+
+
                                         <td>{{strip_tags($val->user_id->created_at)}}</td>
                                     </tr>
-                                    
+
                                 @endforeach
                             </tbody>
                         </table>
-                       
+
                     </div>
                     @endif
-                    
+
                 </div>
             </div>
         </div>
@@ -161,5 +161,5 @@
     </div>
   </div>
 </div>
-    
+
 @endsection
