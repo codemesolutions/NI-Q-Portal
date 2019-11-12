@@ -35,8 +35,8 @@ class ActionController extends Controller
 
     public function create(Request $request){
 
-    
-      
+
+
         $validator = Validator::make($request->all(), [
             'question' => ['required', 'string'],
             'form' => ['required', 'numeric'],
@@ -74,8 +74,8 @@ class ActionController extends Controller
                 $fields->name =  "additional information";
                 $fields->save();
             }
-           
-            
+
+
 
             if($request->has('fields')){
 
@@ -89,14 +89,14 @@ class ActionController extends Controller
                         $fields->label = $field['label'];
                         $fields->value = $field['value'];
                         $fields->field_order = $field['order'];
-                        
+
 
                         if(isset($field['options'])){
                             $fields->options = $field['options'];
                         }
 
                         if(isset($request->file()['fields'][$k])){
-                           
+
                             $fields->download = $request->file()['fields'][$k]['download']->store('form');
                         }
 
@@ -105,21 +105,21 @@ class ActionController extends Controller
 
                         if(isset($field['validation'])){
                             foreach($field['validation'] as $rule){
-                                $fields->validations()->attach($rule['type'], ['value' => $rule['value']]); 
+                                $fields->validations()->attach($rule['type'], ['value' => $rule['value']]);
                             }
                         }
                     }
                 }
             }
 
-            
+
 
             if($request->has('conditions')){
                 foreach($request->input('conditions') as $k => $field){
                     if($k > 0 && !is_null($field) && is_array($field)){
                         $fields = QuestionField::where('question_id', $question->id)->get();
-                        
-                        
+
+
                         $cons = new QuestionCondition();
                         $cons->field_id = $fields[($field['field'] - 1)]->id;
                         $cons->question_condition_type_id = $field['type'];
@@ -127,13 +127,13 @@ class ActionController extends Controller
                         $cons->condition =  $field['value'];
                         $cons->show_date_field = isset($field['date']) && $field['date'] == "on" ? true:false;
                         $cons->save();
-                        
+
                     }
                 }
-               
-               
+
+
             }
-           
+
             return redirect()->route('admin.form', ['id' => $request->input('form')]);
         }
 
@@ -142,7 +142,7 @@ class ActionController extends Controller
 
     public function update(Request $request){
 
-        
+
         $validator = Validator::make($request->all(), [
             'id' => ['required', 'numeric'],
             'question' => ['required', 'string'],
@@ -158,7 +158,7 @@ class ActionController extends Controller
 
         else{
 
-            
+
 
             $question = Question::where('id', $request->input('id'))->firstOrFail();
             $question->question = $request->input('question');
@@ -185,14 +185,14 @@ class ActionController extends Controller
                 $fields->name =  "additional information";
                 $fields->save();
             }
-            
+
             $notify = new Notifications();
             $notify->notification_type_id = NotificationTypes::where('name', 'form created')->first()->id;
             $notify->message = 'There was a new form "'. $question->question .'" created';
             $notify->resource = Route('admin.forms');
             $notify->save();
 
-            
+
 
             if($request->has('fields')){
 
@@ -206,14 +206,14 @@ class ActionController extends Controller
                         $fields->label = $field['label'];
                         $fields->value = $field['value'];
                         $fields->field_order = $field['order'];
-                        
+
 
                         if(isset($field['options'])){
                             $fields->options = $field['options'];
                         }
 
                         if(isset($request->file()['fields'][$k])){
-                           
+
                             $fields->download = $request->file()['fields'][$k]['download']->store('form');
                         }
 
@@ -222,36 +222,36 @@ class ActionController extends Controller
 
                         if(isset($field['validation'])){
                             foreach($field['validation'] as $rule){
-                                $fields->validations()->attach($rule['type'], ['value' => $rule['value']]); 
+                                $fields->validations()->attach($rule['type'], ['value' => $rule['value']]);
                             }
                         }
                     }
                 }
             }
 
-            
-          
+
+
             if($request->has('conditions')){
-               
+
                 foreach($request->input('conditions') as $k => $field){
                     if($k > 0 && !is_null($field) && is_array($field)){
                         $fields = QuestionField::where('question_id', $question->id)->get();
-                        
+
                         $cons = new QuestionCondition();
                         $cons->field_id = $fields[($field['field'] - 1)]->id;
                         $cons->question_condition_type_id = $field['type'];
                         $cons->question_condition_action_id = $field['action'];
                         $cons->condition =  $field['value'];
                         $cons->show_date_field = isset($field['date']) && $field['date'] == "on" ? true:false;
-                        $cons->save(); 
-                        
+                        $cons->save();
+
                     }
                 }
 
-            
-               
+
+
             }
-           
+
             return redirect()->route('admin.forms.question', ['id' => $request->input('id')])->with('success', "Question Updated Successfully");
         }
 
@@ -270,43 +270,46 @@ class ActionController extends Controller
                         ->withInput();
         }
 
-       
+
         foreach($request->input('questions') as $questionId => $questionFields){
+
             foreach($questionFields as $qfield => $tableCol){
-                
+
                 $fqm = FormQuestionMap::where('form_id', $request->input('form'))
                     ->where('question_id', $questionId)
                     ->where('field_id', $qfield)->first();
-                    
+
                 $col = str_replace(' ', '', $tableCol['col']);
                 $parts = explode(":", $col);
-                
-                
-                if(is_null($fqm)){
-                   
-                    $fqm = new FormQuestionMap();
-                    $fqm->form_id = $request->input('form');
-                    $fqm->question_id = $questionId;
-                    $fqm->field_id = $qfield;
-                    $fqm->table = $parts[0];
-                    $fqm->column = $parts[1];
-                    $fqm->value = $tableCol['val'];
-                    $fqm->save();
-                    return redirect('/admin/forms/form?id='.$request->input('form'))->with('success', "Successfully saved map");
+
+                if(count($parts) > 1){
+                    if(is_null($fqm)){
+
+                        $fqm = new FormQuestionMap();
+                        $fqm->form_id = $request->input('form');
+                        $fqm->question_id = $questionId;
+                        $fqm->field_id = $qfield;
+                        $fqm->table = $parts[0];
+                        $fqm->column = $parts[1];
+                        $fqm->value = $tableCol['val'];
+                        $fqm->save();
+                        return redirect('/admin/forms/form?id='.$request->input('form'))->with('success', "Successfully saved map");
+                    }
+
+                    else{
+
+                        $fqm->table = $parts[0];
+                        $fqm->column = $parts[1];
+                        $fqm->value = $tableCol['val'];
+                        $fqm->update();
+                        return redirect('/admin/forms/form?id='.$request->input('form'))->with('success', "Successfully updated map");
+                    }
                 }
 
-                else{
-                  
-                    $fqm->table = $parts[0];
-                    $fqm->column = $parts[1];
-                    $fqm->value = $tableCol['val'];
-                    $fqm->update();
-                    return redirect('/admin/forms/form?id='.$request->input('form'))->with('success', "Successfully updated map");
-                }
             }
         }
 
-       
+
     }
 
     public function delete(Request $request){
