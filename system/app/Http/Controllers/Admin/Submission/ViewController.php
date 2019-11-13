@@ -405,7 +405,7 @@ class ViewController extends Controller
 
             mail(
                 $submission->user_id->email,
-                'NI-Q - Congradulations you have been approved!',
+                'NI-Q - Congratulations you have been approved!',
                 "Ni-Q has reviewed your application and we are excited to notify you that you have been accepted as a donor. The next step in the process is reading and signing the consent and financial forms.
                  Ni-Q requires these forms filled out. At the end of the year, Ni-Q will provide you with a 1099 form. It will be your responsibility to incorporate this in filing your taxes.
                  Thank you for choosing to donate with Ni-Q! \n <a href='https://portal.ni-q.com'>Click here to login into your donor account!</a>",
