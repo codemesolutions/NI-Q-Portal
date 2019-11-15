@@ -112,9 +112,11 @@
                     </div>
 
                     <div class="row m-0 align-items-center mb-4">
+                        <a href="{{Route('admin.forms.submissions.deny', ['id' => $submission->id])}}" class="btn btn-warning text-white  mr-1"><i class="fas fa-trash"></i> Force Re-Submit</a>
+                        <a href="{{Route('admin.forms.submissions.deny', ['id' => $submission->id])}}" class="btn btn-danger  mr-1"><i class="fas fa-lock"></i> Is Not Approved</a>
 
                         <button type="submit" class="btn btn-success mr-1 ml-auto"><i class="fas fa-thumbs-up"></i> Approve</button>
-                        <a href="{{Route('admin.forms.submissions.deny', ['id' => $submission->id])}}" class="btn btn-danger  mr-1"><i class="fas fa-lock"></i> Deny</a>
+
                     </div>
                 </div>
 

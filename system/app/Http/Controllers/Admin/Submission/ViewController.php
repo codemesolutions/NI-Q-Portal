@@ -90,7 +90,7 @@ class ViewController extends Controller
                     $total = $form->questions()->count();
 
                     $count = 0;
-                    foreach($form->questions()->get() as $q){
+                    foreach($form->questions()->orderBy('order')->get() as $q){
                         $answer = QuestionAnswer::where('user_id', $row->user_id->id)->where('question_id', $q->id)->first();
 
                         if(is_null($answer)){
@@ -142,7 +142,7 @@ class ViewController extends Controller
                 'Question' => 'question_id',
             ],
 
-            'rows' => $form->questions()->get()
+            'rows' => $form->questions()->orderBy('order')->get()
         ];
 
         $page['forms'] = Form::where('form_type_id', '!=', FormType::where('name', 'Lab')->first()->id)->where('active', true)->get();

@@ -60,46 +60,50 @@
                     </div>
 
                     @if($data_item->users()->where('action', 'assign')->count() > 0)
-                     <div class="col-12">
-                        <div class="bg-light border p-3 border-bottom-0">
-                            <p>Assigned Users</p>
+                        <div class="col-6 mb-4">
+                            <div class="bg-light border p-3" >
+                                <p>Assigned Users</p>
+                            </div>
+                            <div style="height: 300px; overflow:auto;" class="border-bottom">
+                                <table class="table bg-white border-left border-right m-0">
+                                    <tbody>
+                                        @foreach($data_item->users()->where('action', 'assign')->get() as $val)
+
+                                            <tr>
+                                                <td>{{$val->first_name}}, {{$val->last_name}}</td>
+                                            </tr>
+
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+
                         </div>
-                        <table class="table bg-white border-left border-right">
-                            <tbody>
-                                @foreach($data_item->users()->where('action', 'assign')->get() as $val)
-
-                                    <tr>
-                                        <td>{{$val->first_name}}, {{$val->last_name}}</td>
-                                    </tr>
-
-                                @endforeach
-                            </tbody>
-                        </table>
-
-                    </div>
                     @endif
 
                     @if($data_item->questions()->count() > 0)
-                     <div class="col">
+                     <div class="col mb-4">
                         <div class="bg-light border p-3 border-bottom-0 row m-0 align-items-center">
                             <p class="m-0">Form Questions</p>
 
                             <a class="ml-1 btn btn-sm btn-primary ml-auto" href="/admin/forms/questions/create?id={{$data_item->id}}"><i class="fas fa-plus"></i> Create Question</a>
                         </div>
-                        <table class="table bg-white border-left border-right">
-                            <tbody>
-                                @foreach($data_item->questions()->orderBy('order')->get() as $k => $val)
+                        <div style="height: 300px; overflow:auto;" class="border-bottom">
+                            <table class="table table-bordered bg-white border-left border-right">
+                                <tbody>
+                                    @foreach($data_item->questions()->orderBy('order')->get() as $k => $val)
 
 
-                                    <tr>
-                                        <td ><span class="mr-2"> </span><a class="text-dark" href="/admin/forms/questions/question?id={{$val->id}}">{{strip_tags($val->question)}}</a></td>
-                                        <td>{{$val->order}}</td>
-                                    </tr>
+                                        <tr>
+                                            <td>#{{$k + 1}}.</td>
+                                            <td ><span class="mr-2"> </span><a class="text-dark" href="/admin/forms/questions/question?id={{$val->id}}">{{strip_tags($val->question)}}</a></td>
+                                            <td>{{$val->order}}</td>
+                                        </tr>
 
-                                @endforeach
-                            </tbody>
-                        </table>
-
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                     @endif
 

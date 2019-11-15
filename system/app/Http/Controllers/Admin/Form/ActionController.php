@@ -141,25 +141,25 @@ class ActionController extends Controller
                 foreach($request->input('users') as $key => $value){
 
                     $users[] = ['user_id' => $key, 'action' => 'assign'];
-                    mail(
-                        User::where('id', $key)->first()->email,
-                        'You have a new notification',
-                        "please log into your Ni-Q portal page to view. \n <a href='https://portal.ni-q.com'>Click here to login into your donor account!</a>",
-                        'From: erica@ni-q.com' . "\r\n" .
-                        'Reply-To: erica@ni-q.com' . "\r\n" .
-                        'X-Mailer: PHP/' . phpversion()."\r\n".
-                        'MIME-Version: 1.0' . "\r\n".
-                        'Content-type: text/html; charset=iso-8859-1' . "\r\n"
-                    );
+                    $_user = User::where('id', $key)->first();
+
+                    if(!is_null($_user) && is_null($_user->forms()->where('forms.id', $user->id)->first())){
+                        mail(
+                            $_user->email,
+                            'You have a new notification',
+                            "please log into your Ni-Q portal page to view. \n <a href='https://portal.ni-q.com'>Click here to login into your donor account!</a>",
+                            'From: erica@ni-q.com' . "\r\n" .
+                            'Reply-To: erica@ni-q.com' . "\r\n" .
+                            'X-Mailer: PHP/' . phpversion()."\r\n".
+                            'MIME-Version: 1.0' . "\r\n".
+                            'Content-type: text/html; charset=iso-8859-1' . "\r\n"
+                        );
+                    }
+
                 }
             }
 
-
             $user->users()->sync($users);
-
-
-
-
             return redirect()->route('admin.form', ['id' => $user->id])->with('success', "Form $user->name successfully updated");
         }
 
