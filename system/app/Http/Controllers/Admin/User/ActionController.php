@@ -12,6 +12,8 @@ use App\Form;
 use App\Notifications;
 use App\PageType;
 use App\Menu;
+use App\User;
+use Illuminate\Support\Facades\Auth;
 
 class ActionController extends Controller
 {
@@ -164,6 +166,28 @@ class ActionController extends Controller
         $form = \App\User::where('id', $request->query('id'))->firstOrFail();
         $form->delete();
         return redirect()->route('admin.users')->with('success', 'Successfully deleted user');
-     }
+    }
+
+    public function login(Request $request){
+        $validator = Validator::make($request->all(), [
+            'id' => ['required', 'numeric', 'exists:users'],
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+
+        $user = User::where('id', $request->query('id'))->first();
+
+        if(is_null($user)){
+            return redirect()->back()->with('error', "Invalid User ID");
+        }
+
+        Auth::login($user);
+
+        return redirect('/');
+    }
 
 }

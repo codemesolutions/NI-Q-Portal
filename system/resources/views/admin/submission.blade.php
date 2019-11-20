@@ -3,22 +3,21 @@
 @section('content')
 
 <div class="bg-light h-100">
-     <div class="bg-dark px-3 py-3 row m-0">
+     <div class="bg-dark border-top px-3 py-3 row m-0">
         <p class="m-0 text-uppercase text-white mr-auto" >{!!$title!!} </p>
 
     </div>
     <div style="height: calc(100% - 51.2px);" class="overflow-auto">
-        <div class="container-fluid  p-3 p-md-5">
-            <form class="px-5" method="POST" action="/admin/forms/submissions/submission/map" enctype="multipart/form-data">
+        <div class="">
+            <form class="" method="POST" action="/admin/forms/submissions/submission/map" enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" name="submission" value="{{$submission->id}}"/>
-                <div class="p-3 p-md-5 border  bg-white">
-                     <div class="row m-0 align-items-center mb-4">
-                        <h5 class="m-0 mr-auto">Form Submission</h5>
-                        <a href="#" class="btn btn-primary btn-sm  mr-1 "><i class="fas fa-print"></i> Print</a>
+                <div class=" border  bg-white p-5">
+                     <div class="row m-0 align-items-center ">
+
 
                     </div>
-                    <div class="row bg-light border border-bottom-0 p-3 m-0 align-items-center mb-0">
+                    <div class="row bg-gradient border border-bottom-0 p-3 m-0 align-items-center mb-0">
                         <p class="m-0 mr-auto font-weight-bold">User Information</p>
 
                     </div>
@@ -26,17 +25,23 @@
                         <table class="table table-bordered  bg-white">
                             <tbody>
                                 <tr>
-                                    <td class="w-25">Name:</td>
+                                    <td style="width: 200px;background: #f5f5f5; border-right: #ddd 1px solid; border-bottom: #ddd 1px solid;">Name:</td>
                                     <td class="pl-3">{{$submission->user_id->first_name}}, {{$submission->user_id->last_name}}</td>
                                 </tr>
 
                                  <tr>
-                                    <td class="">Email:</td>
+                                    <td style="width: 200px;background: #f5f5f5; border-right: #ddd 1px solid; border-bottom: #ddd 1px solid;">Email:</td>
                                     <td class="pl-3">{{$submission->user_id->email}}</td>
                                 </tr>
+                                @if(!is_null($submission->user_id->donors()->first()))
+                                 <tr>
+                                    <td style="width: 200px;background: #f5f5f5; border-right: #ddd 1px solid; border-bottom: #ddd 1px solid;">Date Of Birth:</td>
+                                    <td class="pl-3">{{$submission->user_id->donors()->first()->date_of_birth}}</td>
+                                </tr>
+                                @endif
 
                                  <tr>
-                                    <td class="">Disqualified:</td>
+                                    <td style="width: 200px;background: #f5f5f5; border-right: #ddd 1px solid; border-bottom: #ddd 1px solid;">Disqualified:</td>
                                     <td class="pl-3">{{$submission->blocked == 0 ? "No":"Yes"}}</td>
                                 </tr>
                             </tbody>
@@ -48,7 +53,7 @@
                         @php $count = 1; @endphp
                         @foreach($datasets['list']['rows'] as $question)
                             <div class=" my-5">
-                                <p class="mb-0 bg-light border border-bottom-0 p-3 font-weight-bold">#{{$count++}}. &nbsp; {{ucfirst(strip_tags($question->question))}}</p>
+                                <p class="mb-0 bg-gradient border border-bottom-0 p-3 font-weight-bold">#{{$count++}}. &nbsp; {{ucfirst(strip_tags($question->question))}}</p>
 
                                 <table class="table table-bordered bg-white">
                                     <tbody>
@@ -95,7 +100,7 @@
                             </div>
                         @endforeach
                     @endif
-
+                    @if($submission->form_id == 1)
                     <div class="bg-light border p-5 mb-5">
                         <input type="search" placeholder="search..." class="form-control mb-2"/>
                         <div style="max-height: 300px; overflow:auto;" class="select-box border bg-white">
@@ -110,6 +115,16 @@
                             @endforeach
                         </div>
                     </div>
+                    @endif
+                    @if($submission->form_id == 2)
+                        <div class="bg-gradient p-3 border font-weight-bold">Donor Lab Order</div>
+                        <div class="bg-light border p-5 mb-5">
+                            <div class="form-group">
+                                <label>Upload Donor Lab Order</label>
+                                <input name="lab_order" type="file" class="form-control"/>
+                            </div>
+                        </div>
+                    @endif
 
                     <div class="row m-0 align-items-center mb-4">
                         <a href="{{Route('admin.forms.submissions.deny', ['id' => $submission->id])}}" class="btn btn-warning text-white  mr-1"><i class="fas fa-trash"></i> Force Re-Submit</a>

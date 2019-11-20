@@ -1,16 +1,17 @@
 @extends('admin.layouts.app')
 
 @section('content')
- 
-<div class="bg-white h-100">
+
+<div class="bg-light h-100">
      <div class="bg-dark px-3 py-3 row m-0 align-items-center">
         <p class="m-0 text-uppercase text-white" >{!!$title!!} </p>
-        <a href="/admin/user/update?id={{$data_item->id}}" class="btn btn-warning btn-sm ml-auto mr-1 text-white"><i class="fas fa-pencil-alt"></i> Edit User</a>
+        <a href="/admin/user/login?id={{$data_item->id}}" class="btn btn-danger btn-sm ml-auto mr-1 text-white"><i class="fas fa-lock mr-1"></i>Login As User</a>
+        <a href="/admin/user/update?id={{$data_item->id}}" class="btn btn-warning btn-sm  mr-1 text-white"><i class="fas fa-pencil-alt"></i> Edit User</a>
         <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-trash"></i> Delete User</button>
     </div>
     <div style="height: calc(100% - 51.2px);" class="overflow-auto">
       @if(Session::has('success'))
-           
+
             <div class="alert alert-success alert-dismissible fade show mb-4 rounded-0 " role="alert">
                 {{ Session::get('success') }}
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -18,136 +19,93 @@
                 </button>
             </div>
         @endif
-        <div class="container-fluid ">
-                <div class="row  m-0 mt-4">
-                    
-                    <div class="col-12 row m-0">
-                        <div class="col-6">
-                            <div class="row m-0 bg-light border-top border-left border-right p-3">
-                                <p class="m-0">User Information</p>
+        <div class=" ">
+                <div class="row  m-0">
+
+                    <div class="col-12 p-0 row m-0">
+                        <div class="col-12 p-0">
+                            <div class="border-bottom p-5">
+                                <div class="row m-0 bg-gradient border-top border-left border-right p-3">
+                                    <p class="m-0">User Information</p>
+                                </div>
+                                <table class="table bg-white border-left border-right">
+                                    <tbody>
+
+                                        <tr>
+                                            <td style="width: 200px;background: #f5f5f5; border-right: #ddd 1px solid; border-bottom: #ddd 1px solid;">First Name</td>
+                                            <td>{{$data_item->first_name}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 200px;background: #f5f5f5; border-right: #ddd 1px solid; border-bottom: #ddd 1px solid;">Last Name</td>
+                                            <td>{{$data_item->last_name}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td style="width: 200px;background: #f5f5f5; border-right: #ddd 1px solid; border-bottom: #ddd 1px solid;">Email</td>
+                                            <td>{{$data_item->email}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td style="width: 200px;background: #f5f5f5; border-right: #ddd 1px solid; border-bottom: #ddd 1px solid;">Cell Phone</td>
+                                            <td>{{$data_item->cell_phone}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 200px;background: #f5f5f5; border-right: #ddd 1px solid; border-bottom: #ddd 1px solid;">Home Phone</td>
+                                            <td>{{$data_item->home_phone}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td style="width: 200px;background: #f5f5f5; border-right: #ddd 1px solid; border-bottom: #ddd 1px solid;">Active</td>
+                                            <td>{!!$data_item->active == true ? '<span class="badge badge-success rounded-0">Active</span>':'<span class="badge badge-danger rounded-0">Inactive</span>'!!}</td>
+                                        </tr>
+
+
+                                        <tr>
+                                            <td style="width: 200px;background: #f5f5f5; border-right: #ddd 1px solid; border-bottom: #ddd 1px solid;">Created Date</td>
+                                            <td>{{$data_item->created_at}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 200px;background: #f5f5f5; border-right: #ddd 1px solid; border-bottom: #ddd 1px solid;">Updated Date</td>
+                                            <td>{{$data_item->updated_at}}</td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
                             </div>
-                            <table class="table bg-white border-left border-right">
-                                <tbody>
-                                  
-                                    <tr>
-                                        <td class="">First Name</td>
-                                        <td>{{$data_item->first_name}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="">Last Name</td>
-                                        <td>{{$data_item->last_name}}</td>
-                                    </tr>
-                                    
-                                    <tr>
-                                        <td class="">Email</td>
-                                        <td>{{$data_item->email}}</td>
-                                    </tr>
-                                    
-                                    <tr>
-                                        <td class="">Cell Phone</td>
-                                        <td>{{$data_item->cell_phone}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="">Home Phone</td>
-                                        <td>{{$data_item->home_phone}}</td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="">Active</td>
-                                        <td>{!!$data_item->active == true ? '<span class="badge badge-success rounded-0">Active</span>':'<span class="badge badge-danger rounded-0">Inactive</span>'!!}</td>
-                                    </tr>
-
-                                 
-                                    <tr>
-                                        <td class="">Created Date</td>
-                                        <td>{{$data_item->created_at}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="">Updated Date</td>
-                                        <td>{{$data_item->updated_at}}</td>
-                                    </tr>
-                                
-                                </tbody>
-                        </table>
                         </div>
 
-                       
-                    
-                        @if($data_item->notifications()->count() > 0)
-                        <div class="col-6">
-                            <div class="row m-0 bg-light border border-bottom-0 p-3">
-                                <p class="m-0">User Notifications({{$data_item->notifications()->count()}})</p>
-                            </div>
-                            <table class="table bg-white border-left border-right">
-                                <tbody>
-                                    @foreach($data_item->notifications()->get() as $mk)
-                                    <tr>
-                                        <td><a href="/admin/notifications/notification?id={{$mk->id}}">{{$mk->name}}</a></td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                        </table>
-                        </div>
-                        @endif
+
+
+
 
                           @if($data_item->permissions()->count() > 0)
-                        <div class="col-6">
-                            <div class="row m-0 bg-light border border-bottom-0 p-3">
-                                <p class="m-0">User Permissions({{$data_item->permissions()->count()}})</p>
+                        <div class="col-12 p-0">
+                            <div class="p-5">
+                                <div class="row m-0 bg-gradient border border-bottom-0 p-3">
+                                    <p class="m-0">User Permissions({{$data_item->permissions()->count()}})</p>
+                                </div>
+                                <table class="table bg-white border-left border-right">
+                                    <tbody>
+                                        @foreach($data_item->permissions()->get() as $mk)
+                                        <tr>
+                                            <td><a href="/admin/permissions/permission?id={{$mk->id}}">{{$mk->name}}</a></td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
                             </div>
-                            <table class="table bg-white border-left border-right">
-                                <tbody>
-                                    @foreach($data_item->permissions()->get() as $mk)
-                                    <tr>
-                                        <td><a href="/admin/permissions/permission?id={{$mk->id}}">{{$mk->name}}</a></td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                        </table>
                         </div>
                         @endif
 
-                        
 
-                        @if($data_item->conversations()->count() > 0)
-                        <div class="col-6">
-                            <div class="row m-0 bg-light border border-bottom-0 p-3">
-                                <p class="m-0">User Messages({{$data_item->notifications()->count()}})</p>
-                            </div>
-                            <table class="table bg-white border-left border-right">
-                                <tbody>
-                                    @foreach($data_item->conversations()->get() as $mk)
-                                    <tr>
-                                        <td><a href="/admin/message">{{$mk->subject}}</a></td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                        </table>
-                        </div>
-                        @endif
-                        @if($data_item->forms()->count() > 0)
-                        <div class="col-6">
-                            <div class="row m-0 bg-light border border-bottom-0 p-3">
-                                <p class="m-0">User Forms({{$data_item->forms()->count()}})</p>
-                            </div>
-                            <table class="table bg-white border-left border-right">
-                                <tbody>
-                                    @foreach($data_item->forms()->get() as $mk)
-                                    <tr>
-                                            <td>{{$mk->name}}</td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                        </table>
-                        </div>
-                        @endif
 
-                         
-                        
-                    
+
+
+
+
                 </div>
             </div>
-            
+
         </div>
     </div>
 </div>
@@ -179,5 +137,5 @@
     </div>
   </div>
 </div>
-    
+
 @endsection

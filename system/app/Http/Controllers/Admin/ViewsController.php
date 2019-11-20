@@ -9,6 +9,7 @@ use setasign\Fpdi\PdfReader;
 use App\Http\Controllers\Controller;
 use App\Notifications;
 use App\Form;
+use App\FormSubmission;
 use App\User;
 use App\Library\DonorAPI;
 
@@ -34,20 +35,18 @@ class ViewsController extends Controller
 
     public function dashboard(Request $request)
     {
-        
-        
-            
         $page = $this->getPage($request);
         //$page['sidebarHide'] = true;
-        
+        $page['submissions'] = \App\FormSubmission::where('is_new', true)->where('completed', true)->orderBy('form_id')->get();
+
         return view($page['template'], $page);
     }
 
     public function settings(Request $request)
     {
-        
-        
-            
+
+
+
         $page = $this->getPage($request);
         $page['settings'] = \App\Setting::all();
         $page['form_action_route'] = '';

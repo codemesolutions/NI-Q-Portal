@@ -2,18 +2,15 @@
 
 @section('content')
 <div class="login-bg">
-    <div class="jumbotron jumbotron-fluid login-jumbotron">
-        <div class="container">
-            <h1 class="text-center text-white">Login to access your <span>Donor Account</span></h1>
-        </div>
-    </div>
-    <div  class="container ">
-        <div class="row justify-content-center">
-            <div class="col-md-5 ">
-                <div class="card rounded-0 border-0">
-                    <div class="card-header rounded-0 text-white text-uppercase text-left bg-dark border-0 px-5 py-4">Donor Login</div>
 
-                    <div class="card-body p-5">
+    <div  class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-4 mt-5">
+                <div style="background:#fff;" class="card rounded-0 border-0 p-0 shadow">
+
+                    <div  class="card-body  p-5">
+                        <h5 class="mb-2">Donor <span class="font-weight-bold">Login</span></h5>
+                        <p class="mb-4">Welcome to the NI-Q Donor Portal.  Please login below to access your account.  If you do not have an account please <a href="/register">click here</a> to complete our donor appication.</p>
                         <form method="POST" action="{{ route('login') }}">
                             @csrf
 
@@ -60,7 +57,7 @@
 
                             <div class="form-group">
                                 <div class="">
-                                    <button type="submit" class="btn btn-teal text-white text-uppercase btn-lg btn-block mt-4">
+                                    <button type="submit" class="btn btn-teal text-white text-uppercase py-3 btn-block mt-4">
                                         {{ __('Login') }}
                                     </button>
 

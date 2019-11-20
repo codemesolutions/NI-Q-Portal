@@ -456,6 +456,47 @@ class ViewController extends Controller
 
         }
 
+        elseif($form->name == "Consent Form"){
+
+            if($request->has('lab_order')){
+
+                $path = $request->lab_order->store('form');
+
+                $form = new Form();
+                $form->name = "Lab Order - ". $submission->user_id->first_name . " " . $submission->user_id->last_name;
+                $form->form_type_id = FormType::where('name', 'donor')->first()->id;
+                $form->active = true;
+                $form->save();
+                $form->users()->attach( $submission->user_id->id, ['action' => 'assign']);
+
+                $question = new \App\Question();
+                $question->form_id = $form->id;
+                $question->question = "<p>Ni-Q is excited to advance you to the next step in the process to becoming a donor with Ni-Q! The next step is to have your blood drawn. We have partnered with Quest Diagnostics Labs to complete the blood draw and testing.  Our partnership allows the full process, from the blood draw to the testing to be provided to you free of charge.</p>
+
+                <p>Attached is your Quest Diagnostics Lab Order Form. The Order Form provides directions to visit Quest Diagnostics Website to locate the lab nearest you and schedule an appointment at your convenience. Please remember to take the form with you to the lab when you go.
+
+                Again, there is no charge to you or your insurance for the blood draw or testing. We understand that it is a detailed process to become a breastmilk donor, and our goal is to make that as easy and efficient as possible for you. </p>
+
+                <p>Thank you for choosing to become a donor with Ni-Q.  Your contributions are directly making an impact to the health of premature infants across the country. We are committed to working with you to ensure you have a great experience as a donor.
+
+                After printing and completing the blood work, please push submit in the lower left corner. </p>";
+                $question->active = true;
+                $question->order = 1;
+                $question->save();
+
+                $field = new \App\QuestionField();
+                $field->question_id = $question->id;
+                $field->question_field_type_id = \App\QuestionFieldType::where('name', 'file download')->first()->id;
+                $field->name = "lab_order";
+                $field->value = null;
+                $field->label = "Lab Order";
+                $field->options = NULL;
+                $field->download = $path;
+                $field->save();
+
+            }
+        }
+
         $user = new \App\Notifications();
         $user->notification_type_id = \App\NotificationTypes::where('name', 'Donor Approved')->first()->id;
         $user->message = 'Congratuations you have been approved.';
@@ -467,6 +508,6 @@ class ViewController extends Controller
 
 
 
-        return redirect('/admin/forms/form?id='. $submission->form_id)->with('success', 'Submission was processed');
+        return redirect('/admin/forms/form?id='. $submission->form_id)->with('success', 'Submission was proccessed');
     }
 }

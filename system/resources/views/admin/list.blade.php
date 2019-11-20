@@ -3,8 +3,8 @@
 @section('content')
 
 <div class="h-100 bg-light">
-     <div class="bg-teal px-3 py-3 row m-0 align-items-center">
-        <p class="m-0 text-uppercase" >{!!$title!!} </p>
+     <div class="bg-gradient-dark border-bottom-dark px-3 py-3 border-top row m-0 align-items-center">
+        <p class="m-0 text-uppercase text-white" >{!!$title!!} </p>
         <div class="col p-0 form row m-0 ml-auto pl-5">
             <input type="search" name="search" class="form-control form-control-dark col table-search " placeholder="search"/>
 

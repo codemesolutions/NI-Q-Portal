@@ -1,7 +1,7 @@
 @extends('admin.layouts.app')
 
 @section('content')
- 
+
 <div class="bg-light h-100">
      <div class="bg-dark px-3 py-3 row m-0 align-items-center">
         <p class="m-0 text-uppercase text-white" >{!!$title!!} </p>
@@ -13,7 +13,7 @@
     </div>
     <div style="height: calc(100% - 51.2px);" class="overflow-auto">
       @if(Session::has('success'))
-           
+
             <div class="alert alert-success alert-dismissible fade show mb-4 rounded-0 " role="alert">
                 {{ Session::get('success') }}
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -21,52 +21,53 @@
                 </button>
             </div>
         @endif
-        <div class="container-fluid ">
-                <div class="row  m-0 mt-4">
-                    <div class="col-12">
-                        <div class="bg-light border p-3 border-bottom-0">
+        <div class=" ">
+                <div class="row  m-0 ">
+                    <div class="col-12 p-0">
+                        <div class="p-5">
+                        <div class="bg-gradient border p-3 border-bottom-0">
                             <p>{!!$title!!}</p>
                         </div>
                         <table class="table bg-white border-left border-right">
                             <tbody>
                                 @foreach($data_item->toArray() as $name => $val)
-                                    
+
                                     @if($name == 'active')
                                         <tr>
-                                            <td>{{ucfirst(str_replace('_', ' ', $name))}}</td>
+                                            <td style="width: 200px;background: #f5f5f5; border-right: #ddd 1px solid; border-bottom: #ddd 1px solid;">{{ucfirst(str_replace('_', ' ', $name))}}</td>
                                             <td>{!!$val === 0 || $val === "Inactive" ? '<span class="badge badge-danger rounded-0">Inactive</span>':'<span class="badge badge-success rounded-0">Active</span>'!!}</td>
                                         </tr>
                                     @else
                                         @if($name == 'form_id')
                                             <tr>
-                                                <td>{{ucfirst(str_replace('_', ' ', $name))}}</td>
+                                                <td style="width: 200px;background: #f5f5f5; border-right: #ddd 1px solid; border-bottom: #ddd 1px solid;">{{ucfirst(str_replace('_', ' ', $name))}}</td>
                                                 <td>{{strip_tags($val['name'])}}</td>
                                             </tr>
                                          @elseif($name == 'has_why_field')
                                             <tr>
-                                                <td>{{ucfirst(str_replace('_', ' ', $name))}}</td>
+                                                <td style="width: 200px;background: #f5f5f5; border-right: #ddd 1px solid; border-bottom: #ddd 1px solid;">{{ucfirst(str_replace('_', ' ', $name))}}</td>
                                                 <td>{{$val == 0 ? 'No':'Yes'}}</td>
                                             </tr>
                                         @elseif($name == 'additional_info_field')
                                             <tr>
-                                                <td>{{ucfirst(str_replace('_', ' ', $name))}}</td>
+                                                <td style="width: 200px;background: #f5f5f5; border-right: #ddd 1px solid; border-bottom: #ddd 1px solid;">{{ucfirst(str_replace('_', ' ', $name))}}</td>
                                                 <td>{{$val == 0 ? 'No':'Yes'}}</td>
                                             </tr>
-                                        
+
                                         @else
                                              <tr>
-                                                <td>{{ucfirst(str_replace('_', ' ', $name))}}</td>
+                                                <td style="width: 200px;background: #f5f5f5; border-right: #ddd 1px solid; border-bottom: #ddd 1px solid;">{{ucfirst(str_replace('_', ' ', $name))}}</td>
                                                 <td>{{strip_tags($val)}}</td>
                                             </tr>
                                         @endif
                                     @endif
-                                    
+
                                 @endforeach
                             </tbody>
                         </table>
-                       
+                        </div>
                     </div>
-                    
+
                 </div>
             </div>
         </div>
@@ -100,5 +101,5 @@
     </div>
   </div>
 </div>
-    
+
 @endsection

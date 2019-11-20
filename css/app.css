@@ -266,7 +266,7 @@ label{
 
 .login-bg{
     min-height: calc(100% - 165.83px);
-    background: url(https://www.ni-q.com/wp-content/uploads/2017/05/niq_nursing_mom_donor_p2.jpg) 90% center no-repeat;
+    background: url(../img/jens-johnsson-684267-unsplash.jpg);
     background-size: cover;
     padding-bottom: 10rem;
     overflow-y: auto;
@@ -353,7 +353,7 @@ iframe{
     font-weight: 300;
     color: #393c41;
     font-size: 3rem;
-    text-shadow: 1px 1px 1px rgba(0,0,0, 0.2);
+   
     width: 400px;
     text-align: center;
     margin: 0 auto;
