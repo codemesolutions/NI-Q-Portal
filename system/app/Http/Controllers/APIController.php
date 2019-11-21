@@ -57,6 +57,8 @@ class APIController extends Controller
                     $m->cases_remaining = is_null($mk->Lot->CasesRemaining) ? 0 : $mk->Lot->CasesRemaining;
                     $m->sample_pouches = is_null($mk->Lot->SamplePouches) ? 0 : $mk->Lot->SamplePouches;
                     $m->save();
+
+
                 }
 
                 else{
@@ -106,6 +108,17 @@ class APIController extends Controller
                     $m->tracking_number = $mk->TrackingNumber;
                     $m->status = is_null($mk->Status) ? false:true;
                     $m->save();
+
+                    mail(
+                        $donor->user_id->email,
+                        'NI-Q - We have received your result.  You can now request a milk kit.',
+                        "Ni-Q has received your results on the blood work and is excited to have you part of the team! Information about donating is on your menu bar in the portal. Please read the General Guidelines, Things to remember as a donor, and the milk kit packing and instructions. Once you have read through those. Feel free to “Request a Milk Kit. Ni-Q will be ship out milk kits every Wednesday. <br /> <a href='https://portal.ni-q.com'>Click here to login into your donor account!</a>",
+                        'From: erica@ni-q.com' . "\r\n" .
+                        'Reply-To: erica@ni-q.com' . "\r\n" .
+                        'X-Mailer: PHP/' . phpversion()."\r\n".
+                        'MIME-Version: 1.0' . "\r\n".
+                        'Content-type: text/html; charset=iso-8859-1' . "\r\n"
+                    );
                 }
 
                 else{
