@@ -38,7 +38,7 @@ class ViewController extends Controller
         $page['datasets']['list'] = [
             'columns' => [
                 'Donor ID' => function($row){
-                    return $row->donor()->first()->donor_id;
+                    return $row->donor()->first()->donor_number;
                 } ,
 
                 'First Name' => function($row){
@@ -235,7 +235,7 @@ class ViewController extends Controller
         foreach($request->input('exports') as $donor){
             $d = Donor::where('id', \App\Shipping::where('id', $donor)->first()->id)->first();
             $csv[] = [
-                $d->donor_id,
+                $d->donor_number,
                 $d->user_id->first_name,
                 $d->user_id->last_name,
                 $d->user_id->home_phone,
