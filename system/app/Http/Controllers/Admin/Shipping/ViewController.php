@@ -232,8 +232,12 @@ class ViewController extends Controller
 
         $csv = [];
 
+
+
         foreach($request->input('exports') as $donor){
-            $d = Donor::where('id', \App\Shipping::where('id', $donor)->first()->id)->first();
+
+            $d = Donor::where('id', \App\Shipping::where('id', $donor)->first()->donor_id)->first();
+
             $csv[] = [
                 $d->donor_number,
                 $d->user_id->first_name,

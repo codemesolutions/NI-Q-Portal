@@ -20,7 +20,7 @@ class DonorController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-      
+
     }
 
     /**
@@ -30,7 +30,7 @@ class DonorController extends Controller
      */
     public function index(Request $request)
     {
-      
+
 
         $page = $this->getPage($request);
 
@@ -56,10 +56,17 @@ class DonorController extends Controller
     public function milkkitSend(Request $request)
     {
         if(!is_null($request->user()->donors()->first())){
-            $user = new \App\Shipping();
-            $user->donor_id  = $request->user()->donors()->first()->id;
-            $user->save();
-            return redirect()->back()->with('success', "Milk Kit Request Sent");
+            if(is_null(\App\Shipping::where('donor_id', $request->user()->donors()->first()->id)->first())){
+                $user = new \App\Shipping();
+                $user->donor_id  = $request->user()->donors()->first()->id;
+                $user->save();
+                return redirect()->back()->with('success', "Milk Kit Request Sent");
+            }
+
+            else{
+                return redirect()->back()->with('success', "There is a milk kit request already active");
+            }
+
         }
 
         else{
@@ -101,7 +108,7 @@ class DonorController extends Controller
     {
         $page = $this->getPage($request);
         return view($page['template'], $page);
-        
+
     }
 
     public function payments(Request $request)
