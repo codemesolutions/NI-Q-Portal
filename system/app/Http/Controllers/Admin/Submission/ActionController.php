@@ -202,6 +202,17 @@ class ActionController extends Controller
             $a->delete();
         }
 
+        mail(
+            $sub->user_id->email,
+            'NI-Q - Please Re-Submit ' . Form::where('id', $sub->form_id)->first()->name,
+            "Ni-Q is notifying you of an incomplete submission in the donor portal. Log into the Ni-Q donor portal and review the new form carefully before submitting the form. <br /> <a href='https://portal.ni-q.com'>Click here to login into your donor account!</a>",
+            'From: erica@ni-q.com' . "\r\n" .
+            'Reply-To: erica@ni-q.com' . "\r\n" .
+            'X-Mailer: PHP/' . phpversion()."\r\n".
+            'MIME-Version: 1.0' . "\r\n".
+            'Content-type: text/html; charset=iso-8859-1' . "\r\n"
+        );
+
         return redirect('/admin/forms/form?id='. $sub->form_id)->with('success', 'Re-Submit Forced');
     }
 
