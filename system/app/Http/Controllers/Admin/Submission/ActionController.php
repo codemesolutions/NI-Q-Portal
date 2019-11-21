@@ -19,6 +19,7 @@ use App\QuestionType;
 use App\QuestionField;
 use App\QuestionCondition;
 use App\FormSubmission;
+use App\QuestionAnswer;
 
 class ActionController extends Controller
 {
@@ -182,6 +183,26 @@ class ActionController extends Controller
         }
 
         return redirect('/admin/forms/form?id='. $sub->form_id)->with('success', 'Submission was processed');
+    }
+
+    public function resubmit(Request $request){
+        $sub = FormSubmission::where('id', $request->input('id'))->first();
+
+        if(is_null($sub)){
+            return redirect()->back()->with('error', "could not find submission");
+        }
+
+        $sub->completed = false;
+        $sub->is_new = true;
+        $sub->update();
+
+        $qa = \App\QuestionAnswer::where('form_id', $sub->form_id)->where('user_id', $sub->user_id->id)->get();
+
+        foreach($qa as $a){
+            $a->delete();
+        }
+
+        return redirect('/admin/forms/form?id='. $sub->form_id)->with('success', 'Re-Submit Forced');
     }
 
 }
