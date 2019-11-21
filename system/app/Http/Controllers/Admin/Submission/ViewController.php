@@ -464,7 +464,7 @@ class ViewController extends Controller
 
                 $form = new Form();
                 $form->name = "Lab Order - ". $submission->user_id->first_name . " " . $submission->user_id->last_name;
-                $form->form_type_id = FormType::where('name', 'donor')->first()->id;
+                $form->form_type_id = FormType::where('name', 'Lab')->first()->id;
                 $form->active = true;
                 $form->save();
                 $form->users()->attach( $submission->user_id->id, ['action' => 'assign']);

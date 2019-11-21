@@ -116,6 +116,7 @@ Route::get('/admin/forms/submissions', 'Admin\Submission\ViewController@list')->
 Route::get('/admin/forms/submissions/submission', 'Admin\Submission\ViewController@single')->name('admin.forms.submissions.submission');
 Route::post('/admin/forms/submissions/submission/map', 'Admin\Submission\ViewController@map')->name('admin.forms.submissions.submission.map');
 Route::get('/admin/forms/submissions/deny', 'Admin\Submission\ActionController@deny')->name('admin.forms.submissions.deny');
+Route::get('/admin/forms/submissions/resubmit', 'Admin\Submission\ActionController@resubmit')->name('admin.forms.submissions.resubmit');
 //questions
 Route::get('/admin/forms/questions', 'Admin\Question\ViewController@list')->name('admin.forms.questions');
 Route::get('/admin/forms/questions/question', 'Admin\Question\ViewController@single')->name('admin.forms.question');

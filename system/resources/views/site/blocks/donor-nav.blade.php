@@ -16,9 +16,11 @@
                     @endforeach
 
                 </ul>
-                @if(!is_null(Auth::user()->donors()->first()) && Auth::user()->donors()->first()->milkkits()->count() > 0)
+                @if(!is_null(Auth::user()->donors()->first()) && Auth::user()->donors()->first()->bloodkits()->count() > 0)
 
-                    <a href="{{Route('milkkit_send')}}" class="btn btn-teal-sm mt-1">Request Milk Kit</a>
+                    @if(!is_null(Auth::user()->donors()->first()->bloodkits()->first()->recieve_date) && Auth::user()->donors()->first()->bloodkits()->first()->status === 1)
+                        <a href="{{Route('milkkit_send')}}" class="btn btn-teal-sm mt-1">Request Milk Kit</a>
+                    @endif
 
 
 
