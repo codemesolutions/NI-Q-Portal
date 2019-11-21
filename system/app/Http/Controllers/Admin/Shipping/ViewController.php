@@ -29,7 +29,7 @@ class ViewController extends Controller
     }
 
     public function list(Request $request)
-    {   
+    {
         if($request->session()->get('refresh')){
             return redirect(Request::url());
         }
@@ -38,7 +38,7 @@ class ViewController extends Controller
         $page['datasets']['list'] = [
             'columns' => [
                 'Donor ID' => function($row){
-                    return $row->donor()->first()->id;
+                    return $row->donor()->first()->donor_id;
                 } ,
 
                 'First Name' => function($row){
@@ -63,7 +63,7 @@ class ViewController extends Controller
                     }
 
                     return $row->donor()->first()->shipping_address;
-                   
+
                 } ,
 
                 'Address Line 2' => function($row){
@@ -114,7 +114,7 @@ class ViewController extends Controller
         $page = $this->getPage($request);
 
         $page['form_action_route'] = 'admin.shipping.create';
-        
+
 
         $page['fields']['donors'] = [
             'name' => 'donors',
@@ -132,16 +132,16 @@ class ViewController extends Controller
             ];
         }
 
-       
+
 
         return view($page['template'], $page);
     }
 
     public function update(Request $request)
     {
-       
+
         $menu = Form::where('id', $request->query('id'))->firstOrFail();
-       
+
         $page = $this->getPage($request);
 
         $page['form_action_route'] = 'admin.form.update';
@@ -221,7 +221,7 @@ class ViewController extends Controller
         $page = $this->getPage($request);
         $validator = Validator::make($request->all(), [
             'exports' => ['required'],
-           
+
         ]);
 
         if ($validator->fails()) {
@@ -231,11 +231,11 @@ class ViewController extends Controller
         }
 
         $csv = [];
-       
+
         foreach($request->input('exports') as $donor){
-            $d = Donor::where('id', \App\Shipping::where('id', $donor)->first()->donor_id)->first();
+            $d = Donor::where('id', \App\Shipping::where('id', $donor)->first()->id)->first();
             $csv[] = [
-                $d->id,
+                $d->donor_id,
                 $d->user_id->first_name,
                 $d->user_id->last_name,
                 $d->user_id->home_phone,
@@ -245,7 +245,7 @@ class ViewController extends Controller
                 $d->shipping_city,
                 $d->shipping_state,
                 $d->shipping_zipcode
-                
+
             ];
 
             \App\Shipping::where('id', $donor)->delete();
@@ -262,7 +262,7 @@ class ViewController extends Controller
         fclose($fp);
         $request->session()->flash('export', $name);
         return view($page['template'], $page);
-       
+
     }
 
     public function download(){
