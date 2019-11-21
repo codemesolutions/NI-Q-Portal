@@ -15,9 +15,9 @@
 
 <div class="bg-white py-5">
     <div class="container py-5 p-md-5 bg-light  border">
-        
+
          @if(Session::has('success'))
-           
+
             <div class="alert alert-success alert-dismissible fade show mb-4 rounded-0 " role="alert">
                 {{ Session::get('success') }}
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -34,30 +34,30 @@
             </div>
         @endif
         <div class="row m-0 justify-content-center">
-          
+
              <div class="col-12 row m-0 p-0">
                 @if(isset($request) && !is_null($request->user()->forms()->where('action', 'assign')->first()))
                     @foreach ($request->user()->forms()->where('active', true)->where('action', 'assign')->get() as $form)
-                        
-                       
+
+
                         @if((is_null($form->submissions()->where('user_id', Auth::user()->id)->first()) || !$form->submissions()->where('user_id', Auth::user()->id)->first()->completed) && $form->questions()->count() > 0)
                             <div class="col-md-3 p-1">
                                 <div class="card border" style="">
                                     <div class="card-body">
                                         <div class="row m-0">
-                                            
-                                            
+
+
                                             <div class="col-9 p-0">
-                                            
+
                                                 <a href="{{url('/donor/form?name='. $form->name) }}" class="row m-0 h-100 flex-column justify-content-center align-items-start">
                                                     <h6 class="title mb-1">{{$form->name}}</h6>
                                                     <span class="badge badge-danger rounded-0">Not Completed</span>
                                                 </a>
-                                            
+
                                             </div>
-                                        
+
                                         </div>
-                                        
+
                                     </div>
                                 </div>
                             </div>
@@ -66,10 +66,10 @@
                                 <div class="card border" data-toggle="modal" data-target="#form-{{$form->id}}">
                                     <div class="card-body">
                                         <div class="row m-0">
-                                            
-                                            
+
+
                                             <div class="col p-0">
-                                            
+
                                                 <a >
                                                     <h6 class="title mb-1">{{$form->name}}</h6>
                                                     <span class="badge badge-success rounded-0">completed</span>
@@ -92,19 +92,19 @@
 
                                                                 <table class="table table-bordered bg-white m-0 border-0">
                                                                     <tbody>
-                                                                        @php 
-                                                                            $fcount = 1; 
-                                                                            $fields = []; 
+                                                                        @php
+                                                                            $fcount = 1;
+                                                                            $fields = [];
                                                                         @endphp
                                                                         @foreach($question->fields()->get() as $field)
-                                                                            @php 
+                                                                            @php
                                                                                 $answer = \App\QuestionAnswer::where('question_id', $question->id)->where('field_id', $field->id)->where('user_id', Auth::user()->id)->first();
-                                            
+
                                                                             @endphp
                                                                             @if(!is_null($answer) && !isset($fields[$field->name]))
                                                                                 <tr>
                                                                                     @if($field['question_field_type_id']->id == 6)
-                                                                                        @php 
+                                                                                        @php
                                                                                             $ext = pathinfo($answer->answer, PATHINFO_EXTENSION);
                                                                                         @endphp
                                                                                         @if($ext == "doc" || $ext === "docx")
@@ -113,15 +113,15 @@
                                                                                         @else
                                                                                             <td class="pl-3"><a href="{{url('/')}}/file/{{$answer->answer}}">{{ucfirst($answer->answer)}}</a></td>
                                                                                         @endif
-                                                                                        
+
                                                                                     @else
                                                                                         <td class="pl-3">{{ucfirst($answer->answer)}}</td>
                                                                                     @endif
                                                                                 </tr>
-                                                                        
-                                                                            @endif  
 
-                                                                            @php 
+                                                                            @endif
+
+                                                                            @php
                                                                                 if(!isset($fields[$field->name])){
                                                                                         $fields[$field->name] = $answer;
                                                                                 }
@@ -129,28 +129,28 @@
                                                                         @endforeach
                                                                     </tbody>
                                                                 </table>
-                                                                
+
                                                             </div>
                                                         @endforeach
                                                     </div>
                                                     <div class="modal-footer border-0">
                                                         <button type="button" class="btn btn-danger btn-sm p-0 py-1 px-3" data-dismiss="modal">Close</button>
-                                
+
                                                     </div>
                                                     </div>
                                                 </div>
                                                 </div>
-                                            
+
                                             </div>
-                                        
+
                                         </div>
-                                        
+
                                     </div>
                                 </div>
                             </div>
                         @endif
                     @endforeach
-              
+
                 @endif
              </div>
             <div class="col-md-6 p-1">
@@ -164,7 +164,7 @@
                                 <i class="fas fa-angle-right mr-3"></i> {{$convo->message}} <span class="small">{{date('h:i a m/d/Y', strtotime($convo->created_at))}}</span>
                             </a>
                             @endforeach
-                    
+
                         </ul>
                     </div>
                 </div>
@@ -176,13 +176,13 @@
                         <ul class="list-group ">
                             @foreach($request->user()->conversations()->get() as $convo)
                             <a class="py-2 rounded-0   border-bottom text-dark" href="/messages/message?id={{$convo->id}}" >
-                                <i class="fas fa-angle-right mr-3"></i>{{$convo->users()->where('users.id', '!=', $request->user()->id)->first()->name}}:&nbsp; "{{$convo->subject}}"     
+                                <i class="fas fa-angle-right mr-3"></i>{{$convo->users()->where('users.id', '!=', $request->user()->id)->first()->name}}:&nbsp; "{{$convo->subject}}"
                             </a>
                             @endforeach
-                    
+
                         </ul>
 
-                        
+
                     </div>
                 </div>
             </div>
@@ -203,16 +203,16 @@
                                     @if(!is_null($mk->paid_date))
                                     <p><span class="font-weight-bold">Paid Date:  </span> {{date('m-d-Y', strtotime($mk->paid_date))}} </p>
                                     @endif
-                                      
+
                                 </div>
                             @endforeach
-                    
+
                         </ul>
                     </div>
                 </div>
             </div>
             @endif
-            @if(!is_null($request->user()->donors()->first()) && $request->user()->donors()->first()->bloodkits()->count() > 0)
+            @if(!is_null($request->user()->donors()->first()) && $request->user()->donors()->first()->bloodkits()->where('status', true)->count() > 0)
             <div class="col p-1">
                 <div class=" bg-white  border  p-5 row m-0 align-items-center justify-content-start">
                    <h6 class="font-weight-light m-0"> Your <span class="font-weight-bold">Blood Kits</span></h6>
@@ -224,16 +224,16 @@
                                     <i class="fas fa-angle-right mr-2"></i>#{{$k + 1}}. &nbsp; {{$mk->tracking_number}}
                                 </a>
                                  <div class="collapse w-100 bg-light p-3 border" id="bk-{{$k}}">
-                                  
+
                                     <p><span class="font-weight-bold">Received Date:  </span> {{date('m-d-Y', strtotime($mk->received_date))}} </p>
                                     @if(!is_null($mk->order_date))
                                         <p><span class="font-weight-bold">Order Date:  </span> {{date('m-d-Y', strtotime($mk->order_date))}} </p>
                                     @endif
-                                  
+
                                 </div>
-                               
+
                             @endforeach
-                    
+
                         </ul>
                     </div>
                 </div>
