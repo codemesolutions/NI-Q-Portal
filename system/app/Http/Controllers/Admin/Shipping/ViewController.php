@@ -49,6 +49,10 @@ class ViewController extends Controller
                     return $row->donor()->first()->user_id->last_name;
                 } ,
 
+                'Email' => function($row){
+                    return $row->donor()->first()->user_id->email;
+                } ,
+
                 'Home Phone' => function($row){
                     return $row->donor()->first()->user_id->home_phone;
                 } ,
@@ -242,6 +246,7 @@ class ViewController extends Controller
                 $d->donor_number,
                 $d->user_id->first_name,
                 $d->user_id->last_name,
+                $d->user_id->email,
                 $d->user_id->home_phone,
                 $d->user_id->cell_phone,
                 $d->shipping_address,
