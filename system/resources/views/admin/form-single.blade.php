@@ -175,6 +175,8 @@
                                                 <td><a href="/admin/forms/submissions/submission?form={{$data_item->name}}&id={{$val->id}}">{{strip_tags($val->user_id->first_name)}}, {{strip_tags($val->user_id->last_name)}}</a></td>
                                                 <td>{{$val->is_new == true ? "New":""}}</td>
                                                 <td>{{$val->completed == true ? "Completed":""}}</td>
+                                                <td>{{$val->blocked == true ? "Disqualified":""}}</td>
+                                                <td>{{$val->waited == true ? "Wait Listed":""}}</td>
 
                                                 <td>{{date('m-d-Y', strtotime($val->user_id->created_at))}}</td>
                                             </tr>
