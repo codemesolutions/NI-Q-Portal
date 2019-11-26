@@ -107,7 +107,7 @@
                             @foreach($forms as $form)
                                 <div class="select-box-item  row m-0 border-bottom p-3">
                                     <div class="custom-control custom-checkbox ml-2">
-                                        @if($form->id == 2 || $form->id == 3 || $form->id == 105)
+                                        @if($form->id == 27 || $form->id == 3 || $form->id == 105)
                                         <input checked name="forms[{{$form->id}}]" type="checkbox" class="custom-control-input" id="{{$form->id}}">
                                         <label class="custom-control-label" for=""></label>
                                         @else
@@ -121,7 +121,7 @@
                         </div>
                     </div>
                     @endif
-                    @if($submission->form_id == 2)
+                    @if($submission->form_id == 105)
                         <div class="bg-gradient p-3 border font-weight-bold">Donor Lab Order</div>
                         <div class="bg-light border p-5 mb-5">
                             <div class="form-group">
