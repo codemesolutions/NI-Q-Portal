@@ -360,7 +360,7 @@ class DonorFormController extends Controller
                 foreach($_qs->fields()->get() as $field){
                     $a = QuestionAnswer::where('form_id', $fs->form_id)
                         ->where('question_id', $_qs->id)
-                        ->where('field_id', $field->id)->first();
+                        ->where('field_id', $field->id)->where('user_id', $fs->user_id->id)->first();
 
                     if($field->name !== 'file'){
                         if($field->name == 'date'){
