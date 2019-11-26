@@ -5,8 +5,8 @@
     <div style="border-bottom: #111 1px solid;" class="bg-dark   border-top px-3 py-3">
         <p class="m-0 text-uppercase text-white" >{!!$title!!} </p>
     </div>
-    <div class="row m-0 p-0 h-100 overflow-auto">
-        <div class="col-12 mb-5 p-0">
+    <div class="row m-0 p-0  overflow-auto" style="height: calc(100% - 53px);">
+        <div class="col-12 pb-5 p-0">
 
             <div class="row m-0 pb-0 align-items-stretch">
 
