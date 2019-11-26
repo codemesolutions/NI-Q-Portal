@@ -6,7 +6,7 @@
         <p class="m-0 text-uppercase text-white" >{!!$title!!} </p>
     </div>
     <div class="row m-0 p-0  overflow-auto" style="height: calc(100% - 53px);">
-        <div class="col-12 pb-5 p-0">
+        <div class="col-12  p-0">
 
             <div class="row m-0 pb-0 align-items-stretch">
 
