@@ -20,6 +20,7 @@ Route::get('/form/disqualified', 'PublicFormController@disqualified');
 Route::get('/form/waitlisted', 'PublicFormController@waitlisted');
 Route::get('/file/form/{file}', 'PublicFormController@file');
 Route::get('/file/submissions/{file}', 'PublicFormController@file');
+Route::get('/file/public/{file}', 'PublicFormController@file');
 
 //portal routes
 Route::get('/', 'DonorController@index')->name('home');

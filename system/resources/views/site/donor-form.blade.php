@@ -10,15 +10,15 @@
         </div>
         @include('site.blocks.donor-nav')
     @else
-        
+
     @endif
 <div class="bg-white py-5">
     <div class="container border bg-light py-5">
         <div class=" p-5">
             <h6 class="m-0 mx-auto font-weight-bold  mb-3">{!!$title!!}</h6>
-           
+
             <div style="" class="border bg-white mx-auto answer p-5">
-                
+
                 @if($errors->count() > 0)
                     <div class="alert alert-danger rounded-0 alert-dismissible fade show" role="alert">
                         <strong>Holy guacamole!</strong> You should check in on some of those fields below.
@@ -27,6 +27,8 @@
                         </button>
                     </div>
                 @endif
+
+                @if(is_null($question->template))
                 <div class="row m-0 align-items-center">
                   {!!$question->question!!}
                 </div>
@@ -36,17 +38,17 @@
                     <input type="hidden" name="question" value="{{$question->id}}"/>
                     @php $conditions = []; @endphp
                     @foreach($question->fields()->orderBy('id')->get() as $k => $field)
-                        
+
                         @if($field->question_field_type_id->id == 1)
                             <div class="form-group">
                                 <label>{{$field->label}}</label>
                                 <input class="form-control {{$errors->has($field->name) ? 'is-invalid':''}}" type="text" name="{{$field->name}}" value=""/>
                                   @if($errors->has($field->name))
-                                    
+
                                     <span class="invalid-feedback  m-0" role="alert">
                                         <strong>{{ $errors->first($field->name) }}</strong>
                                     </span>
-                                    
+
                                 @endif
                             </div>
                         @elseif($field->question_field_type_id->id == 9)
@@ -54,11 +56,11 @@
                                 <label>{{$field->label}}</label>
                                 <input class="form-control {{$errors->has($field->name) ? 'is-invalid':''}}" type="password" name="{{$field->name}}" value=""/>
                                   @if($errors->has($field->name))
-                                    
+
                                     <span class="invalid-feedback  m-0" role="alert">
                                         <strong>{{ $errors->first($field->name) }}</strong>
                                     </span>
-                                    
+
                                 @endif
                             </div>
                         @elseif($field->question_field_type_id->id == 4)
@@ -66,22 +68,22 @@
                                 <label>{{$field->label}}</label>
                                 <textarea class="form-control {{$errors->has($field->name) ? 'is-invalid':''}}" name="{{$field->name}}"></textarea>
                                   @if($errors->has($field->name))
-                                    
+
                                     <span class="invalid-feedback  m-0" role="alert">
                                         <strong>{{ $errors->first($field->name) }}</strong>
                                     </span>
-                                    
+
                                 @endif
                             </div>
                         @elseif($field->question_field_type_id->id == 5)
                             <div class="form-group">
-                                @php      
+                                @php
                                     $options = explode(",", rtrim($field->options, ','));
                                     foreach($options as $k => $v){
                                         $options[$k] = str_replace(' ', '', $v);
                                     }
 
-                                    
+
                                 @endphp
                                 <label>{{$field->label}}</label>
                                 <select class="form-control {{$errors->has($field->name) ? 'is-invalid':''}}" name="{{$field->name}}">
@@ -90,11 +92,11 @@
                                   @endforeach
                                 </select>
                                   @if($errors->has($field->name))
-                                    
+
                                     <span class="invalid-feedback m-0" role="alert">
                                         <strong>{{ $errors->first($field->name) }}</strong>
                                     </span>
-                                    
+
                                 @endif
                             </div>
                         @elseif($field->question_field_type_id->id == 7)
@@ -109,11 +111,11 @@
                                 <label>{{$field->label}}</label>
                                 <input class="form-control {{$errors->has($field->name) ? 'is-invalid':''}}" type="file" name="{{$field->name}}" value=""/>
                                   @if($errors->has($field->name))
-                                    
+
                                     <span class="invalid-feedback  m-0" role="alert">
                                         <strong>{{ $errors->first($field->name) }}</strong>
                                     </span>
-                                    
+
                                 @endif
                             </div>
 
@@ -128,15 +130,15 @@
                                     <label class="custom-control-label " for="{{$field->name . $k}}'">{{$field->label}}</label>
                                     @endif
                                 </div>
-                              
+
                                  @if($errors->has($field->name))
-                                    
+
                                     <span class="invalid-feedback col m-0" role="alert">
                                         <strong>{{ $errors->first($field->name) }}</strong>
                                     </span>
-                                    
+
                                 @endif
-                                
+
                             </div>
                          @elseif($field->question_field_type_id->id == 3)
                             <div class="form-group row m-0 mb-2 align-items-center">
@@ -144,15 +146,15 @@
                                     <input type="checkbox" id="{{$field->name . $k}}'" name="{{$field->name}}" value="{{$field->value}}" class="custom-control-input {{$errors->has($field->name) ? 'is-invalid':''}} ">
                                     <label class="custom-control-label " for="{{$field->name . $k}}'">{{$field->label}}</label>
                                 </div>
-                              
+
                                  @if($errors->has($field->name))
-                                    
+
                                     <span class="invalid-feedback col m-0" role="alert">
                                         <strong>{{ $errors->first($field->name) }}</strong>
                                     </span>
-                                    
+
                                 @endif
-                                
+
                             </div>
                         @endif
 
@@ -170,11 +172,11 @@
                                         <label>If answer equals {{$con->label}} please enter the date</label>
                                         <input data-condition="{{$c->condition}}" class="form-control condition is-invalid" type="date" name="condition_date"/>
                                          @if($errors->has('condition_date'))
-                                    
+
                                             <span class="invalid-feedback col m-0" role="alert">
                                                 <strong>{{ $errors->first('condition_date') }}</strong>
                                             </span>
-                                            
+
                                         @endif
                                     </div>
                                 @else
@@ -207,6 +209,9 @@
                     <button class="btn btn-dark btn-sm mt-3" type="submit">Submit</button>
                 </form>
                 <p class="small mt-4">Please answer each question as accuratly as you can.  Please understand our application process is to ensure we provide the best service to you.</p>
+                @else
+                    @include('site.' . $question->template)
+                @endif
             </div>
 
         </div>

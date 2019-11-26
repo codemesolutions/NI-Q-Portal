@@ -15,6 +15,7 @@
         <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-trash"></i> Delete Form</button>
     </div>
     <div style="height: calc(100% - 51.2px);" class="overflow-auto">
+
       @if(Session::has('success'))
 
             <div class="alert alert-success alert-dismissible fade show mb-4 rounded-0 " role="alert">
@@ -24,10 +25,19 @@
                 </button>
             </div>
         @endif
-        <div class=" ">
+        <ul class="nav border-bottom align-items-center p-0" id="pills-tab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link {{!$request->has('sub') ? 'active': ''}} text-dark" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Detail</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark {{$request->has('sub') ? 'active show': ''}}" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Submissions</a>
+            </li>
+        </ul>
+        <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane fade show {{!$request->has('sub') ? 'active': ''}}" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
                 <div class="row  m-0 align-items-stretch">
                     <div class="col-12 p-0">
-                        <div class="bg-white border p-5">
+                        <div class="bg-white  p-5">
                             <div class="bg-gradient border p-3 border-bottom-0">
                                 <p>Information</p>
                             </div>
@@ -35,22 +45,21 @@
                                 <tbody>
                                     @foreach($data_item->toArray() as $name => $val)
                                         @if($name == 'active')
-
-                                        <tr>
-                                            <td style="width: 200px;background: #f5f5f5; border-right: #ddd 1px solid; border-bottom: #ddd 1px solid;">{{ucfirst(str_replace('_', ' ', $name))}}</td>
-                                            <td>{!!$val == "Inactive" ? '<span class="badge badge-danger rounded-0">Inactive</span>':'<span class="badge badge-success rounded-0">Active</span>'!!}</td>
-                                        </tr>
+                                            <tr>
+                                                <td style="width: 200px;background: #f5f5f5; border-right: #ddd 1px solid; border-bottom: #ddd 1px solid;">{{ucfirst(str_replace('_', ' ', $name))}}</td>
+                                                <td>{!!$val == "Inactive" ? '<span class="badge badge-danger rounded-0">Inactive</span>':'<span class="badge badge-success rounded-0">Active</span>'!!}</td>
+                                            </tr>
                                         @else
                                             @if($name === 'form_type_id')
-                                            <tr>
-                                                <td style="width: 200px;background: #f5f5f5; border-right: #ddd 1px solid;border-bottom: #ddd 1px solid;">Form Type</td>
-                                                <td>{{strip_tags($val)}}</td>
-                                            </tr>
-                                            @else
-                                            <tr>
-                                                <td style="width: 200px;background: #f5f5f5; border-right: #ddd 1px solid;border-bottom: #ddd 1px solid;">{{ucfirst(str_replace('_', ' ', $name))}}</td>
-                                                <td>{{strip_tags($val)}}</td>
-                                            </tr>
+                                                <tr>
+                                                    <td style="width: 200px;background: #f5f5f5; border-right: #ddd 1px solid;border-bottom: #ddd 1px solid;">Form Type</td>
+                                                    <td>{{strip_tags($val)}}</td>
+                                                </tr>
+                                                @else
+                                                <tr>
+                                                    <td style="width: 200px;background: #f5f5f5; border-right: #ddd 1px solid;border-bottom: #ddd 1px solid;">{{ucfirst(str_replace('_', ' ', $name))}}</td>
+                                                    <td>{{strip_tags($val)}}</td>
+                                                </tr>
                                             @endif
                                         @endif
 
@@ -58,41 +67,40 @@
                                 </tbody>
                             </table>
                         </div>
-
                     </div>
 
                     @if($data_item->questions()->count() > 0)
-                    <div class="col p-0 m-0">
-                       <div class="p-5 border-bottom bg-white h-100">
-                           <div class="bg-gradient  p-3 border row m-0 align-items-center">
-                               <p class="m-0">Form Questions</p>
+                        <div class="col p-0 m-0">
+                            <div class="p-5 border-bottom bg-white h-100">
+                                <div class="bg-gradient  p-3 border row m-0 align-items-center">
+                                    <p class="m-0">Form Questions</p>
 
-                               <a class="ml-1 btn  btn-primary btn-sm ml-auto small" href="/admin/forms/questions/create?id={{$data_item->id}}"><i class="fas fa-plus"></i> Create Question</a>
-                           </div>
-                           <div style="max-height: 300px; overflow:auto;" class="">
+                                    <a class="ml-1 btn  btn-primary btn-sm ml-auto small" href="/admin/forms/questions/create?id={{$data_item->id}}"><i class="fas fa-plus"></i> Create Question</a>
+                                </div>
+                                <div style="max-height: 300px; overflow:auto;" class="">
 
-                               <table class="table table-bordered bg-white border-left border-right m-0">
-                                   <tbody>
-                                       @foreach($data_item->questions()->orderBy('order')->get() as $k => $val)
-
-
-                                           <tr>
-                                               <td>#{{$k + 1}}.</td>
-                                               <td ><span class="mr-2"> </span><a class="text-dark" href="/admin/forms/questions/question?id={{$val->id}}">{{strip_tags($val->question)}}</a></td>
-                                               <td>{{$val->order}}</td>
-                                           </tr>
-
-                                       @endforeach
-                                   </tbody>
-                               </table>
-
-                           </div>
-                       </div>
-                   </div>
-                   @endif
+                                    <table class="table table-bordered bg-white border-left border-right m-0">
+                                        <tbody>
+                                            @foreach($data_item->questions()->orderBy('order')->get() as $k => $val)
 
 
-                   @if($data_item->users()->where('action', 'assign')->count() > 0)
+                                                <tr>
+                                                    <td>#{{$k + 1}}.</td>
+                                                    <td ><span class="mr-2"> </span><a class="text-dark" href="/admin/forms/questions/question?id={{$val->id}}">{{strip_tags($val->question)}}</a></td>
+                                                    <td>{{$val->order}}</td>
+                                                </tr>
+
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+
+
+                    @if($data_item->users()->where('action', 'assign')->count() > 0)
                         <div class="col p-0 m-0">
                             <div class="p-5 border border-top-0 bg-white">
                                 <div class="bg-white border  p-3 bg-gradient" >
@@ -118,23 +126,57 @@
                     @endif
 
 
-                     @if($data_item->submissions()->where('is_new', true)->where('completed', true)->count() > 0)
-                     <div class="col-12 p-0">
-                         <div class="p-5  bg-white">
-                            <div class="bg-gradient border  p-3 border-bottom-0">
-                                <p>Form Submissions</p>
-                            </div>
-                            <table class="table bg-white border-left border-right text-center m-0">
-                                <tbody>
+                    @if($data_item->submissions()->where('is_new', true)->where('completed', true)->count() > 0)
+                        <div class="col-12 p-0">
+                            <div class="p-5  bg-white">
+                                <div class="bg-gradient border  p-3 border-bottom-0">
+                                    <p>Form Submissions</p>
+                                </div>
+                                <table class="table bg-white border-left border-right text-center m-0">
+                                    <tbody>
 
-                                    @foreach($data_item->submissions()->where('is_new', true)->where('completed', true)->get() as $k => $val)
+                                        @foreach($data_item->submissions()->where('is_new', true)->where('completed', true)->get() as $k => $val)
+                                            @if(!is_null($val->user_id))
+                                                <tr>
+                                                    <td>#{{$k + 1}}.</td>
+                                                    <td><a href="/admin/forms/submissions/submission?form={{$data_item->name}}&id={{$val->id}}">{{strip_tags($val->user_id->first_name)}}, {{strip_tags($val->user_id->last_name)}}</a></td>
+
+
+                                                    <td>{{strip_tags($val->user_id->created_at)}}</td>
+                                                </tr>
+                                            @endif
+
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    @endif
+
+
+                </div>
+            </div>
+
+            <div class="tab-pane fade {{$request->has('sub') ? 'active show': ''}}" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                @if($data_item->submissions()->where('is_new', true)->where('completed', true)->count() > 0)
+                    <div class="col-12 p-0 pb-5">
+                        <div class="p-5  bg-white">
+                            <div class="bg-gradient border  p-3 border-bottom-0">
+                                <p>Submissions</p>
+                            </div>
+                            <table class="table bg-white border-left border-right  m-0">
+                                <tbody>
+                                    @php $subs = $data_item->submissions()->simplePaginate(15); @endphp
+                                    @foreach($subs as $k => $val)
                                         @if(!is_null($val->user_id))
                                             <tr>
-                                                <td>#{{$k + 1}}.</td>
+
                                                 <td><a href="/admin/forms/submissions/submission?form={{$data_item->name}}&id={{$val->id}}">{{strip_tags($val->user_id->first_name)}}, {{strip_tags($val->user_id->last_name)}}</a></td>
+                                                <td>{{$val->is_new == true ? "New":""}}</td>
+                                                <td>{{$val->completed == true ? "Completed":""}}</td>
 
-
-                                                <td>{{strip_tags($val->user_id->created_at)}}</td>
+                                                <td>{{date('m-d-Y', strtotime($val->user_id->created_at))}}</td>
                                             </tr>
                                         @endif
 
@@ -142,11 +184,12 @@
                                 </tbody>
                             </table>
                         </div>
-
+                        <div class="row m-0 justify-content-center">
+                        {{ $subs->appends(['id' => $data_item->id, 'sub' => 1])->links() }}
+                        </div>
                     </div>
-                    @endif
 
-                </div>
+                @endif
             </div>
         </div>
     </div>

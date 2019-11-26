@@ -383,12 +383,17 @@ class PublicFormController extends Controller
 
 
     public function file(Request $request, $file){
+
         if(file_exists(storage_path() .'/app/form/'. $file)){
             return response()->download(storage_path() .'/app/form/'. $file);
         }
 
         elseif(file_exists(storage_path() .'/app/submissions/'. $file)){
             return response()->download(storage_path() .'/app/submissions/'. $file);
+        }
+
+        elseif(file_exists(storage_path() .'/app/public/'. $file)){
+            return response()->download(storage_path() .'/app/public/'. $file);
         }
 
         else{

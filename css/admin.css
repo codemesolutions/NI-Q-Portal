@@ -294,6 +294,14 @@ label{
     margin: 0 0.5rem 0 0rem;
 }
 
+.nav .nav-item{
+    border-right: #ddd 1px solid;
+}
+
+.nav .nav-item .active{
+    background: #eee;
+}
+
 .navbar-toggler{
     color: #343a40;
 }

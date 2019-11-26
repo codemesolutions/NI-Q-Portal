@@ -11,6 +11,8 @@ use App\QuestionFieldType;
 use App\FormSubmission;
 use App\Setting;
 use App\Question;
+use DOMDocument;
+use PhpOffice\PhpWord\PhpWord;
 
 class DonorFormController extends Controller
 {
@@ -115,7 +117,6 @@ class DonorFormController extends Controller
         $page['question'] = $questions;
         $page['title'] = $form->name;
         $page['form_id'] = $form->id;
-
 
         return view($page['template'], $page);
     }
@@ -335,8 +336,60 @@ class DonorFormController extends Controller
         }
 
         else{
+
             $fs->completed = true;
             $fs->update();
+
+            if( $form->name == "NI-Q Consent Form"){
+               //dd('writing file');
+                $phpWord = new \PhpOffice\PhpWord\PhpWord();
+
+
+                $section = $phpWord->addSection();
+                $myTextElement = $section->addText('<w:br/><w:br/><w:br/>NI-Q Consent Form <w:br/>', ['bold' => true], ['alignment' => 'center']);
+                // Adding Text element to the Section having font styled by default...
+                $_qs = Form::where('id', $fs->form_id)->first()->questions()->first();
+                $_q = $_qs->question;
+                $_q = preg_replace("/<br>/m", "<br />", $_q);
+
+                $imageVal =null;
+                foreach($_qs->fields()->get() as $field){
+                    $a = QuestionAnswer::where('form_id', $fs->form_id)
+                        ->where('question_id', $_qs->id)
+                        ->where('field_id', $field->id)->first();
+
+                    if($field->name == 'date'){
+                        $_q = preg_replace("/\[".$field->name."\]+/m", '<u><b>'.date('m-d-Y', strtotime($a->answer)).'</b></u>', $_q);
+                    }
+
+                    elseif($field->name == 'sign'){
+                        $img = imagecreate(150, 30);
+                        $background_color = imagecolorallocate($img, 255, 255, 255);
+                        $text_color = imagecolorallocate($img, 0, 0, 0);
+                        $font = getcwd() . '/fonts/HomemadeApple-Regular.ttf';
+                        imagettftext($img, 10, 0, 10, 20, $text_color, $font, $a->answer);
+                        //imagestring($img, $font, 5, 5,  $a->answer, $text_color);
+                        imagepng($img, getcwd(). "/storage/image.png");
+                        $imageVal = $field->name;
+
+                        $_q = preg_replace("/\[".$field->name."\]+/m", '<img src="'.url('/'). '/storage/image.png"/>', $_q);
+                    }
+
+                    else{
+                        $_q = preg_replace("/\[".$field->name."\]+/m", '<u><b>'.$a->answer.'</b></u>', $_q);
+                    }
+
+                }
+
+
+                \PhpOffice\PhpWord\Shared\Html::addHtml($section, $_q, false, false);
+
+                $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
+
+                $objWriter->save(storage_path() . '/app/public/helloWorld.docx');
+
+
+            }
 
             $notify = new \App\Notifications();
             $notify->notification_type_id = \App\NotificationTypes::where('name', 'form submission')->first()->id;
