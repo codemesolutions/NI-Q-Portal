@@ -193,7 +193,7 @@ class ActionController extends Controller
         }
 
         $sub->blocked = false;
-        $sub->waitlisted = false;
+        $sub->waited = false;
         $sub->completed = false;
         $sub->is_new = true;
         $sub->update();
