@@ -86,52 +86,74 @@
                                                     </div>
                                                     <div class="modal-body p-0">
                                                         @php $count = 1; @endphp
-                                                         @foreach($form->questions()->get() as $question)
-                                                            <div class="">
-                                                                <p class="mb-0 bg-light border-bottom-0 p-3 font-weight-bold">#{{$count++}}. &nbsp; {{ucfirst(strip_tags($question->question))}}</p>
+                                                        @if($form->name !== "NI-Q Consent Form")
+                                                            @foreach($form->questions()->get() as $question)
+                                                                <div class="">
+                                                                    <p class="mb-0 bg-light border-bottom-0 p-3 font-weight-bold">#{{$count++}}. &nbsp; {{ucfirst(strip_tags($question->question))}}</p>
 
-                                                                <table class="table table-bordered bg-white m-0 border-0">
-                                                                    <tbody>
-                                                                        @php
-                                                                            $fcount = 1;
-                                                                            $fields = [];
-                                                                        @endphp
-                                                                        @foreach($question->fields()->get() as $field)
+                                                                    <table class="table table-bordered bg-white m-0 border-0">
+                                                                        <tbody>
                                                                             @php
-                                                                                $answer = \App\QuestionAnswer::where('question_id', $question->id)->where('field_id', $field->id)->where('user_id', Auth::user()->id)->first();
-
+                                                                                $fcount = 1;
+                                                                                $fields = [];
                                                                             @endphp
-                                                                            @if(!is_null($answer) && !isset($fields[$field->name]))
-                                                                                <tr>
-                                                                                    @if($field['question_field_type_id']->id == 6)
-                                                                                        @php
-                                                                                            $ext = pathinfo($answer->answer, PATHINFO_EXTENSION);
-                                                                                        @endphp
-                                                                                        @if($ext == "doc" || $ext === "docx")
-                                                                                            <td class="pl-3"><iframe style="height: 500px;" class="w-100 border mb-3" src="https://docs.google.com/gview?url={{url('/')}}/file/{{$answer->answer}}&embedded=true" frameborder="0">
-                                </iframe></td>
+                                                                            @foreach($question->fields()->get() as $field)
+                                                                                @php
+                                                                                    $answer = \App\QuestionAnswer::where('question_id', $question->id)->where('field_id', $field->id)->where('user_id', Auth::user()->id)->first();
+
+                                                                                @endphp
+                                                                                @if(!is_null($answer) && !isset($fields[$field->name]))
+                                                                                    <tr>
+                                                                                        @if($field['question_field_type_id']->id == 6)
+                                                                                            @php
+                                                                                                $ext = pathinfo($answer->answer, PATHINFO_EXTENSION);
+                                                                                            @endphp
+                                                                                            @if($ext == "doc" || $ext === "docx")
+                                                                                                <td class="pl-3"><iframe style="height: 500px;" class="w-100 border mb-3" src="https://docs.google.com/gview?url={{url('/')}}/file/{{$answer->answer}}&embedded=true" frameborder="0">
+                                    </iframe></td>
+                                                                                            @else
+                                                                                                <td class="pl-3"><a href="{{url('/')}}/file/{{$answer->answer}}">{{ucfirst($answer->answer)}}</a></td>
+                                                                                            @endif
+
                                                                                         @else
-                                                                                            <td class="pl-3"><a href="{{url('/')}}/file/{{$answer->answer}}">{{ucfirst($answer->answer)}}</a></td>
+                                                                                            <td class="pl-3">{{ucfirst($answer->answer)}}</td>
                                                                                         @endif
+                                                                                    </tr>
 
-                                                                                    @else
-                                                                                        <td class="pl-3">{{ucfirst($answer->answer)}}</td>
-                                                                                    @endif
-                                                                                </tr>
+                                                                                @endif
 
-                                                                            @endif
+                                                                                @php
+                                                                                    if(!isset($fields[$field->name])){
+                                                                                            $fields[$field->name] = $answer;
+                                                                                    }
+                                                                                @endphp
+                                                                            @endforeach
+                                                                        </tbody>
+                                                                    </table>
 
-                                                                            @php
-                                                                                if(!isset($fields[$field->name])){
-                                                                                        $fields[$field->name] = $answer;
-                                                                                }
-                                                                            @endphp
-                                                                        @endforeach
-                                                                    </tbody>
-                                                                </table>
+                                                                </div>
+                                                            @endforeach
+                                                        @else
+                                                            @foreach($form->questions()->get() as $question)
+                                                                @foreach($question->fields()->get() as $field)
+                                                                    @php
+                                                                        $answer = \App\QuestionAnswer::where('question_id', $question->id)->where('field_id', $field->id)->where('user_id', Auth::user()->id)->first();
+                                                                    @endphp
+                                                                    @if(!is_null($answer) && !isset($fields[$field->name]))
+                                                                        @php
+                                                                        $ext = pathinfo($answer->answer, PATHINFO_EXTENSION);
+                                                                        @endphp
 
-                                                            </div>
-                                                        @endforeach
+                                                                        @if($ext == "doc" || $ext === "docx")
+                                                                        <td class="pl-3">
+                                                                            <iframe style="height: 500px;" class="w-100 border mb-3" src="https://docs.google.com/gview?url={{url('/')}}/file/{{$answer->answer}}&embedded=true" frameborder="0"></iframe>
+                                                                        </td>
+                                                                        @endif
+                                                                    @endif
+                                                                @endforeach
+                                                            @endforeach
+
+                                                        @endif
                                                     </div>
                                                     <div class="modal-footer border-0">
                                                         <button type="button" class="btn btn-danger btn-sm p-0 py-1 px-3" data-dismiss="modal">Close</button>

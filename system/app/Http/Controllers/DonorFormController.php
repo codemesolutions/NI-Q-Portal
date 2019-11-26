@@ -254,19 +254,22 @@ class DonorFormController extends Controller
 
             if($field->question_field_type_id->name ==='file upload'){
 
-                $answer = $request->file($field->name)->store('submissions');
+                $file = $request->file($field->name);
 
-                if(!is_null($answer) && $answer !== false){
-                    $qa = new QuestionAnswer();
-                    $qa->form_id = $form->id;
-                    $qa->question_id = $_question->id;
-                    $qa->field_id = $field->id;
-                    $qa->user_id = $request->user()->id;
-                    $qa->answer = $answer;
+                if(!is_null($file)){
+                    $answer = $request->file($field->name)->store('submissions');
 
-                    $qa->save();
+                    if(!is_null($answer) && $answer !== false){
+                        $qa = new QuestionAnswer();
+                        $qa->form_id = $form->id;
+                        $qa->question_id = $_question->id;
+                        $qa->field_id = $field->id;
+                        $qa->user_id = $request->user()->id;
+                        $qa->answer = $answer;
+
+                        $qa->save();
+                    }
                 }
-
             }
 
             else{
@@ -353,41 +356,56 @@ class DonorFormController extends Controller
                 $_q = preg_replace("/<br>/m", "<br />", $_q);
 
                 $imageVal =null;
+                $id = null;
                 foreach($_qs->fields()->get() as $field){
                     $a = QuestionAnswer::where('form_id', $fs->form_id)
                         ->where('question_id', $_qs->id)
                         ->where('field_id', $field->id)->first();
 
-                    if($field->name == 'date'){
-                        $_q = preg_replace("/\[".$field->name."\]+/m", '<u><b>'.date('m-d-Y', strtotime($a->answer)).'</b></u>', $_q);
-                    }
+                    if($field->name !== 'file'){
+                        if($field->name == 'date'){
+                            $_q = preg_replace("/\[".$field->name."\]+/m", '<u><b>'.date('m-d-Y', strtotime($a->answer)).'</b></u>', $_q);
+                        }
 
-                    elseif($field->name == 'sign'){
-                        $img = imagecreate(150, 30);
-                        $background_color = imagecolorallocate($img, 255, 255, 255);
-                        $text_color = imagecolorallocate($img, 0, 0, 0);
-                        $font = getcwd() . '/fonts/HomemadeApple-Regular.ttf';
-                        imagettftext($img, 10, 0, 10, 20, $text_color, $font, $a->answer);
-                        //imagestring($img, $font, 5, 5,  $a->answer, $text_color);
-                        imagepng($img, getcwd(). "/storage/image.png");
-                        $imageVal = $field->name;
+                        elseif($field->name == 'sign'){
+                            $img = imagecreate(150, 30);
+                            $background_color = imagecolorallocate($img, 255, 255, 255);
+                            $text_color = imagecolorallocate($img, 0, 0, 0);
+                            $font = getcwd() . '/fonts/HomemadeApple-Regular.ttf';
+                            imagettftext($img, 10, 0, 10, 20, $text_color, $font, $a->answer);
+                            //imagestring($img, $font, 5, 5,  $a->answer, $text_color);
+                            imagepng($img, getcwd(). "/storage/image.png");
+                            $imageVal = $field->name;
 
-                        $_q = preg_replace("/\[".$field->name."\]+/m", '<img src="'.url('/'). '/storage/image.png"/>', $_q);
+                            $_q = preg_replace("/\[".$field->name."\]+/m", '<img src="'.url('/'). '/storage/image.png"/>', $_q);
+                        }
+
+                        else{
+                            $_q = preg_replace("/\[".$field->name."\]+/m", '<u><b>'.$a->answer.'</b></u>', $_q);
+                        }
                     }
 
                     else{
-                        $_q = preg_replace("/\[".$field->name."\]+/m", '<u><b>'.$a->answer.'</b></u>', $_q);
+                        $id = $field->id;
                     }
-
                 }
 
 
                 \PhpOffice\PhpWord\Shared\Html::addHtml($section, $_q, false, false);
 
                 $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
+                $f = 'public/'.uniqid().'.docx';
+                $objWriter->save(storage_path() . '/app/'. $f);
 
-                $objWriter->save(storage_path() . '/app/public/helloWorld.docx');
-
+                if(!is_null($id)){
+                    $qa = new QuestionAnswer();
+                    $qa->form_id = $fs->form_id;
+                    $qa->question_id = $_qs->id;
+                    $qa->field_id = $id;
+                    $qa->user_id = $request->user()->id;
+                    $qa->answer = $f;
+                    $qa->save();
+                }
 
             }
 

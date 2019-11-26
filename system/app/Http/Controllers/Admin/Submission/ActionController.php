@@ -192,6 +192,8 @@ class ActionController extends Controller
             return redirect()->back()->with('error', "could not find submission");
         }
 
+        $sub->blocked = false;
+        $sub->waitlisted = false;
         $sub->completed = false;
         $sub->is_new = true;
         $sub->update();
