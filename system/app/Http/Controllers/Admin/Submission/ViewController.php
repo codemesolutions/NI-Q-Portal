@@ -456,7 +456,7 @@ class ViewController extends Controller
 
         }
 
-        elseif($form->name == "Consent Form"){
+        elseif($form->name == "NI-Q Consent Form" || $form->name == "Consent Form"){
 
             if($request->has('lab_order')){
 
