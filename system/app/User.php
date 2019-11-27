@@ -58,4 +58,8 @@ class User extends Authenticatable
     public function forms(){
         return $this->belongsToMany(Form::class, 'user_form');
     }
+
+    public function submissions(){
+        return $this->hasMany(FormSubmission::class);
+    }
 }

@@ -97,6 +97,25 @@
                         </div>
                         @endif
 
+                        @if($data_item->submissions()->count() > 0)
+                        <div class="col-12 p-0">
+                            <div class="p-5">
+                                <div class="row m-0 bg-gradient border border-bottom-0 p-3">
+                                    <p class="m-0">User Submissions({{$data_item->submissions()->count()}})</p>
+                                </div>
+                                <table class="table bg-white border-left border-right">
+                                    <tbody>
+                                        @foreach($data_item->submissions()->get() as $mk)
+                                        <tr>
+                                            <td><a href="/admin/forms/submissions/submission?form={{\App\Form::where('id', $mk->form_id)->first()->name}}&id={{$mk->id}}">{{\App\Form::where('id',$mk->form_id)->first()->name}} Submission</a></td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        @endif
+
 
 
 

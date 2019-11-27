@@ -494,6 +494,23 @@ class ViewController extends Controller
                 $field->download = $path;
                 $field->save();
 
+                mail(
+                    $submission->user_id->email,
+                    'Ni-Q is excited to advance you to the next step in the process to becoming a donor with Ni-Q!',
+                    "The final step is to have your blood drawn. We have partnered with Quest Diagnostics Labs to complete the blood draw and testing.  Our partnership allows the full process, from the blood draw to the testing to be provided to you FREE of charge.
+                    Attached is your Quest Diagnostics Lab Order Form. The Order Form provides directions to visit Quest Diagnostics Website to locate the lab nearest you and schedule an appointment at your convenience. Please remember to take the form with you to the lab when you go.
+                    Again, there is no charge to you or your insurance for the blood draw or testing. DO NOT take give them your insurance card. We understand that it is a detailed process to become a breastmilk donor, and our goal is to make it as easy and efficient as possible for you.
+                    Thank you for choosing to become a donor with Ni-Q.  Your contributions are directly making an impact to the health of premature infants across the country. We are committed to working with you to ensure you have a great experience as a donor.
+                    As soon as lab results are back, Ni-Q will notify you to request a milk kit and get started!
+                    After printing and completing the blood work, please push submit in the lower left corner.
+                     <br /> <a href='https://portal.ni-q.com'>Click here to login into your donor account!</a>",
+                    'From: erica@ni-q.com' . "\r\n" .
+                    'Reply-To: erica@ni-q.com' . "\r\n" .
+                    'X-Mailer: PHP/' . phpversion()."\r\n".
+                    'MIME-Version: 1.0' . "\r\n".
+                    'Content-type: text/html; charset=iso-8859-1' . "\r\n"
+                );
+
             }
         }
 

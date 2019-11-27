@@ -162,12 +162,13 @@
                 @if($data_item->submissions()->where('is_new', true)->where('completed', true)->count() > 0)
                     <div class="col-12 p-0 pb-5">
                         <div class="p-5  bg-white">
-                            <div class="bg-gradient border  p-3 border-bottom-0">
+                            <div class="bg-gradient border  p-3 border-bottom-0 row m-0 align-items-center">
                                 <p>Submissions</p>
+
                             </div>
                             <table class="table bg-white border-left border-right  m-0">
                                 <tbody>
-                                    @php $subs = $data_item->submissions()->simplePaginate(15); @endphp
+
                                     @foreach($subs as $k => $val)
                                         @if(!is_null($val->user_id))
                                             <tr>

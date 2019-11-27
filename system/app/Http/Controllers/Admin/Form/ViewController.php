@@ -42,6 +42,7 @@ class ViewController extends Controller
             'rows' => Form::where('form_type_id', '!=', 4)->get()
         ];
 
+
         $page['list_actions'] = '/list-table-actions-form';
         $page['questions_route'] =Route('admin.forms.questions');
         $page['submissions_route'] =Route('admin.forms.submissions');
@@ -56,21 +57,25 @@ class ViewController extends Controller
 
     public function single(Request $request)
     {
-       
+
         $id = $request->query('id');
-        
+
         $page = $this->getPage($request);
 
-       
+
         $results = Form::where('id', $id)->first();
-       
-        
+
+
         if(is_null($results)){
             abort(404);
         }
 
-        
+
         $page['data_item'] = $results;
+
+
+
+        $page['subs'] = $results->submissions()->paginate(15);
 
         $page['view_route'] = "";
         $page['delete_route'] = Route('admin.form.delete');
@@ -85,7 +90,7 @@ class ViewController extends Controller
         $page = $this->getPage($request);
 
         $page['form_action_route'] = 'admin.form.create';
-        
+
         $page['fields'][] = [
             'name' => 'name',
             'type' => 'text',
@@ -94,7 +99,7 @@ class ViewController extends Controller
             'value' => old('name')
         ];
 
-    
+
         $page['fields']['type'] = [
             'name' => 'type',
             'type' => 'select',
@@ -151,16 +156,16 @@ class ViewController extends Controller
             'checked' => false,
         ];
 
-       
+
 
         return view($page['template'], $page);
     }
 
     public function update(Request $request)
     {
-       
+
         $menu = Form::where('id', $request->query('id'))->firstOrFail();
-       
+
         $page = $this->getPage($request);
 
         $page['form_action_route'] = 'admin.form.update';
