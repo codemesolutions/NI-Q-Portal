@@ -31,6 +31,7 @@ Route::post('/donor/form/submit', 'DonorFormController@formSubmit');
 Route::get('/messages', 'DonorController@messages')->name('messages');
 
 Route::get('/milkit/send', 'DonorController@milkkitSend')->name('milkkit_send');
+Route::get('/milkit/pickup', 'DonorController@milkkitPickup')->name('milkkit_pickup');
 Route::get('/bloodkits', 'DonorController@bloodkit')->name('bloodkits');
 Route::get('/account', 'DonorController@account')->name('account');
 Route::get('/file', 'DonorController@file')->name('file');

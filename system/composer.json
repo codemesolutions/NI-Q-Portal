@@ -13,6 +13,7 @@
         "fideloper/proxy": "^4.0",
         "gufy/pdftohtml-php": "~2",
         "guzzlehttp/guzzle": "^6.3",
+        "jeremy-dunn/php-fedex-api-wrapper": "^3.0",
         "laravel/framework": "5.8.*",
         "laravel/tinker": "^1.0",
         "phpoffice/phpword": "^0.17.0",
