@@ -18,10 +18,17 @@ use FedEx\TrackService\Request as TRequest;
 use FedEx\TrackService\ComplexType;
 use FedEx\TrackService\SimpleType;
 
-define('FEDEX_ACCOUNT_NUMBER', '510087240');
-define('FEDEX_METER_NUMBER', '118745553');
-define('FEDEX_KEY', '7dXXlfnIegr0yM1k');
-define('FEDEX_PASSWORD', 'RQUJyjDYYlISpefPrqPktnXc1');
+//test
+define('_FEDEX_ACCOUNT_NUMBER', '510087240');
+define('_FEDEX_METER_NUMBER', '118745553');
+define('_FEDEX_KEY', '7dXXlfnIegr0yM1k');
+define('_FEDEX_PASSWORD', 'RQUJyjDYYlISpefPrqPktnXc1');
+
+//prod
+define('FEDEX_ACCOUNT_NUMBER', '747437041');
+define('FEDEX_METER_NUMBER', '250736860');
+define('FEDEX_KEY', 'HHMB2d6fiK5IsnBi');
+define('FEDEX_PASSWORD', 'fm69lwISwzPTyP4SpTSLwi4rh');
 
 
 class DonorController extends Controller
