@@ -14,6 +14,7 @@
                 <a class="btn btn-warning text-white btn-sm ml-auto mr-1" href="{{$map_route}}"><i class="fas fa-sitemap"></i> map</a>
                 @endif
                 <a class="btn btn-primary btn-sm ml-auto" href="{{$create_route}}"><i class="fas fa-plus"></i> create</a>
+                <a class="btn btn-warning btn-sm ml-3" href="/admin/donors/export">Export</a>
                 <button class="btn btn-danger btn-sm  ml-1 delete d-none " data-toggle="modal" data-target="#create-form"><i class="fas fa-trash"></i> Delete</button>
             </div>
         </div>

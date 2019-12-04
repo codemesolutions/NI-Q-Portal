@@ -26,6 +26,7 @@
 <body>
 
 
+
  @include('admin.layouts.header')
 
    <div class="row m-0" style="height: calc(100% - 77px);" >

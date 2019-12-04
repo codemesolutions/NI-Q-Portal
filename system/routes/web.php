@@ -62,6 +62,7 @@ Route::get('/admin/donors/donor', 'Admin\Donor\ViewController@single')->name('ad
 Route::get('/admin/donors/delete', 'Admin\Donor\ActionController@delete')->name('admin.donor.delete');
 Route::post('/admin/donors/create', 'Admin\Donor\ActionController@create')->name('admin.donor.create');
 Route::post('/admin/donors/update', 'Admin\Donor\ActionController@update')->name('admin.donor.update');
+Route::get('/admin/donors/export', 'Admin\Donor\ActionController@export')->name('admin.donors.export');
 
 
 

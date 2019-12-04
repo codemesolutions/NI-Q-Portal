@@ -435,3 +435,7 @@ $('table tr td.clickable').on("click", function(e){
 $('button.export').on('click', function(){
     $('form.exports').submit();
 });
+
+
+
+

@@ -29,7 +29,7 @@ class ActionController extends Controller
 
 
     public function create(Request $request){
-        
+
         $validator = Validator::make($request->all(), [
             'user' => ['required', 'integer'],
             'date_of_birth' => ['required', 'date'],
@@ -45,7 +45,7 @@ class ActionController extends Controller
             'consent_form' => ['sometimes', 'nullable', 'mimes:doc,docx'],
         ]);
 
-        
+
 
         if ($validator->fails()) {
             return redirect()->back()
@@ -85,8 +85,8 @@ class ActionController extends Controller
                 $user->consent_form = $request->consent_form->store('form');
                 $user->recieved_consent_form = true;
             }
-            
-          
+
+
             $user->save();
 
             $api = new DonorAPI('https://donortrack.ni-q.com:443/', 'api1', 'Api1Rand0M');
@@ -109,7 +109,7 @@ class ActionController extends Controller
             }catch(Exception $e){
                 return redirect()->route('admin.donors')->with('success','Donor created successfully!');
             }
-           
+
 
             $api->post('api/donor/'.$user->id.'/mailingaddress', [
                 "DonorId"=> $user->id,
@@ -178,7 +178,7 @@ class ActionController extends Controller
             $user->shipping_zipcode= $request->input('shipping_zipcode');
             $user->active = $request->input('active') == "on" ? true:false;
             $user->update();
-            
+
             return redirect()->route('admin.donor', ['id' => $user->id])->with('success','Donor updated successfully!');
         }
 
@@ -191,6 +191,40 @@ class ActionController extends Controller
         return redirect()->route('admin.donors')->with('success', 'Successfully inactivated Donor', $form->id);
      }
 
+     public function export(Request $request){
 
-  
+        $csv = [];
+
+        $donors = Donor::all();
+
+        foreach($donors as $d)
+        $csv[] = [
+            $d->donor_number,
+            $d->user_id->first_name,
+            $d->user_id->last_name,
+            $d->user_id->email,
+            $d->user_id->home_phone,
+            $d->user_id->cell_phone,
+            $d->shipping_address,
+            $d->shipping_address2,
+            $d->shipping_city,
+            $d->shipping_state,
+            $d->shipping_zipcode
+        ];
+
+
+        $name = \uniqid();
+
+        $fp = fopen(storage_path() . '/app/public/'.$name.'.csv', 'w+');
+
+        foreach ($csv as $fields) {
+            fputcsv($fp, $fields);
+        }
+
+        fclose($fp);
+
+        return response()->download(storage_path() . '/app/public/'.$name.'.csv');
+
+    }
+
 }
