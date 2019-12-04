@@ -21,7 +21,7 @@
 
                     @if(!is_null(Auth::user()->donors()->first()->bloodkits()->first()->recieve_date) && Auth::user()->donors()->first()->bloodkits()->first()->status === 1)
                         <a href="{{Route('milkkit_send')}}" class="btn btn-teal-sm mt-1">Request Milk Kit</a>
-                        <a href="{{Route('milkkit_pickup')}}" class="d-none btn btn-teal-sm-outline mt-1">Schedule A Pickup</a>
+                        <a href="{{Route('milkkit_pickup')}}" class=" btn btn-teal-sm-outline mt-1">Schedule A Pickup</a>
                     @endif
 
 
