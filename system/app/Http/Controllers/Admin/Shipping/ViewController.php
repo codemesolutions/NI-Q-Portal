@@ -103,7 +103,7 @@ class ViewController extends Controller
                 } ,
                 'Created Date' => 'created_at'
             ],
-            'rows' => \App\Shipping::all()
+            'rows' => \App\Shipping::where('type', 'send')->get()
         ];
 
         $page['update_route'] = "";
