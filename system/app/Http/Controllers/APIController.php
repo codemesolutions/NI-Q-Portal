@@ -129,7 +129,7 @@ class APIController extends Controller
 
                 else{
 
-                    if(is_null($m->recieve_date) && !is_null($mk->ReceiveDate)){
+                    if(is_null($m) && !is_null($mk->ReceiveDate)){
                         mail(
                             $donor->user_id->email,
                             'NI-Q - We have received your result.  You can now request a milk kit.',
