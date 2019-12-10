@@ -69,6 +69,7 @@ Route::get('/admin/donors/export', 'Admin\Donor\ActionController@export')->name(
 
 // admin User
 Route::get('/admin/users', 'Admin\User\ViewController@list')->name('admin.users');
+Route::get('/admin/api/users', 'Admin\User\ViewController@apiList');
 Route::get('/admin/users/user', 'Admin\User\ViewController@single')->name('admin.user');
 Route::get('/admin/user/create', 'Admin\User\ViewController@create')->name('admin.user.create');
 Route::get('/admin/user/update', 'Admin\User\ViewController@update')->name('admin.user.update');

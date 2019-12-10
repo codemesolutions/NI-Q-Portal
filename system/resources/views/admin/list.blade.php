@@ -6,8 +6,10 @@
      <div class="bg-gradient-dark border-bottom-dark px-3 py-3 border-top row m-0 align-items-center">
         <p class="m-0 text-uppercase text-white" >{!!$title!!} </p>
         <div class="col p-0 form row m-0 ml-auto pl-5">
-            <input type="search" name="search" class="form-control form-control-dark col table-search " placeholder="search"/>
-
+            <form class="col row m-0">
+            <input type="search" name="search" class="form-control form-control-dark col " placeholder="search" value="{{$request->query('search')}}"/>
+            <button class="btn btn-primary btn-sm ml-1">Search</button>
+            </form>
 
             <div class="row align-items-center pl-5 m-0">
                 @if(isset($show_map) && $show_map && isset($map_route))
@@ -99,10 +101,10 @@
             @endif
         </div>
          @else
-            <div class="mx-auto w-75 mt-5 p-5 text-center bg-white border">
-                <h5 class="m-0">Uh Oh!.  Looks like there is no data available for display.</h5>
+            <div class="mx-auto w-50 mt-5 p-5 text-center">
+                <h5 class="m-0">No Records Found!</h5>
                 <p class="mb-4 small text-muted">You can get started creating new records by clicking the button below</p>
-                <a class="btn btn-primary px-4 mx-auto" href={{$create_route}}><i class="fas fa-plus"></i> Create</a>
+                <a class="btn btn-primary btn-sm px-4 mx-auto" href={{$create_route}}><i class="fas fa-plus"></i> Create</a>
             </div>
         @endif
     </div>

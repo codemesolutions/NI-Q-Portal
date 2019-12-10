@@ -33,6 +33,13 @@
                 </button>
             </div>
         @endif
+
+        <div class="alert alert-warning alert-dismissible fade show mb-4 rounded-0 " role="alert">
+            Schedule a pickup is under construction.  Please drop of your Milk Kit at the nearest FedEX Drop Off Location Monday - Thursday 7:30am to 5pm.  We apoligize for any inconvience this may cause.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
         <div class="row m-0 justify-content-center">
 
              <div class="col-12 row m-0 p-0">
@@ -264,4 +271,20 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="pickup-message" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h6 class="modal-title font-weight-bold" id="exampleModalLabel">Schedule A Pickup Information</h6>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body p-4">
+          Schedule a pickup is under construction.  Please drop of your Milk Kit at the nearest FedEX Drop Off Location Monday - Thursday 7:30am to 5pm.  We apoligize for any inconvience this may cause.
+        </div>
+
+      </div>
+    </div>
+  </div>
 @endsection

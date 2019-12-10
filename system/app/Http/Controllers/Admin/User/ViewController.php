@@ -28,19 +28,35 @@ class ViewController extends Controller
 
     public function list(Request $request)
     {
-       
+
         $page = $this->getPage($request);
+
+        if(!$request->has('search')){
+            $dataset = User::paginate(50);
+        }
+
+        else{
+            $dataset = User::where('first_name', "LIKE", "%".$request->query('search')."%")
+                ->orWhere('last_name', "LIKE", "%".$request->query('search')."%")
+                ->orWhere('email', "LIKE", "%".$request->query('search')."%")->get();
+        }
+
 
         $page['datasets']['list'] = [
             'columns' => [
-                'Username' => 'name',
+
                 'First Name' => 'first_name',
                 'Last Name' => 'last_name',
+                'Donor ID' => function($row){
+                    $donor = $row->donors()->first();
+                    return !is_null($donor) ? $row->donors()->first()->donor_number: "";
+                },
+
                 'Username' => 'name',
                 'Email' => 'email',
                 'Created Date' => 'created_at'
             ],
-            'rows' => User::all()
+            'rows' => $dataset
         ];
 
         $page['view_route'] = Route('admin.user');
@@ -50,22 +66,26 @@ class ViewController extends Controller
         return view($page['template'], $page);
     }
 
+    public function apiList(Request $request){
+        return response()->json(User::all());
+    }
+
     public function single(Request $request)
     {
-       
+
         $id = $request->query('id');
-        
+
         $page = $this->getPage($request);
 
-       
+
         $results = User::where('id', $id)->first();
-       
-        
+
+
         if(is_null($results)){
             abort(404);
         }
 
-        
+
         $page['data_item'] = $results;
 
         $page['view_route'] = "";
@@ -81,7 +101,7 @@ class ViewController extends Controller
         $page = $this->getPage($request);
 
         $page['form_action_route'] = 'admin.user.create';
-        
+
         $page['fields'][] = [
             'name' => 'name',
             'type' => 'text',
@@ -158,9 +178,9 @@ class ViewController extends Controller
 
     public function update(Request $request)
     {
-       
+
         $user = User::where('id', $request->query('id'))->firstOrFail();
-       
+
         $page = $this->getPage($request);
 
         $page['form_action_route'] = 'admin.user.update';
@@ -228,7 +248,7 @@ class ViewController extends Controller
         ];
 
         foreach(Permission::all() as $perm){
-            
+
             if(!is_null($user->permissions()->where('permissions.id', $perm->id)->first())){
                 $page['fields']['roles']['options'][] = [
                     'name' => $perm->name,
@@ -242,10 +262,10 @@ class ViewController extends Controller
                     'name' => $perm->name,
                     'value' => $perm->id,
                     'selected' => false,
-                    
+
                 ];
             }
-           
+
         }
 
         $page['fields'][] = [

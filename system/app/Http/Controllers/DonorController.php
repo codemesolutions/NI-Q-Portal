@@ -102,6 +102,7 @@ class DonorController extends Controller
             if(is_null(\App\Shipping::where('donor_id', $request->user()->donors()->first()->id)->where('type', 'pickup')->first())){
 
                 $createPickupRequest = new PComplexType\CreatePickupRequest();
+
                 // Authentication & client details.
                 $createPickupRequest->WebAuthenticationDetail->UserCredential->Key = FEDEX_KEY;
                 $createPickupRequest->WebAuthenticationDetail->UserCredential->Password = FEDEX_PASSWORD;
@@ -154,6 +155,7 @@ class DonorController extends Controller
                 $createPickupRequest->CountryRelationship = PSimpleType\CountryRelationshipType::_DOMESTIC;
                 //$createPickupRequest->PickupServiceCategory = PSimpleType\PickupServiceCategoryType::_FEDEX_NEXT_DAY_EARLY_MORNING;
                 $_request = new PRequest();
+                $_request->getSoapClient()->__setLocation(PRequest::PRODUCTION_URL);
                 $trackingID = null;
 
                 try {

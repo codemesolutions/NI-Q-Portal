@@ -30,9 +30,19 @@ class ViewController extends Controller
 
     public function list(Request $request)
     {
-       
-        
+
+
         $page = $this->getPage($request);
+
+        if(!$request->has('search')){
+            $dataset = Donor::paginate(50);
+        }
+
+        else{
+            $dataset =  Donor::all();
+
+
+        }
 
         $page['datasets']['list'] = [
             'columns' => [
@@ -56,7 +66,7 @@ class ViewController extends Controller
                     }
                 },
             ],
-            'rows' => Donor::all()
+            'rows' => $dataset
         ];
 
         $page['view_route'] = "/admin/donors/donor";
@@ -72,15 +82,15 @@ class ViewController extends Controller
         $donorID = $request->query('id');
         $page = $this->getPage($request);
 
-       
+
         $donor = Donor::where('id', $donorID)->first();
-       
-        
+
+
         if(is_null($donor)){
             abort(404);
         }
 
-        
+
         $page['donor'] = $donor;
 
         $page['view_route'] = "";
@@ -111,7 +121,7 @@ class ViewController extends Controller
                 'selected' => false
             ];
         }
-        
+
         $page['fields'][] = [
             'name' => 'date_of_birth',
             'type' => 'text',
@@ -119,7 +129,7 @@ class ViewController extends Controller
             'helper' => 'Please enter your date of birth (01/01/1999)',
             'value' => old('date_of_birth')
         ];
-     
+
         $page['fields'][] = [
             'name' => 'mailing_address',
             'type' => 'text',
@@ -226,7 +236,7 @@ class ViewController extends Controller
             'value' => old('use_mailing_address'),
             'checked' => false
         ];
-       
+
 
         $page['fields'][] = [
             'name' => 'active',
@@ -281,9 +291,9 @@ class ViewController extends Controller
                     'selected' => false
                 ];
             }
-          
+
         }
-        
+
         $page['fields'][] = [
             'name' => 'date_of_birth',
             'type' => 'text',
@@ -291,7 +301,7 @@ class ViewController extends Controller
             'helper' => 'Please enter your date of birth (01/01/1999)',
             'value' => is_null(old('date_of_birth')) ? $donor->date_of_birth: old('date_of_birth')
         ];
-     
+
         $page['fields'][] = [
             'name' => 'mailing_address',
             'type' => 'text',
@@ -390,7 +400,7 @@ class ViewController extends Controller
             'value' => is_null(old('notes')) ? $donor->notes: old('notes')
         ];
 
-     
+
 
         $page['fields'][] = [
             'name' => 'consent_form',
@@ -399,7 +409,7 @@ class ViewController extends Controller
             'value' => is_null(old('consent_form')) ? $donor->consent_form: old('consent_form'),
             'checked' => $donor->consent_form
         ];
-        
+
 
         $page['fields'][] = [
             'name' => 'financial_form',
@@ -409,7 +419,7 @@ class ViewController extends Controller
             'checked' => $donor->financial_form
         ];
 
-       
+
 
         $page['fields'][] = [
             'name' => 'active',

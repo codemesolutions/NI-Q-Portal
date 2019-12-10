@@ -25,8 +25,10 @@
 </head>
 <body>
 
-
-
+<div class="loader">
+    <h1>Loading...</h1>
+</div>
+<div class="page h-100">
  @include('admin.layouts.header')
 
    <div class="row m-0" style="height: calc(100% - 77px);" >
@@ -57,9 +59,17 @@
         </div>
    </div>
 
-
-
+   <script>
+        document.querySelector('.page').style.display="none";
+        document.querySelector('.loader').style.display="block";
+        window.onload = function(){
+            document.querySelector('.page').style.display="block";
+            document.querySelector('.loader').style.display="none";
+        }
+   </script>
+</div>
     @include('admin.layouts.footer')
+
 
 
 

@@ -29,4 +29,8 @@ class Donor extends Model
     public function getUserIdAttribute($value){
         return User::where('id', $value)->first();
     }
+
+    public function users(){
+        return $this->belongsTo(User::class);
+    }
 }
