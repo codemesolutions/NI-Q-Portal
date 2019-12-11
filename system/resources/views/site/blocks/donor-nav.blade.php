@@ -20,8 +20,8 @@
                 @if(!is_null(Auth::user()->donors()->first()) && Auth::user()->donors()->first()->bloodkits()->count() > 0)
 
                     @if(!is_null(Auth::user()->donors()->first()->bloodkits()->first()->recieve_date) && Auth::user()->donors()->first()->bloodkits()->first()->status === 1)
-                        <a href="{{Route('milkkit_send')}}" class="btn btn-teal-sm mt-1">Request Milk Kit</a>
-                        <button type="button" class="btn btn-teal-sm-outline mt-1" data-toggle="modal" data-target="#pickup-message">
+                        <a href="{{Route('milkkit_send')}}" class="d-none d-md-inline-block btn btn-teal-sm mt-1">Request Milk Kit</a>
+                        <button type="button" class="d-none d-md-inline-block btn btn-teal-sm-outline mt-1" data-toggle="modal" data-target="#pickup-message">
                             Schedule A Pickup
                         </button>
                         <a href="{{Route('milkkit_pickup')}}" class="d-none btn btn-teal-sm-outline mt-1">Schedule A Pickup</a>
@@ -33,7 +33,6 @@
 
 
                 @endif
-
 
                  <a class="btn btn-teal-sm mt-1  ml-3 mr-2 mr-md-0" href="{{ route('logout') }}"
                         onclick="event.preventDefault();
@@ -47,21 +46,27 @@
         </div>
     </div>
 </div>
- <div style="margin-top: -1.5rem; border-top: #111 1px solid; " class="collapse navbar-collapse bg-dark donor-nav-dropdown mb-4" id="navbarTogglerDemo01">
+ <div style=" border-top: #111 1px solid; " class="collapse navbar-collapse bg-dark donor-nav-dropdown mb-4" id="navbarTogglerDemo01">
 
         <ul class="nav flex-column p-0 text-white">
 
-            @foreach($donor_menu->items()->get() as $item)
+             @foreach($donor_menu->items()->orderBy('created_at')->get() as $item)
                 @foreach($userPermissions as $permmission)
                     @if(!is_null($item->permissions()->where('name', $permmission->name)->first()))
-                     <li class="nav-item p-0">
-                        <div class="container">
-                            <a class="nav-link" href="{{Route('home')}}"> Home</a>
-                        </div>
-                    </li>
+                        <li class="nav-item"><a class="nav-link" href="{{url($item->path)}}">{{$item->name}}</a></li>
+                        @php break; @endphp
                     @endif
                 @endforeach
             @endforeach
+            @if(!is_null(Auth::user()->donors()->first()) && Auth::user()->donors()->first()->bloodkits()->count() > 0)
+
+                @if(!is_null(Auth::user()->donors()->first()->bloodkits()->first()->recieve_date) && Auth::user()->donors()->first()->bloodkits()->first()->status === 1)
+                <li class="nav-item"><a href="{{Route('milkkit_send')}}" class="nav-link">Request Milk Kit</a></li>
+                <li class="nav-item"> <a class="nav-link" data-toggle="modal" data-target="#pickup-message">Schedule A Pickup</a></li>
+                @endif
+            @endif
+
+
         </ul>
 
 </div>
