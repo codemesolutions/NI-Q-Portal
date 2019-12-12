@@ -37,7 +37,15 @@ class ViewsController extends Controller
     {
         $page = $this->getPage($request);
         //$page['sidebarHide'] = true;
-        $page['submissions'] = \App\FormSubmission::where('is_new', true)->where('completed', true)->orderBy('form_id')->get();
+        $page['submissions'] = \App\FormSubmission::where('is_new', true)
+            ->where('completed', true)
+            ->where('form_id', 1)
+            ->orWhere('form_id', 2)
+            ->orWhere('form_id', 3)
+            ->orWhere('form_id', 27)
+            ->orWhere('form_id', 105)
+            ->orderBy('form_id')
+            ->get();
 
         return view($page['template'], $page);
     }
