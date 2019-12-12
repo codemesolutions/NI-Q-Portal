@@ -20,7 +20,10 @@
                 @if(!is_null(Auth::user()->donors()->first()) && Auth::user()->donors()->first()->bloodkits()->count() > 0)
 
                     @if(!is_null(Auth::user()->donors()->first()->bloodkits()->first()->recieve_date) && Auth::user()->donors()->first()->bloodkits()->first()->status === 1)
-                        <a href="{{Route('milkkit_send')}}" class="d-none d-md-inline-block btn btn-teal-sm mt-1">Request Milk Kit</a>
+                        <a href="{{Route('milkkit_send')}}" class="d-none btn btn-teal-sm mt-1">Request Milk Kit</a>
+                        <button type="button" class="d-none d-md-inline-block btn btn-teal-sm mt-1" data-toggle="modal" data-target="#request-milkkit">
+                            Request Milk Kit
+                        </button>
                         <button type="button" class="d-none d-md-inline-block btn btn-teal-sm-outline mt-1" data-toggle="modal" data-target="#pickup-message">
                             Schedule A Pickup
                         </button>
@@ -61,7 +64,7 @@
             @if(!is_null(Auth::user()->donors()->first()) && Auth::user()->donors()->first()->bloodkits()->count() > 0)
 
                 @if(!is_null(Auth::user()->donors()->first()->bloodkits()->first()->recieve_date) && Auth::user()->donors()->first()->bloodkits()->first()->status === 1)
-                <li class="nav-item"><a href="{{Route('milkkit_send')}}" class="nav-link">Request Milk Kit</a></li>
+                <li class="nav-item"><a class="nav-link" data-toggle="modal" data-target="#request-milkkit">Request Milk Kit</a></li>
                 <li class="nav-item"> <a class="nav-link" data-toggle="modal" data-target="#pickup-message">Schedule A Pickup</a></li>
                 @endif
             @endif

@@ -101,6 +101,7 @@ class ViewController extends Controller
 
                     return $row->donor()->first()->shipping_zipcode;
                 } ,
+                'Quantity' => 'qty',
                 'Created Date' => 'created_at'
             ],
             'rows' => \App\Shipping::where('type', 'send')->get()
@@ -239,8 +240,8 @@ class ViewController extends Controller
 
 
         foreach($request->input('exports') as $donor){
-
-            $d = Donor::where('id', \App\Shipping::where('id', $donor)->first()->donor_id)->first();
+            $shipRecord = \App\Shipping::where('id', $donor)->first();
+            $d = Donor::where('id', $shipRecord->donor_id)->first();
 
             $csv[] = [
                 $d->donor_number,
@@ -253,8 +254,8 @@ class ViewController extends Controller
                 $d->shipping_address2,
                 $d->shipping_city,
                 $d->shipping_state,
-                $d->shipping_zipcode
-
+                $d->shipping_zipcode,
+                $shipRecord->qty
             ];
 
             \App\Shipping::where('id', $donor)->delete();

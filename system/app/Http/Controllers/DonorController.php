@@ -81,6 +81,7 @@ class DonorController extends Controller
                 $user = new \App\Shipping();
                 $user->type = "send";
                 $user->donor_id  = $request->user()->donors()->first()->id;
+                $user->qty = $request->input('qty');
                 $user->save();
                 return redirect()->back()->with('success', "Milk Kit Request Sent");
             }

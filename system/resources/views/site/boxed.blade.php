@@ -287,4 +287,24 @@
       </div>
     </div>
   </div>
+  <div class="modal fade" id="request-milkkit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog model-center rounded-0 border-0" role="document">
+      <div class="modal-content rounded-0 border-0">
+        <div class="modal-header bg-teal rounded-0">
+          <h6 class="modal-title font-weight-bold " id="exampleModalLabel">How many milk kits would you like?</h6>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body p-4 border-right">
+            <form action="{{Route('milkkit_send')}}">
+                <label>Please enter the quantity of milk kits you would like sent to you?</label>
+                <input type="number" name="qty" class="form-control" value="1"/>
+                <button class="btn btn-dark mt-3 btn-block btn-sm">Request</button>
+            </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
 @endsection
