@@ -73,12 +73,15 @@ Route::get('/admin/api/users', 'Admin\User\ViewController@apiList');
 Route::get('/admin/users/user', 'Admin\User\ViewController@single')->name('admin.user');
 Route::get('/admin/user/create', 'Admin\User\ViewController@create')->name('admin.user.create');
 Route::get('/admin/user/update', 'Admin\User\ViewController@update')->name('admin.user.update');
-Route::post('/admin/user/account/update', 'Admin\User\ActionController@updateAccount')->name('admin.user.account.update');
+
 Route::get('/admin/user/delete', 'Admin\User\ActionController@delete')->name('admin.user.delete');
 Route::get('/admin/user/login', 'Admin\User\ActionController@login')->name('admin.user.login');
 Route::post('/admin/user/create', 'Admin\User\ActionController@create')->name('admin.user.create');
 Route::post('/admin/user/update', 'Admin\User\ActionController@update')->name('admin.user.update');
 
+Route::post('/admin/user/account/update/user', 'Admin\User\ActionController@updateUserAccount')->name('admin.user.account.update');
+Route::post('/admin/user/account/update/mailing', 'Admin\User\ActionController@updateUserAccountMailing')->name('admin.user.account.update.mailing');
+Route::post('/admin/user/account/update/shipping', 'Admin\User\ActionController@updateUserAccountShipping')->name('admin.user.account.update.shipping');
 // admin Notifications
 Route::get('/admin/notifications', 'Admin\Notification\ViewController@list')->name('admin.notifications');
 Route::get('/admin/notifications/notification', 'Admin\Notification\ViewController@single')->name('admin.notification');

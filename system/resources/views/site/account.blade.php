@@ -139,6 +139,164 @@
                 </div>
 
             </div>
+            @if(!is_null(Auth::user()->donors()->first()))
+            <div class="col-md-12 p-0 mb-3 notifications">
+                <div class="row m-0">
+                    <form class="w-100 p-5 bg-white border" method="post" action="{{Route('admin.user.account.update.mailing')}}">
+                        <div class="row m-0">
+                            <div class="col-12 mb-5 text-center text-md-left ">
+                                <h6 class="m-0 d-inline">Mailing Address Information</h6>
+                            </div>
+                            <div class="w-100 row m-0 px-md-3">
+
+                                <div class="col-12 row m-0 p-2">
+                                     <div class="form-group col-12 col-md-6 mb-4 px-4">
+                                        <label>Mailing Address:</label>
+                                        <input class="form-control" type="text" name="mailing_address" value="{{Auth::user()->donors()->first()->mailing_address}}"/>
+                                        @error('mailing_address')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+
+                                    </div>
+                                    <div class="form-group col-12 col-md-6 mb-4 px-4">
+                                        <label>Mailing Address Line 2:</label>
+                                        <input class="form-control" type="text" name="mailing_address2" value="{{Auth::user()->donors()->first()->mailing_address2}}"/>
+                                        @error('mailing_address2')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+
+                                    </div>
+
+
+                                    <div class="form-group col-12 col-md-6 mb-4 px-4">
+                                        <label>Mailing Address City:</label>
+                                        <input class="form-control" type="text" name="mailing_city" value="{{Auth::user()->donors()->first()->mailing_city}}"/>
+                                        @error('mailing_city')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+
+                                    </div>
+                                    <div class="form-group col-12 col-md-6 mb-4 px-4">
+                                        <label>Mailing Address State:</label>
+                                        <input class="form-control" type="text" name="mailing_state" value="{{Auth::user()->donors()->first()->mailing_state}}"/>
+                                        @error('mailing_state')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+
+                                    </div>
+                                    <div class="form-group col-12 col-md-6 mb-4 px-4">
+                                        <label>Mailing Address Zip Code:</label>
+                                        <input class="form-control" type="text" name="mailing_zipcode" value="{{Auth::user()->donors()->first()->mailing_zipcode}}"/>
+                                        @error('mailing_zipcode')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+
+                                    </div>
+
+                                    @csrf
+
+                                    <input type="hidden" name="id" value="{{Auth::user()->id}}"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row m-0 w-100 mt-5">
+
+                            <button class="btn btn-teal ml-auto">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            @endif
+            @if(!is_null(Auth::user()->donors()->first()))
+            <div class="col-md-12 p-0 mb-3 notifications">
+                <div class="row m-0">
+                    <form class="w-100 p-5 bg-white border" method="post" action="{{Route('admin.user.account.update.shipping')}}">
+                        <div class="row m-0">
+                            <div class="col-12 mb-5 text-center text-md-left ">
+                                <h6 class="m-0 d-inline">Shipping Address Information</h6>
+                            </div>
+                            <div class="w-100 row m-0 px-md-3">
+
+                                <div class="col-12 row m-0 p-2">
+                                     <div class="form-group col-12 col-md-6 mb-4 px-4">
+                                        <label>Shipping Address:</label>
+                                        <input class="form-control" type="text" name="shipping_address" value="{{Auth::user()->donors()->first()->shipping_address}}"/>
+                                        @error('shipping_address')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+
+                                    </div>
+                                    <div class="form-group col-12 col-md-6 mb-4 px-4">
+                                        <label>Shipping Address Line 2:</label>
+                                        <input class="form-control" type="text" name="shipping_address2" value="{{Auth::user()->donors()->first()->shipping_address2}}"/>
+                                        @error('shipping_address2')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+
+                                    </div>
+
+
+                                    <div class="form-group col-12 col-md-6 mb-4 px-4">
+                                        <label>Shipping Address City:</label>
+                                        <input class="form-control" type="text" name="shipping_city" value="{{Auth::user()->donors()->first()->shipping_city}}"/>
+                                        @error('shipping_city')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+
+                                    </div>
+                                    <div class="form-group col-12 col-md-6 mb-4 px-4">
+                                        <label>Shipping Address State:</label>
+                                        <input class="form-control" type="text" name="shipping_state" value="{{Auth::user()->donors()->first()->shipping_state}}"/>
+                                        @error('shipping_state')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+
+                                    </div>
+                                    <div class="form-group col-12 col-md-6 mb-4 px-4">
+                                        <label>Shipping Address Zip Code:</label>
+                                        <input class="form-control" type="text" name="shipping_zipcode" value="{{Auth::user()->donors()->first()->shipping_zipcode}}"/>
+                                        @error('shipping_zipcode')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+
+                                    </div>
+
+                                    @csrf
+
+                                    <input type="hidden" name="id" value="{{Auth::user()->id}}"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row m-0 w-100 mt-5">
+
+                            <button class="btn btn-teal ml-auto">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            @endif
 
 
         </div>

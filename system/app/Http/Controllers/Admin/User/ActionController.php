@@ -117,14 +117,14 @@ class ActionController extends Controller
 
     }
 
-    public function updateAccount(Request $request){
-
+    public function updateUserAccount(Request $request){
 
         $validator = Validator::make($request->all(), [
 
-            'first_name' => ['required', 'string', 'max:255'],
-            'last_name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255'],
+            'first_name' => ['sometimes', 'string', 'max:255'],
+            'last_name' => ['sometimes', 'string', 'max:255'],
+            'email' => ['sometimes', 'string', 'email', 'max:255'],
+
         ]);
 
 
@@ -154,13 +154,101 @@ class ActionController extends Controller
 
             $user->update();
 
-
+            $donor = \App\Donor::where('user_id', $user->id)->first();
+            $donor->mailing_address= $request->input('mailing_address');
+            $donor->mailing_address2= $request->input('mailing_address2');
+            $donor->mailing_city= $request->input('mailing_city');
+            $donor->mailing_state= $request->input('mailing_state');
+            $donor->mailing_zipcode= $request->input('mailing_zipcode');
+            $donor->shipping_address= $request->input('shipping_address');
+            $donor->shipping_address2= $request->input('shipping_address2');
+            $donor->shipping_city= $request->input('shipping_city');
+            $donor->shipping_state= $request->input('shipping_state');
+            $donor->shipping_zipcode= $request->input('shipping_zipcode');
+            $donor->update();
 
             return redirect('/account')->with('success','User updated successfully!');
         }
 
     }
 
+    public function updateUserAccountShipping(Request $request){
+
+        $validator = Validator::make($request->all(), [
+
+
+            'shipping_address' => ['sometimes', 'string'],
+            'shipping_city' => ['sometimes',  'string'],
+            'shipping_state' => ['sometimes',  'string'],
+            'shipping_zipcode' => [ 'sometimes', 'numeric'],
+        ]);
+
+
+
+        if ($validator->fails()) {
+
+            return redirect()->back()
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+
+
+
+        else{
+
+
+            $donor = \App\Donor::where('user_id', $request->user()->id)->first();
+
+            $donor->shipping_address= $request->input('shipping_address');
+            $donor->shipping_address2= $request->input('shipping_address2');
+            $donor->shipping_city= $request->input('shipping_city');
+            $donor->shipping_state= $request->input('shipping_state');
+            $donor->shipping_zipcode= $request->input('shipping_zipcode');
+            $donor->update();
+
+            return redirect('/account')->with('success','User updated successfully!');
+        }
+
+    }
+
+    public function updateUserAccountMailing(Request $request){
+
+        $validator = Validator::make($request->all(), [
+
+
+            'mailing_address' => ['required', 'string'],
+            'mailing_city' => ['required', 'string'],
+            'mailing_state' => ['required', 'string'],
+            'mailing_zipcode' => ['required', 'numeric'],
+        ]);
+
+
+
+        if ($validator->fails()) {
+
+            return redirect()->back()
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+
+
+
+        else{
+
+
+            $donor = \App\Donor::where('user_id', $request->user()->id)->first();
+
+            $donor->mailing_address= $request->input('mailing_address');
+            $donor->mailing_address2= $request->input('mailing_address2');
+            $donor->mailing_city= $request->input('mailing_city');
+            $donor->mailing_state= $request->input('mailing_state');
+            $donor->mailing_zipcode= $request->input('mailing_zipcode');
+            $donor->update();
+
+            return redirect('/account')->with('success','User updated successfully!');
+        }
+
+    }
 
     public function delete(Request $request){
         $form = \App\User::where('id', $request->query('id'))->firstOrFail();
