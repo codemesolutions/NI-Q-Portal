@@ -24,7 +24,7 @@
 
                     <div class="col-12 p-0 row m-0">
                         <div class="col-12 p-0">
-                            <div class="border-bottom p-5">
+                            <div class="border-bottom p-5 mb-4">
                                 <div class="row m-0 bg-gradient border-top border-left border-right p-3">
                                     <p class="m-0">User Information</p>
                                 </div>
@@ -80,7 +80,7 @@
 
                           @if($data_item->permissions()->count() > 0)
                         <div class="col-12 p-0">
-                            <div class="p-5">
+                            <div class="px-5">
                                 <div class="row m-0 bg-gradient border border-bottom-0 p-3">
                                     <p class="m-0">User Permissions({{$data_item->permissions()->count()}})</p>
                                 </div>
@@ -99,7 +99,7 @@
 
                         @if($data_item->submissions()->count() > 0)
                         <div class="col-12 p-0">
-                            <div class="p-5">
+                            <div class="px-5">
                                 <div class="row m-0 bg-gradient border border-bottom-0 p-3">
                                     <p class="m-0">User Submissions({{$data_item->submissions()->count()}})</p>
                                 </div>
@@ -118,7 +118,72 @@
 
 
 
+                        <div class="col-6 p-0 mb-5">
+                            <div class="pl-5">
+                                <div class="row m-0 bg-gradient border-top border-left border-right p-3">
+                                    <p class="m-0">Donor Mailing Address</p>
+                                </div>
+                                <table class="table bg-white border-left border-right">
+                                    <tbody>
+                                        <tr>
+                                            <td style="width: 200px;background: #f5f5f5; border-right: #ddd 1px solid;border-bottom: #ddd 1px solid;">Address</td>
+                                            <td>{{$data_item->donors()->first()->mailing_address}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 200px;background: #f5f5f5; border-right: #ddd 1px solid;border-bottom: #ddd 1px solid;">Address 2</td>
+                                            <td>{{$data_item->donors()->first()->mailing_address2}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 200px;background: #f5f5f5; border-right: #ddd 1px solid;border-bottom: #ddd 1px solid;">City</td>
+                                            <td>{{$data_item->donors()->first()->mailing_city}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 200px;background: #f5f5f5; border-right: #ddd 1px solid;border-bottom: #ddd 1px solid;">State</td>
+                                            <td>{{$data_item->donors()->first()->mailing_state}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 200px;background: #f5f5f5; border-right: #ddd 1px solid;border-bottom: #ddd 1px solid;">Zip Code</td>
+                                            <td>{{$data_item->donors()->first()->mailing_zipcode}}</td>
+                                        </tr>
 
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-6 p-0 mb-5">
+                            <div class="  pr-5 pl-3">
+                                <div class="row m-0 bg-gradient border-top border-left border-right p-3">
+                                    <p class="m-0">Donor Shipping Address</p>
+                                </div>
+                                <table class="table bg-white border-left border-right">
+                                    <tbody>
+                                        <tr>
+                                            <td style="width: 200px;background: #f5f5f5; border-right: #ddd 1px solid;border-bottom: #ddd 1px solid;">Address</td>
+                                            <td>{{$data_item->donors()->first()->shipping_address}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 200px;background: #f5f5f5; border-right: #ddd 1px solid;border-bottom: #ddd 1px solid;">Address 2</td>
+                                            <td>{{$data_item->donors()->first()->shipping_address2}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 200px;background: #f5f5f5; border-right: #ddd 1px solid;border-bottom: #ddd 1px solid;">City</td>
+                                            <td>{{$data_item->donors()->first()->shipping_city}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 200px;background: #f5f5f5; border-right: #ddd 1px solid;border-bottom: #ddd 1px solid;">State</td>
+                                            <td>{{$data_item->donors()->first()->shipping_state}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 200px;background: #f5f5f5; border-right: #ddd 1px solid;border-bottom: #ddd 1px solid;">Zip Code</td>
+                                            <td>{{$data_item->donors()->first()->shipping_zipcode}}</td>
+                                        </tr>
+
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
 
 
 
