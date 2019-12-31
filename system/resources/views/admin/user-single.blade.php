@@ -117,7 +117,7 @@
                         @endif
 
 
-
+                        @if(!is_null($data_item->donors()->first()))
                         <div class="col-6 p-0 mb-5">
                             <div class="pl-5">
                                 <div class="row m-0 bg-gradient border-top border-left border-right p-3">
@@ -151,6 +151,7 @@
                                 </table>
                             </div>
                         </div>
+
                         <div class="col-6 p-0 mb-5">
                             <div class="  pr-5 pl-3">
                                 <div class="row m-0 bg-gradient border-top border-left border-right p-3">
@@ -185,7 +186,7 @@
                             </div>
                         </div>
 
-
+                    @endif
 
                 </div>
             </div>
