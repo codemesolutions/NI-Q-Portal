@@ -34,7 +34,7 @@
             </div>
         @endif
 
-        <div class="alert alert-warning alert-dismissible fade show mb-4 rounded-0 " role="alert">
+        <div class="d-none alert alert-warning alert-dismissible fade show mb-4 rounded-0 " role="alert">
             Schedule a pickup is under construction.  Please drop of your Milk Kit at the nearest FedEX Drop Off Location Monday - Thursday 7:30am to 5pm.  We apoligize for any inconvience this may cause.
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
