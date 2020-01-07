@@ -17,17 +17,18 @@
 
                 </ul>
 
-                @if(!is_null(Auth::user()->donors()->first()) && Auth::user()->donors()->first()->bloodkits()->count() > 0)
-
-                    @if(!is_null(Auth::user()->donors()->first()->bloodkits()->first()->recieve_date) && Auth::user()->donors()->first()->bloodkits()->first()->status === 1)
-                        <a href="{{Route('milkkit_send')}}" class="d-none btn btn-teal-sm mt-1">Request Milk Kit</a>
-                        <button type="button" class="d-none d-md-inline-block btn btn-teal-sm mt-1" data-toggle="modal" data-target="#request-milkkit">
-                            Request Milk Kit
-                        </button>
-                        <button type="button" class="d-none d-md-inline-block btn btn-teal-sm-outline mt-1" data-toggle="modal" data-target="#pickup-message">
-                            Schedule A Pickup
-                        </button>
-                        <a href="{{Route('milkkit_pickup')}}" class="d-none btn btn-teal-sm-outline mt-1">Schedule A Pickup</a>
+                @if(!is_null(Auth::user()->donors()->first()) && Auth::user()->donors()->first()->milkkits()->count() > 0 &&  Auth::user()->donors()->first()->bloodkits()->count() > 0)
+                    @if(Auth::user()->donors()->first()->milkkits()->where('active', true)->whereNotNull('finalized_date')->first())
+                        @if(!is_null(Auth::user()->donors()->first()->bloodkits()->first()->recieve_date) && Auth::user()->donors()->first()->bloodkits()->first()->status === 1)
+                            <a href="{{Route('milkkit_send')}}" class="d-none btn btn-teal-sm mt-1">Request Milk Kit</a>
+                            <button type="button" class="d-none d-md-inline-block btn btn-teal-sm mt-1" data-toggle="modal" data-target="#request-milkkit">
+                                Request Milk Kit
+                            </button>
+                            <button type="button" class="d-none d-md-inline-block btn btn-teal-sm-outline mt-1" data-toggle="modal" data-target="#pickup-message">
+                                Schedule A Pickup
+                            </button>
+                            <a href="{{Route('milkkit_pickup')}}" class="d-none btn btn-teal-sm-outline mt-1">Schedule A Pickup</a>
+                        @endif
                     @endif
 
 
