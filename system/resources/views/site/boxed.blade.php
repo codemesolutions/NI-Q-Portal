@@ -215,7 +215,7 @@
                     </div>
                 </div>
             </div>
-            @if(!is_null($request->user()->donors()->first()) && $request->user()->donors()->first()->milkkits()->count() > 0)
+            @if(!is_null($request->user()->donors()->first()) && $request->user()->donors()->first()->milkkits()->whereNotNull('finalized_date')->count() > 0)
              <div class="col p-1">
                 <div class=" bg-white  border  p-5 row m-0 align-items-center justify-content-start">
                    <h6 class="font-weight-light m-0"> Your <span class="font-weight-bold">Milk Kits</span></h6>
@@ -223,6 +223,7 @@
 
                         <ul class="list-group ">
                             @foreach($request->user()->donors()->first()->milkkits()->get() as $k => $mk)
+                                @if(!is_null($mk->finalized_date))
                                 <a class="p-2 rounded-0 mk border" data-toggle="collapse" href="#mk-{{$k}}">
                                     <i class="fas fa-angle-right mr-2"></i>Milk Kit #{{$mk->barcode}} - {{date('m-d-Y', strtotime($mk->received_date))}}
                                 </a>
@@ -234,6 +235,7 @@
                                     @endif
 
                                 </div>
+                                @endif
                             @endforeach
 
                         </ul>
@@ -281,7 +283,7 @@
           </button>
         </div>
         <div class="modal-body p-4">
-          Schedule a pickup is under construction.  Please drop of your Milk Kit at the nearest FedEX Drop Off Location Monday - Thursday 7:30am to 5pm.  We apoligize for any inconvience this may cause.
+            Please have your package ready by 1pm.  If Your Pickup Request is after 1pm your pickup will be scheduled before 1pm on the following day.
         </div>
         <div class="modal-footer">
         <a class="btn btn-dark mt-3 btn-block btn-sm" href="{{Route('milkkit_pickup')}}">Schedule Pickup</a>
