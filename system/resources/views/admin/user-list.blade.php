@@ -73,6 +73,8 @@
                         @if(isset($dataset['rows']))
                             @foreach($dataset['rows'] as $user)
 
+
+
                             <tr class="hover " data-href="{{$view_route}}?id={{$user->id}}">
                                 <td class="px-5 clickable">
                                     <div class="custom-control custom-checkbox">

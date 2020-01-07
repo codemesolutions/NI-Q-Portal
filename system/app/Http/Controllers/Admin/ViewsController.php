@@ -45,7 +45,7 @@ class ViewsController extends Controller
             ->orWhere('form_id', 27)
             ->orWhere('form_id', 105)
             ->orderBy('form_id')
-            ->get();
+            ->paginate(25);
 
         return view($page['template'], $page);
     }

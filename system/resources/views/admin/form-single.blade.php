@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="bg-light  h-100">
+<div class="bg-white h-100">
      <div class="bg-gradient-dark border-bottom-dark border-top px-3 py-3 row m-0 align-items-center">
         <p class="m-0 text-uppercase text-white" >{!!$title!!} </p>
          @if($data_item->questions()->count() == 0)
@@ -25,7 +25,7 @@
                 </button>
             </div>
         @endif
-        <ul class="nav border-bottom align-items-center p-0" id="pills-tab" role="tablist">
+        <ul class="nav  align-items-center p-0 shadow position-relative " id="pills-tab" role="tablist">
             <li class="nav-item">
                 <a class="nav-link {{!$request->has('sub') ? 'active': ''}} text-dark" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Detail</a>
             </li>
@@ -33,11 +33,11 @@
                 <a class="nav-link text-dark {{$request->has('sub') ? 'active show': ''}}" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Submissions</a>
             </li>
         </ul>
-        <div class="tab-content" id="pills-tabContent">
-            <div class="tab-pane fade show {{!$request->has('sub') ? 'active': ''}}" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+        <div class="tab-content bg-image" id="pills-tabContent">
+            <div class="tab-pane bg-image fade show {{!$request->has('sub') ? 'active': ''}}" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
                 <div class="row  m-0 align-items-stretch">
                     <div class="col-12 p-0">
-                        <div class="bg-white  p-5">
+                        <div class="  p-5">
                             <div class="bg-gradient border p-3 border-bottom-0">
                                 <p>Information</p>
                             </div>
@@ -71,7 +71,7 @@
 
                     @if($data_item->questions()->count() > 0)
                         <div class="col p-0 m-0">
-                            <div class="p-5 border-bottom bg-white h-100">
+                            <div class=" h-100">
                                 <div class="bg-gradient  p-3 border row m-0 align-items-center">
                                     <p class="m-0">Form Questions</p>
 
@@ -102,7 +102,7 @@
 
                     @if($data_item->users()->where('action', 'assign')->count() > 0)
                         <div class="col p-0 m-0">
-                            <div class="p-5 border border-top-0 bg-white">
+                            <div class="p-5 ">
                                 <div class="bg-white border  p-3 bg-gradient" >
                                     <p>Assigned Users</p>
                                 </div>
@@ -128,7 +128,7 @@
 
                     @if($data_item->submissions()->where('is_new', true)->where('completed', true)->count() > 0)
                         <div class="col-12 p-0">
-                            <div class="p-5  bg-white">
+                            <div class="p-5  ">
                                 <div class="bg-gradient border  p-3 border-bottom-0">
                                     <p>Form Submissions</p>
                                 </div>
@@ -158,34 +158,36 @@
                 </div>
             </div>
 
-            <div class="tab-pane fade {{$request->has('sub') ? 'active show': ''}}" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+            <div class="tab-pane fade bg-image {{$request->has('sub') ? 'active show': ''}}" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
                 @if($data_item->submissions()->where('is_new', true)->where('completed', true)->count() > 0)
                     <div class="col-12 p-0 pb-5">
-                        <div class="p-5  bg-white">
-                            <div class="bg-gradient border  p-3 border-bottom-0 row m-0 align-items-center">
-                                <p>Submissions</p>
+                        <div class="p-5 ">
+                            <div class="shadow-lg">
+                                <div class="bg-gradient border  p-3 border-bottom-0 row m-0 align-items-center">
+                                    <p>Submissions</p>
 
+                                </div>
+                                <table class="table bg-white border-left border-right  m-0">
+                                    <tbody>
+
+                                        @foreach($subs as $k => $val)
+                                            @if(!is_null($val->user_id))
+                                                <tr>
+
+                                                    <td><a href="/admin/forms/submissions/submission?form={{$data_item->name}}&id={{$val->id}}">{{strip_tags($val->user_id->first_name)}}, {{strip_tags($val->user_id->last_name)}}</a></td>
+                                                    <td>{{$val->is_new == true ? "New":""}}</td>
+                                                    <td>{{$val->completed == true ? "Completed":""}}</td>
+                                                    <td>{{$val->blocked == true ? "Disqualified":""}}</td>
+                                                    <td>{{$val->waited == true ? "Wait Listed":""}}</td>
+
+                                                    <td>{{date('m-d-Y', strtotime($val->user_id->created_at))}}</td>
+                                                </tr>
+                                            @endif
+
+                                        @endforeach
+                                    </tbody>
+                                </table>
                             </div>
-                            <table class="table bg-white border-left border-right  m-0">
-                                <tbody>
-
-                                    @foreach($subs as $k => $val)
-                                        @if(!is_null($val->user_id))
-                                            <tr>
-
-                                                <td><a href="/admin/forms/submissions/submission?form={{$data_item->name}}&id={{$val->id}}">{{strip_tags($val->user_id->first_name)}}, {{strip_tags($val->user_id->last_name)}}</a></td>
-                                                <td>{{$val->is_new == true ? "New":""}}</td>
-                                                <td>{{$val->completed == true ? "Completed":""}}</td>
-                                                <td>{{$val->blocked == true ? "Disqualified":""}}</td>
-                                                <td>{{$val->waited == true ? "Wait Listed":""}}</td>
-
-                                                <td>{{date('m-d-Y', strtotime($val->user_id->created_at))}}</td>
-                                            </tr>
-                                        @endif
-
-                                    @endforeach
-                                </tbody>
-                            </table>
                         </div>
                         <div class="row m-0 justify-content-center">
                         {{ $subs->appends(['id' => $data_item->id, 'sub' => 1])->links() }}

@@ -283,6 +283,9 @@
         <div class="modal-body p-4">
           Schedule a pickup is under construction.  Please drop of your Milk Kit at the nearest FedEX Drop Off Location Monday - Thursday 7:30am to 5pm.  We apoligize for any inconvience this may cause.
         </div>
+        <div class="modal-footer">
+        <a class="btn btn-dark mt-3 btn-block btn-sm" href="{{Route('milkkit_pickup')}}">Schedule Pickup</a>
+        </div>
 
       </div>
     </div>

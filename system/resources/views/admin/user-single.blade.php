@@ -2,12 +2,12 @@
 
 @section('content')
 
-<div class="bg-light h-100">
-     <div class="bg-dark px-3 py-3 row m-0 align-items-center">
+<div class="bg-image h-100">
+     <div class="bg-dark px-3 py-1 row m-0 align-items-center border-top">
         <p class="m-0 text-uppercase text-white" >{!!$title!!} </p>
-        <a href="/admin/user/login?id={{$data_item->id}}" class="btn btn-danger btn-sm ml-auto mr-1 text-white"><i class="fas fa-lock mr-1"></i>Login As User</a>
-        <a href="/admin/user/update?id={{$data_item->id}}" class="btn btn-warning btn-sm  mr-1 text-white"><i class="fas fa-pencil-alt"></i> Edit User</a>
-        <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-trash"></i> Delete User</button>
+        <a href="/admin/user/login?id={{$data_item->id}}" class="btn btn-danger btn-sm ml-auto mr-1 text-white small"><i class="fas fa-lock mr-1"></i>Login As User</a>
+        <a href="/admin/user/update?id={{$data_item->id}}" class="btn btn-warning btn-sm  mr-1 text-white small"><i class="fas fa-pencil-alt"></i> Edit User</a>
+        <button class="btn btn-danger btn-sm small" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-trash"></i> Delete User</button>
     </div>
     <div style="height: calc(100% - 51.2px);" class="overflow-auto">
       @if(Session::has('success'))
@@ -20,177 +20,153 @@
             </div>
         @endif
         <div class=" ">
-                <div class="row  m-0">
+            <div class="row  m-0">
+                <div class="col-12 p-0 row m-0">
+                    <div class="col-12 p-0">
+                        <ul class="nav bg-dark border-top-dark align-items-center p-0  text-white" id="pills-tab" role="tablist">
+                            <li class="nav-item border-right-dark">
+                                <a class="nav-link text-white {{!$request->has('sub') ? 'active': ''}}" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Information</a>
+                            </li>
+                            <li class="nav-item border-right-dark">
+                                <a class="nav-link text-white {{$request->has('sub') ? 'active show': ''}}" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Forms</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content bg-image" id="pills-tabContent">
+                            <div class="tab-pane bg-image fade show {{!$request->has('sub') ? 'active': ''}}" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                                <div class="">
 
-                    <div class="col-12 p-0 row m-0">
-                        <div class="col-12 p-0">
-                            <div class="border-bottom p-5 mb-4">
-                                <div class="row m-0 bg-gradient border-top border-left border-right p-3">
-                                    <p class="m-0">User Information</p>
+                                    <table class="table bg-white border-left border-right m-0">
+                                        <tbody>
+
+                                            <tr>
+                                                <td style="width: 200px;background: #f5f5f5; border-right: #ddd 1px solid; border-bottom: #ddd 1px solid;">First Name</td>
+                                                <td>{{$data_item->first_name}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 200px;background: #f5f5f5; border-right: #ddd 1px solid; border-bottom: #ddd 1px solid;">Last Name</td>
+                                                <td>{{$data_item->last_name}}</td>
+                                            </tr>
+
+                                            <tr>
+                                                <td style="width: 200px;background: #f5f5f5; border-right: #ddd 1px solid; border-bottom: #ddd 1px solid;">Email</td>
+                                                <td>{{$data_item->email}}</td>
+                                            </tr>
+
+                                            <tr>
+                                                <td style="width: 200px;background: #f5f5f5; border-right: #ddd 1px solid; border-bottom: #ddd 1px solid;">Cell Phone</td>
+                                                <td>{{$data_item->cell_phone}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 200px;background: #f5f5f5; border-right: #ddd 1px solid; border-bottom: #ddd 1px solid;">Home Phone</td>
+                                                <td>{{$data_item->home_phone}}</td>
+                                            </tr>
+
+                                            <tr>
+                                                <td style="width: 200px;background: #f5f5f5; border-right: #ddd 1px solid; border-bottom: #ddd 1px solid;">Active</td>
+                                                <td>{!!$data_item->active == true ? '<span class="badge badge-success rounded-0">Active</span>':'<span class="badge badge-danger rounded-0">Inactive</span>'!!}</td>
+                                            </tr>
+
+                                            <tr>
+                                                <td style="width: 200px;background: #f5f5f5; border-right: #ddd 1px solid; border-bottom: #ddd 1px solid;">Permissions</td>
+                                                @if($data_item->permissions()->count() > 1)
+                                                <td class="p-0">@foreach($data_item->permissions()->get() as $perm) <p class="border-bottom pl-3 py-1"><a href="/admin/permissions/permission?id={{$perm->id}}">{{$perm->name}}</a></p> @endforeach</td>
+                                                @elseif($data_item->permissions()->count() === 1)
+                                                <td class=""><a href="/admin/permissions/permission?id={{$data_item->permissions()->first()->id}}">{{$data_item->permissions()->first()->name}}</a></td>
+                                                @elseif($data_item->permissions()->count() === 0)
+                                                <td class="">None Assigned</td>
+                                                @endif
+                                            </tr>
+                                            @if($data_item->donors()->count() >0)
+                                            <tr>
+                                                <td style="width: 200px;background: #f5f5f5; border-right: #ddd 1px solid; border-bottom: #ddd 1px solid;">Donor Number</td>
+                                                <td class="">{{$data_item->donors()->first()->donor_number}}</td>
+
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 200px;background: #f5f5f5; border-right: #ddd 1px solid; border-bottom: #ddd 1px solid;">Mailing Address</td>
+                                                <td class="">
+                                                    <p>{{$data_item->donors()->first()->mailing_address}}</p>
+                                                    <p>{{$data_item->donors()->first()->mailing_address2}}</p>
+                                                    <span>{{$data_item->donors()->first()->mailing_city}},</span>
+                                                    <span>{{$data_item->donors()->first()->mailing_state}},</span>
+                                                    <span>{{$data_item->donors()->first()->mailing_zipcode}}</span>
+                                                </td>
+
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 200px;background: #f5f5f5; border-right: #ddd 1px solid; border-bottom: #ddd 1px solid;">Shipping Address</td>
+                                                <td class="">
+                                                    <p>{{$data_item->donors()->first()->shipping_address}}</p>
+                                                    <p>{{$data_item->donors()->first()->shipping_address2}}</p>
+                                                    <span>{{$data_item->donors()->first()->shipping_city}},</span>
+                                                    <span>{{$data_item->donors()->first()->shipping_state}},</span>
+                                                    <span>{{$data_item->donors()->first()->shipping_zipcode}}</span>
+                                                </td>
+
+                                            </tr>
+
+                                            <tr>
+                                                <td style="width: 200px;background: #f5f5f5; border-right: #ddd 1px solid; border-bottom: #ddd 1px solid;">Mailing City</td>
+                                                <td class="">{{$data_item->donors()->first()->mailing_city}}</td>
+
+                                            </tr>
+                                            @endif
+
+                                            <tr>
+                                                <td style="width: 200px;background: #f5f5f5; border-right: #ddd 1px solid; border-bottom: #ddd 1px solid;">Created Date</td>
+                                                <td>{{$data_item->created_at}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 200px;background: #f5f5f5; border-right: #ddd 1px solid; border-bottom: #ddd 1px solid;">Updated Date</td>
+                                                <td>{{$data_item->updated_at}}</td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
                                 </div>
-                                <table class="table bg-white border-left border-right">
-                                    <tbody>
+                            </div>
+                            <div class="tab-pane bg-image fade {{!$request->has('sub') ? 'active': ''}}" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                                <div class="">
 
-                                        <tr>
-                                            <td style="width: 200px;background: #f5f5f5; border-right: #ddd 1px solid; border-bottom: #ddd 1px solid;">First Name</td>
-                                            <td>{{$data_item->first_name}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td style="width: 200px;background: #f5f5f5; border-right: #ddd 1px solid; border-bottom: #ddd 1px solid;">Last Name</td>
-                                            <td>{{$data_item->last_name}}</td>
-                                        </tr>
+                                    <table class="table  bg-white border-left border-right m-0">
+                                        <tbody>
 
-                                        <tr>
-                                            <td style="width: 200px;background: #f5f5f5; border-right: #ddd 1px solid; border-bottom: #ddd 1px solid;">Email</td>
-                                            <td>{{$data_item->email}}</td>
-                                        </tr>
-
-                                        <tr>
-                                            <td style="width: 200px;background: #f5f5f5; border-right: #ddd 1px solid; border-bottom: #ddd 1px solid;">Cell Phone</td>
-                                            <td>{{$data_item->cell_phone}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td style="width: 200px;background: #f5f5f5; border-right: #ddd 1px solid; border-bottom: #ddd 1px solid;">Home Phone</td>
-                                            <td>{{$data_item->home_phone}}</td>
-                                        </tr>
-
-                                        <tr>
-                                            <td style="width: 200px;background: #f5f5f5; border-right: #ddd 1px solid; border-bottom: #ddd 1px solid;">Active</td>
-                                            <td>{!!$data_item->active == true ? '<span class="badge badge-success rounded-0">Active</span>':'<span class="badge badge-danger rounded-0">Inactive</span>'!!}</td>
-                                        </tr>
+                                            @foreach($data_item->forms()->get() as $form)
+                                                @php $submission = $form->submissions()->where('form_id', $form->id)->where('user_id', $data_item->id)->first(); @endphp
+                                                @if(!is_null($submission))
+                                                <tr>
+                                                    <td style="width: 200px;background: #f5f5f5; border-right: #ddd 1px solid; border-bottom: #ddd 1px solid;"><a class="text-dark" href="/admin/forms/submissions/submission?form={{App\Form::where('id', $submission->form_id)->first()->name}}&id={{$submission->id}}">{{App\Form::where('id', $submission->form_id)->first()->name}}</a></td>
+                                                    <td>Completed: {{$submission->completed === 1 ? 'Yes':'No'}}</td>
+                                                    <td>New: {{$submission->is_new === 1 ? 'Yes':'No'}}</td>
+                                                    <td>Wait Listed: {{$submission->waited === 1 ? 'Yes':'No'}}</td>
+                                                    <td>Disqualified: {{$submission->blocked === 1 ? 'Yes':'No'}}</td>
+                                                    <td>Submission Date: {{date('m/d/Y', strtotime($submission->created_at))}}</td>
+                                                    <td>
+                                                        <div class="dropdown">
+                                                            <button class="btn dropdown-toggle p-0" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                <i class="fas fa-ellipsis-h"></i>
+                                                            </button>
+                                                            <div class="dropdown-menu shadow p-0" aria-labelledby="dropdownMenuButton">
+                                                                <a class="dropdown-item border-bottom" href="/admin/forms/submissions/submission?form={{App\Form::where('id', $submission->form_id)->first()->name}}&id={{$submission->id}}"><i class="fas fa-eye mr-1"></i> View</a>
+                                                                <a class="dropdown-item border-bottom" href="#"><i class="fas fa-sync mr-1"></i> Force Re-Submit</a>
+                                                                <a class="dropdown-item" href="#"><i class="fas fa-lock mr-1"></i> Deny Submission</a>
+                                                            </div>
+                                                        </div>
+                                                    </td>
 
 
-                                        <tr>
-                                            <td style="width: 200px;background: #f5f5f5; border-right: #ddd 1px solid; border-bottom: #ddd 1px solid;">Created Date</td>
-                                            <td>{{$data_item->created_at}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td style="width: 200px;background: #f5f5f5; border-right: #ddd 1px solid; border-bottom: #ddd 1px solid;">Updated Date</td>
-                                            <td>{{$data_item->updated_at}}</td>
-                                        </tr>
+                                                </tr>
+                                                @endif
+                                            @endforeach
 
-                                    </tbody>
-                                </table>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
-
-
-
-
-
-                          @if($data_item->permissions()->count() > 0)
-                        <div class="col-12 p-0">
-                            <div class="px-5">
-                                <div class="row m-0 bg-gradient border border-bottom-0 p-3">
-                                    <p class="m-0">User Permissions({{$data_item->permissions()->count()}})</p>
-                                </div>
-                                <table class="table bg-white border-left border-right">
-                                    <tbody>
-                                        @foreach($data_item->permissions()->get() as $mk)
-                                        <tr>
-                                            <td><a href="/admin/permissions/permission?id={{$mk->id}}">{{$mk->name}}</a></td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        @endif
-
-                        @if($data_item->submissions()->count() > 0)
-                        <div class="col-12 p-0">
-                            <div class="px-5">
-                                <div class="row m-0 bg-gradient border border-bottom-0 p-3">
-                                    <p class="m-0">User Submissions({{$data_item->submissions()->count()}})</p>
-                                </div>
-                                <table class="table bg-white border-left border-right">
-                                    <tbody>
-                                        @foreach($data_item->submissions()->get() as $mk)
-                                        <tr>
-                                            <td><a href="/admin/forms/submissions/submission?form={{\App\Form::where('id', $mk->form_id)->first()->name}}&id={{$mk->id}}">{{\App\Form::where('id',$mk->form_id)->first()->name}} Submission</a></td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        @endif
-
-
-                        @if(!is_null($data_item->donors()->first()))
-                        <div class="col-6 p-0 mb-5">
-                            <div class="pl-5">
-                                <div class="row m-0 bg-gradient border-top border-left border-right p-3">
-                                    <p class="m-0">Donor Mailing Address</p>
-                                </div>
-                                <table class="table bg-white border-left border-right">
-                                    <tbody>
-                                        <tr>
-                                            <td style="width: 200px;background: #f5f5f5; border-right: #ddd 1px solid;border-bottom: #ddd 1px solid;">Address</td>
-                                            <td>{{$data_item->donors()->first()->mailing_address}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td style="width: 200px;background: #f5f5f5; border-right: #ddd 1px solid;border-bottom: #ddd 1px solid;">Address 2</td>
-                                            <td>{{$data_item->donors()->first()->mailing_address2}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td style="width: 200px;background: #f5f5f5; border-right: #ddd 1px solid;border-bottom: #ddd 1px solid;">City</td>
-                                            <td>{{$data_item->donors()->first()->mailing_city}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td style="width: 200px;background: #f5f5f5; border-right: #ddd 1px solid;border-bottom: #ddd 1px solid;">State</td>
-                                            <td>{{$data_item->donors()->first()->mailing_state}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td style="width: 200px;background: #f5f5f5; border-right: #ddd 1px solid;border-bottom: #ddd 1px solid;">Zip Code</td>
-                                            <td>{{$data_item->donors()->first()->mailing_zipcode}}</td>
-                                        </tr>
-
-
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
-                        <div class="col-6 p-0 mb-5">
-                            <div class="  pr-5 pl-3">
-                                <div class="row m-0 bg-gradient border-top border-left border-right p-3">
-                                    <p class="m-0">Donor Shipping Address</p>
-                                </div>
-                                <table class="table bg-white border-left border-right">
-                                    <tbody>
-                                        <tr>
-                                            <td style="width: 200px;background: #f5f5f5; border-right: #ddd 1px solid;border-bottom: #ddd 1px solid;">Address</td>
-                                            <td>{{$data_item->donors()->first()->shipping_address}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td style="width: 200px;background: #f5f5f5; border-right: #ddd 1px solid;border-bottom: #ddd 1px solid;">Address 2</td>
-                                            <td>{{$data_item->donors()->first()->shipping_address2}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td style="width: 200px;background: #f5f5f5; border-right: #ddd 1px solid;border-bottom: #ddd 1px solid;">City</td>
-                                            <td>{{$data_item->donors()->first()->shipping_city}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td style="width: 200px;background: #f5f5f5; border-right: #ddd 1px solid;border-bottom: #ddd 1px solid;">State</td>
-                                            <td>{{$data_item->donors()->first()->shipping_state}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td style="width: 200px;background: #f5f5f5; border-right: #ddd 1px solid;border-bottom: #ddd 1px solid;">Zip Code</td>
-                                            <td>{{$data_item->donors()->first()->shipping_zipcode}}</td>
-                                        </tr>
-
-
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
-                    @endif
-
+                    </div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>

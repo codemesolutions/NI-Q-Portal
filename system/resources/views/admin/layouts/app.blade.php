@@ -31,11 +31,11 @@
 <div class="page h-100">
  @include('admin.layouts.header')
 
-   <div class="row m-0" style="height: calc(100% - 77px);" >
+   <div class="row m-0" style="height: calc(100% - 37px);" >
     @if(!isset($sidebarHide) || !$sidebarHide)
         <div class="h-100 overflow-auto sidebar" >
 
-            <ul class="nav flex-column">
+            <ul class="nav flex-column border-0">
                @foreach($admin_menu->items()->orderBy('created_at', 'asc')->get() as $item)
                   @foreach($userPermissions as $permmission)
                      @if(!is_null($item->permissions()->where('name', $permmission->name)->first()))

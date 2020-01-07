@@ -1,8 +1,8 @@
 @extends('admin.layouts.app')
 
 @section('content')
- 
-<div class="bg-light h-100">
+
+<div class="bg-image h-100">
      <div class="bg-dark px-3 py-3 row m-0 align-items-center">
         <p class="m-0 text-uppercase text-white" >{!!$title!!} </p>
         <a href="/admin/notification/update?id={{$data_item->id}}" class="btn btn-warning btn-sm ml-auto mr-1 text-white"><i class="fas fa-pencil-alt"></i> Edit Notification</a>
@@ -10,7 +10,7 @@
     </div>
     <div style="height: calc(100% - 51.2px);" class="overflow-auto">
       @if(Session::has('success'))
-           
+
             <div class="alert alert-success alert-dismissible fade show mb-4 rounded-0 " role="alert">
                 {{ Session::get('success') }}
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -27,16 +27,16 @@
                         <table class="table bg-white border-left border-right">
                             <tbody>
                                 @foreach($data_item->toArray() as $name => $val)
-                                
+
                                     <tr>
                                         <td>{{ucfirst(str_replace('_', ' ', $name))}}</td>
                                         <td>{{$val}}</td>
                                     </tr>
-                                    
+
                                 @endforeach
                             </tbody>
                         </table>
-                       
+
                     </div>
                     <div class="col-12">
                         <div class="bg-light border p-3 border-bottom-0">
@@ -45,15 +45,15 @@
                         <table class="table bg-white border-left border-right">
                             <tbody>
                                 @foreach($data_item->users()->get() as $user)
-                                
+
                                     <tr>
-                                        <td><a href="/admin/users/user?id={{$user->id}}">{{$user->first_name}}, {{$user->last_name}}</a></td>   
+                                        <td><a href="/admin/users/user?id={{$user->id}}">{{$user->first_name}}, {{$user->last_name}}</a></td>
                                     </tr>
-                                    
+
                                 @endforeach
                             </tbody>
                         </table>
-                       
+
                     </div>
                 </div>
             </div>
@@ -88,5 +88,5 @@
     </div>
   </div>
 </div>
-    
+
 @endsection

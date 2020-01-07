@@ -34,33 +34,48 @@ class ViewController extends Controller
 
         $page['datasets']['list'] = [
             'columns' => [
-                'User' => 'user_id',
-                
+                'Subject' => 'subject',
+                'From' => function($row){
+                    $comment =  \App\Comment::where('ticket_id', $row->id)->orderBy('created_at')->first();
+                    $from = User::where('id', $comment->from_user_id)->first();
+                    return $from->first_name . ' ' . $from->last_name;
+                },
+
             ],
-            'rows' => $request->user()->conversations()->get()
+            'rows' => \App\Ticket::all()
         ];
 
         $page['list_actions'] = 'admin.sections.message-list-actions';
 
         $page['update_route'] = Route('admin.message.view');
         $page['create_route'] = Route('admin.message.create');
+        $page['view_route'] = Route('admin.message.view');
 
-        return view($page['template'], $page);
+
+        return view('admin.tickets-list', $page);
     }
 
     public function view(Request $request){
-        $msg = Conversation::where('id', $request->query('id'))->first();
+        $ticket = \App\Ticket::where('id', $request->query('id'))->first();
+        if(!is_null($ticket)){
+            $comments = \App\Comment::where('ticket_id', $ticket->id)->get();
+        }
 
-        if(!is_null($msg)){
+
+        if(isset($comments) && !is_null($comments)){
             $page = $this->getPage($request);
-            $page['message'] = $msg;
-            return view($page['template'], $page);
+            $page['ticket'] = $ticket;
+
+            $page['view_route'] = Route('admin.message.view');
+            $page['delete_route'] = Route('admin.message.view');
+            $page['comments'] = $comments;
+            return view('admin.tickets-single', $page);
         }
 
         abort(404);
 
 
-       
+
     }
 
     public function create(Request $request)
@@ -68,7 +83,7 @@ class ViewController extends Controller
         $page = $this->getPage($request);
 
         $page['form_action_route'] = 'admin.message.create';
-        
+
         $page['fields'][] = [
             'name' => 'title',
             'type' => 'text',
@@ -85,7 +100,7 @@ class ViewController extends Controller
             'value' => old('body')
         ];
 
-          
+
         $page['fields']['users'] = [
             'name' => 'users',
             'type' => 'checkbox-select',
@@ -107,9 +122,9 @@ class ViewController extends Controller
 
     public function update(Request $request)
     {
-       
+
         $menu = Menu::where('id', $request->query('id'))->firstOrFail();
-       
+
         $page = $this->getPage($request);
 
         $page['form_action_route'] = 'admin.message.update';
@@ -136,7 +151,7 @@ class ViewController extends Controller
             'value' => old('body')
         ];
 
-          
+
         $page['fields']['users'] = [
             'name' => 'users',
             'type' => 'checkbox-select',

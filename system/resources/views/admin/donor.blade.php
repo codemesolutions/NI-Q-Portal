@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="bg-white h-100">
+<div class="bg-image h-100">
      <div class="bg-dark border-top px-3 py-3 row m-0 align-items-center">
         <p class="m-0 text-uppercase text-white" >{!!$title!!} </p>
         <a href="/admin/donors/update?id={{$donor->id}}" class="btn btn-warning btn-sm ml-auto mr-1 text-white"><i class="fas fa-pencil-alt"></i> Edit Donor</a>

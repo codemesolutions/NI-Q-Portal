@@ -25,10 +25,12 @@ class APIController extends Controller
     public function sync(Request $request)
     {
         $api = new \App\Library\DonorAPI('https://donortrack.ni-q.com:443/', 'api1', 'Api1Rand0M');
+        //$api = new \App\Library\DonorAPI('http://localhost:55907/', 'api1', 'Api1Rand0M');
         $milkKits = $api->get('api/MilkKit');
 
         foreach($milkKits as $mk){
             $donor = \App\Donor::where('donor_number', $mk->DonorId)->first();
+
 
             if(!is_null($donor)){
                 $m = \App\MilkKit::where('donor_id', $donor->id)->where('barcode', $mk->Barcode)->first();
@@ -49,13 +51,17 @@ class APIController extends Controller
                     $m->pallet = $mk->Pallet;
                     $m->shipping_service = $mk->ShippingService;
                     $m->tracking_number = $mk->TrackingNumber;
-                    $m->lot_barcode = $mk->Lot->Barcode;
-                    $m->best_by_date = $mk->Lot->BestByDate;
-                    $m->closed = $mk->Lot->Closed;
-                    $m->transferred = $mk->Lot->Transferred;
-                    $m->total_cases = is_null($mk->Lot->TotalCases) ? 0 : $mk->Lot->TotalCases;
-                    $m->cases_remaining = is_null($mk->Lot->CasesRemaining) ? 0 : $mk->Lot->CasesRemaining;
-                    $m->sample_pouches = is_null($mk->Lot->SamplePouches) ? 0 : $mk->Lot->SamplePouches;
+                    if(!is_null($mk->Lot)){
+                        $m->lot_barcode = $mk->Lot->Barcode;
+                        $m->best_by_date = $mk->Lot->BestByDate;
+                        $m->closed = $mk->Lot->Closed;
+                        $m->transferred = $mk->Lot->Transferred;
+                        $m->total_cases = is_null($mk->Lot->TotalCases) ? 0 : $mk->Lot->TotalCases;
+                        $m->cases_remaining = is_null($mk->Lot->CasesRemaining) ? 0 : $mk->Lot->CasesRemaining;
+                        $m->sample_pouches = is_null($mk->Lot->SamplePouches) ? 0 : $mk->Lot->SamplePouches;
+                    }
+
+
                     $m->save();
 
 
@@ -76,13 +82,15 @@ class APIController extends Controller
                     $m->pallet = $mk->Pallet;
                     $m->shipping_service = $mk->ShippingService;
                     $m->tracking_number = $mk->TrackingNumber;
-                    $m->lot_barcode = $mk->Lot->Barcode;
-                    $m->best_by_date = $mk->Lot->BestByDate;
-                    $m->closed = $mk->Lot->Closed;
-                    $m->transferred = $mk->Lot->Transferred;
-                    $m->total_cases = is_null($mk->Lot->TotalCases) ? 0 : $mk->Lot->TotalCases;
-                    $m->cases_remaining = is_null($mk->Lot->CasesRemaining) ? 0 : $mk->Lot->CasesRemaining;
-                    $m->sample_pouches = is_null($mk->Lot->SamplePouches) ? 0 : $mk->Lot->SamplePouches;
+                    if(!is_null($mk->Lot)){
+                        $m->lot_barcode = $mk->Lot->Barcode;
+                        $m->best_by_date = $mk->Lot->BestByDate;
+                        $m->closed = $mk->Lot->Closed;
+                        $m->transferred = $mk->Lot->Transferred;
+                        $m->total_cases = is_null($mk->Lot->TotalCases) ? 0 : $mk->Lot->TotalCases;
+                        $m->cases_remaining = is_null($mk->Lot->CasesRemaining) ? 0 : $mk->Lot->CasesRemaining;
+                        $m->sample_pouches = is_null($mk->Lot->SamplePouches) ? 0 : $mk->Lot->SamplePouches;
+                    }
                     $m->update();
                 }
 
@@ -90,8 +98,8 @@ class APIController extends Controller
         }
 
 
-        $milkKits = $api->get('api/BloodKit');
-        foreach($milkKits as $mk){
+        $bloodKits = $api->get('api/BloodKit');
+        foreach($bloodKits as $mk){
             $donor = \App\Donor::where('donor_number', $mk->DonorId)->first();
 
             if(!is_null($donor)){
@@ -130,6 +138,7 @@ class APIController extends Controller
                 else{
 
                     if(is_null($m->recieve_date) && !is_null($mk->ReceiveDate)){
+
                         mail(
                             $donor->user_id->email,
                             'NI-Q - We have received your result.  You can now request a milk kit.',
@@ -155,6 +164,7 @@ class APIController extends Controller
 
             }
         }
+
 
         return redirect()->route('admin')->with('Success', 'API SUCCESSFULLY PULLED');
     }

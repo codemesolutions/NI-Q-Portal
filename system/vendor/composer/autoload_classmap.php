@@ -7,6 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'App\\BloodKit' => $baseDir . '/app/BloodKit.php',
+    'App\\Comment' => $baseDir . '/app/Comment.php',
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\Conversation' => $baseDir . '/app/Conversation.php',
     'App\\Document' => $baseDir . '/app/Document.php',
@@ -111,6 +112,7 @@ return array(
     'App\\Rules\\Type' => $baseDir . '/app/Rules/Type.php',
     'App\\Setting' => $baseDir . '/app/Setting.php',
     'App\\Shipping' => $baseDir . '/app/Shipping.php',
+    'App\\Ticket' => $baseDir . '/app/Ticket.php',
     'App\\User' => $baseDir . '/app/User.php',
     'App\\ValidationRule' => $baseDir . '/app/ValidationRule.php',
     'BeyondCode\\DumpServer\\DumpServerCommand' => $vendorDir . '/beyondcode/laravel-dump-server/src/DumpServerCommand.php',

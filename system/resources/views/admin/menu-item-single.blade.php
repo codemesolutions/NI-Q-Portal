@@ -1,8 +1,8 @@
 @extends('admin.layouts.app')
 
 @section('content')
- 
-<div class="bg-white h-100">
+
+<div class="bg-image h-100">
      <div class="bg-dark px-3 py-3 row m-0 align-items-center">
         <p class="m-0 text-uppercase text-white" >{!!$title!!} </p>
         <a href="/admin/menu-item/update?id={{$data_item->id}}" class="btn btn-warning btn-sm ml-auto mr-1 text-white"><i class="fas fa-pencil-alt"></i> Edit Menu Item</a>
@@ -10,7 +10,7 @@
     </div>
     <div style="height: calc(100% - 51.2px);" class="overflow-auto">
       @if(Session::has('success'))
-           
+
             <div class="alert alert-success alert-dismissible fade show mb-4 rounded-0 " role="alert">
                 {{ Session::get('success') }}
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -20,7 +20,7 @@
         @endif
         <div class="container-fluid ">
                 <div class="row  m-0 mt-4">
-                    
+
                     <div class="col-12 row m-0">
                         <div class="col-6">
                             <div class="row m-0 bg-light border-top border-left border-right p-3">
@@ -28,7 +28,7 @@
                             </div>
                             <table class="table bg-white border-left border-right">
                                 <tbody>
-                                  
+
                                     <tr>
                                         <td class="">Name</td>
                                         <td>{{$data_item->name}}</td>
@@ -39,9 +39,9 @@
                                         <td>{{$data_item->path}}</td>
                                     </tr>
 
-                                     
-                                    
-                                 
+
+
+
                                     <tr>
                                         <td class="">Created Date</td>
                                         <td>{{$data_item->created_at}}</td>
@@ -50,13 +50,13 @@
                                         <td class="">Updated Date</td>
                                         <td>{{$data_item->updated_at}}</td>
                                     </tr>
-                                
+
                                 </tbody>
                         </table>
                         </div>
 
-                       
-                    
+
+
                         @if($data_item->permissions()->count() > 0)
                         <div class="col-6">
                             <div class="row m-0 bg-light border border-bottom-0 p-3 align-items-center">
@@ -75,19 +75,19 @@
                         </div>
                         @endif
 
-                        
 
-                        
 
-                       
-                       
 
-                         
-                        
-                    
+
+
+
+
+
+
+
                 </div>
             </div>
-            
+
         </div>
     </div>
 </div>
@@ -119,5 +119,5 @@
     </div>
   </div>
 </div>
-    
+
 @endsection

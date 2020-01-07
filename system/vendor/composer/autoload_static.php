@@ -469,6 +469,7 @@ class ComposerStaticInit5567a5600df731d1960131df7780bd9a
 
     public static $classMap = array (
         'App\\BloodKit' => __DIR__ . '/../..' . '/app/BloodKit.php',
+        'App\\Comment' => __DIR__ . '/../..' . '/app/Comment.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Conversation' => __DIR__ . '/../..' . '/app/Conversation.php',
         'App\\Document' => __DIR__ . '/../..' . '/app/Document.php',
@@ -573,6 +574,7 @@ class ComposerStaticInit5567a5600df731d1960131df7780bd9a
         'App\\Rules\\Type' => __DIR__ . '/../..' . '/app/Rules/Type.php',
         'App\\Setting' => __DIR__ . '/../..' . '/app/Setting.php',
         'App\\Shipping' => __DIR__ . '/../..' . '/app/Shipping.php',
+        'App\\Ticket' => __DIR__ . '/../..' . '/app/Ticket.php',
         'App\\User' => __DIR__ . '/../..' . '/app/User.php',
         'App\\ValidationRule' => __DIR__ . '/../..' . '/app/ValidationRule.php',
         'BeyondCode\\DumpServer\\DumpServerCommand' => __DIR__ . '/..' . '/beyondcode/laravel-dump-server/src/DumpServerCommand.php',

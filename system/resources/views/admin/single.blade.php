@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="bg-light h-100">
+<div class="bg-image h-100">
      <div class="bg-dark px-3 py-3 row m-0 align-items-center">
         <p class="m-0 text-uppercase text-white" >{!!$title!!} </p>
         @if(isset($previous))

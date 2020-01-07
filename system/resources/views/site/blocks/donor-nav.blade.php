@@ -37,6 +37,7 @@
 
                 @endif
 
+
                  <a class="btn btn-teal-sm mt-1  ml-3 mr-2 mr-md-0" href="{{ route('logout') }}"
                         onclick="event.preventDefault();
                                         document.getElementById('logout-form').submit();">

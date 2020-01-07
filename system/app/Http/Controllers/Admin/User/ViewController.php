@@ -32,7 +32,7 @@ class ViewController extends Controller
         $page = $this->getPage($request);
 
         if(!$request->has('search')){
-            $dataset = User::paginate(50);
+            $dataset = User::orderBy('created_at', 'desc')->paginate(20);
         }
 
         else{
@@ -52,7 +52,45 @@ class ViewController extends Controller
                     return !is_null($donor) ? $row->donors()->first()->donor_number: "";
                 },
 
-                'Username' => 'name',
+                'Donor App' => function($row){
+                    $donorApp = $row->submissions()->where('form_id', 1)->first();
+
+                    if(!is_null($donorApp) && $donorApp->completed && !$donorApp->is_new && !$donorApp->blocked && !$donorApp->waited){
+                        return '<span class="badge badge-success rounded-0">Approved</span>';
+                    }
+
+                    if(!is_null($donorApp) && !$donorApp->completed && $donorApp->is_new && !$donorApp->blocked && !$donorApp->waited){
+                        return '<span class="badge badge-info rounded-0">Incomplete</span>';
+                    }
+
+                    elseif(!is_null($donorApp) && $donorApp->completed && $donorApp->is_new && !$donorApp->blocked && !$donorApp->waited){
+                        return '<span class="badge badge-primary rounded-0">New</span>';
+                    }
+
+                    elseif(!is_null($donorApp) && $donorApp->blocked){
+                        return '<span class="badge badge-danger rounded-0">Disqualified</span>';
+                    }
+
+                    elseif(!is_null($donorApp) && $donorApp->waited){
+                        return '<span class="badge badge-warning rounded-0">Wait Listed</span>';
+                    }
+
+                },
+
+                'Consent Form' => function($row){
+                    $donorApp = $row->submissions()->where('form_id', 2)->first();
+
+                    if(is_null($donorApp)){
+                        $donorApp = $row->submissions()->where('form_id', 105)->first();
+                    }
+
+                    if(!is_null($donorApp) && $donorApp->completed){
+                        return "Completed";
+                    }
+
+                },
+
+
                 'Email' => 'email',
                 'Created Date' => 'created_at'
             ],

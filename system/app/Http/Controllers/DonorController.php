@@ -26,9 +26,9 @@ define('_FEDEX_PASSWORD', 'RQUJyjDYYlISpefPrqPktnXc1');
 
 //prod
 define('FEDEX_ACCOUNT_NUMBER', '747437041');
-define('FEDEX_METER_NUMBER', '250736860');
-define('FEDEX_KEY', 'HHMB2d6fiK5IsnBi');
-define('FEDEX_PASSWORD', 'fm69lwISwzPTyP4SpTSLwi4rh');
+define('FEDEX_METER_NUMBER', '110078335');
+define('FEDEX_KEY', 'sZEr86pBTS9PFduw');
+define('FEDEX_PASSWORD', '7hBqu3epQkWXPkgfgyUQItksR');
 
 
 class DonorController extends Controller
@@ -177,7 +177,7 @@ class DonorController extends Controller
 
                     }
 
-
+                    dd($createPickupReply);
 
                     $trackingID = $createPickupReply->PickupConfirmationNumber;
                 } catch (\Exception $e) {
