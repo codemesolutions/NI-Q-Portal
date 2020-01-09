@@ -1,7 +1,7 @@
 @extends('admin.layouts.app')
 
 @section('content')
-<div style="background:#111;" class=" h-100">
+<div style="background:#fff;" class=" h-100">
     <div style="border-bottom: #111 1px solid;" class="bg-dark   border-top px-3 py-3">
         <p class="m-0 text-uppercase text-white" >{!!$title!!} </p>
     </div>
@@ -98,6 +98,7 @@
                                     @endforeach
                                 </tbody>
                             </table>
+                            {{$submissions->links() }}
                         </div>
                     </div>
                 </div>
