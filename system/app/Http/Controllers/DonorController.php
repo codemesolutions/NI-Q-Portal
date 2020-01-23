@@ -132,10 +132,10 @@ class DonorController extends Controller
         $createPickupRequest = new PComplexType\CreatePickupRequest();
 
         // Authentication & client details.
-        $createPickupRequest->WebAuthenticationDetail->UserCredential->Key = _FEDEX_KEY;
-        $createPickupRequest->WebAuthenticationDetail->UserCredential->Password = _FEDEX_PASSWORD;
-        $createPickupRequest->ClientDetail->AccountNumber = _FEDEX_ACCOUNT_NUMBER;
-        $createPickupRequest->ClientDetail->MeterNumber = _FEDEX_METER_NUMBER;
+        $createPickupRequest->WebAuthenticationDetail->UserCredential->Key = FEDEX_KEY;
+        $createPickupRequest->WebAuthenticationDetail->UserCredential->Password = FEDEX_PASSWORD;
+        $createPickupRequest->ClientDetail->AccountNumber = FEDEX_ACCOUNT_NUMBER;
+        $createPickupRequest->ClientDetail->MeterNumber = FEDEX_METER_NUMBER;
         // Version.
         $createPickupRequest->Version->ServiceId = 'disp';
         $createPickupRequest->Version->Major = 17;
@@ -146,7 +146,7 @@ class DonorController extends Controller
         $createPickupRequest->TransactionDetail->Localization->LocaleCode = 'ES';
         // Associated account number.
         $createPickupRequest->AssociatedAccountNumber->Type = PSimpleType\AssociatedAccountNumberType::_FEDEX_EXPRESS;
-        $createPickupRequest->AssociatedAccountNumber->AccountNumber = _FEDEX_ACCOUNT_NUMBER;
+        $createPickupRequest->AssociatedAccountNumber->AccountNumber = FEDEX_ACCOUNT_NUMBER;
         // Origin detail contact.
         $createPickupRequest->OriginDetail->PickupLocation->Contact->ContactId = $request->user()->id;
         $createPickupRequest->OriginDetail->PickupLocation->Contact->PersonName = $request->user()->first_name . " " . $request->user()->last_name;
@@ -201,11 +201,11 @@ class DonorController extends Controller
 
                     $trackRequest = new ComplexType\TrackRequest();
                     // User Credential
-                    $trackRequest->WebAuthenticationDetail->UserCredential->Key = _FEDEX_KEY;
-                    $trackRequest->WebAuthenticationDetail->UserCredential->Password = _FEDEX_PASSWORD;
+                    $trackRequest->WebAuthenticationDetail->UserCredential->Key = FEDEX_KEY;
+                    $trackRequest->WebAuthenticationDetail->UserCredential->Password = FEDEX_PASSWORD;
                     // Client Detail
-                    $trackRequest->ClientDetail->AccountNumber = _FEDEX_ACCOUNT_NUMBER;
-                    $trackRequest->ClientDetail->MeterNumber = _FEDEX_METER_NUMBER;
+                    $trackRequest->ClientDetail->AccountNumber = FEDEX_ACCOUNT_NUMBER;
+                    $trackRequest->ClientDetail->MeterNumber = FEDEX_METER_NUMBER;
 
                     // Version
                     $trackRequest->Version->ServiceId = 'trck';
@@ -241,7 +241,7 @@ class DonorController extends Controller
 
                 }
 
-                dd($createPickupReply);
+                //dd($createPickupReply);
 
 
 
@@ -249,7 +249,7 @@ class DonorController extends Controller
         }
         catch (\Exception $e) {
             return redirect()->back()->with('error', "There was an internal system error when making your request please contact NI-Q through messanger to let them know of the issue.");
-            dd($_request->getSoapClient()->__getLastResponse());
+            //dd($_request->getSoapClient()->__getLastResponse());
         }
 
     }
