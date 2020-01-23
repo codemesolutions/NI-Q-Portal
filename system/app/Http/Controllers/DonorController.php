@@ -59,7 +59,11 @@ class DonorController extends Controller
             return redirect($page);
         }
 
-        if(!is_null($request->user()->permissions()->where('name', 'admin')->first()) || !is_null($request->user()->permissions()->where('name', 'Shipping')->first())){
+        if(!is_null($request->user()->permissions()->where('name', 'admin')->first())){
+            return redirect('/admin');
+        }
+
+        elseif(!is_null($request->user()->permissions()->where('name', 'Shipping')->first())){
             return redirect('/admin');
         }
 
