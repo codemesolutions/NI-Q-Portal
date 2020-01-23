@@ -32,10 +32,10 @@ class ActionController extends Controller
 
     public function create(Request $request){
         $validator = Validator::make($request->all(), [
-            'title' => ['required', 'string', 'max:255'],
-            'body' => ['required', 'string'],
-            'users' => ['required']
-           
+            'subject' => ['required', 'string', 'max:255'],
+            'message' => ['required', 'string'],
+            'user' => ['required']
+
         ]);
 
         if ($validator->fails()) {
@@ -46,49 +46,60 @@ class ActionController extends Controller
 
         else{
 
-            if(!is_null($request->input('users'))){
-            
-            
-                foreach($request->input('users') as $key => $value){
+            if(!is_null($request->input('user'))){
 
-                    $conversation = new Conversation();
-                    $conversation->subject = $request->input('title');
-                    $conversation->save();
-                    $conversation->users()->attach(User::where('id', $key)->first());
-                    $conversation->users()->attach($request->user());
 
-                    $user = new \App\Message();
-                    $user->conversation_id = $conversation->id;
-                    $user->to_user_id = User::where('id', $key)->first()->id;
-                    $user->from_user_id = $request->user()->id;
-                    $user->message = $request->input('body');
-                    $user->save();
-    
-                    $notify = new Notifications();
-                    $notify->notification_type_id = NotificationTypes::where('name', 'Message')->first()->id;
-                    $notify->message = 'You have recieved a new message from "'. $request->user()->name .'"';
-                    $notify->resource = Route('admin.forms');
-                    $notify->save();
-                    $notify->users()->attach(User::where('id', $key)->first());
+                foreach($request->input('user') as $key => $id){
+                    if($request->has('donor_message')){
+
+                        $ticket = new \App\Ticket();
+                        $ticket->subject = $request->input('subject');
+                        $ticket->from_user_id = $request->user()->id;
+                        $ticket->to_user_id = 1;
+                        $ticket->is_new = 1;
+                        $ticket->save();
+
+                        $comment = new \App\Comment();
+                        $comment->ticket_id = $ticket->id;
+                        $comment->from_user_id = $request->user()->id;
+                        $comment->to_user_id = 1;
+                        $comment->message = $request->input('message');
+                        $comment->save();
+                        return redirect('messages')->with('success','Message sent successfully!');
+                    }
+
+                    $ticket = new \App\Ticket();
+                    $ticket->subject = $request->input('subject');
+                    $ticket->from_user_id = $request->user()->id;
+                    $ticket->to_user_id = $id;
+                    $ticket->is_new = 1;
+                    $ticket->save();
+
+                    $comment = new \App\Comment();
+                    $comment->ticket_id = $ticket->id;
+                    $comment->from_user_id = $request->user()->id;
+                    $comment->to_user_id = $id;
+                    $comment->message = $request->input('message');
+                    $comment->save();
                 }
 
                 return redirect('admin/message')->with('success','Message sent successfully!');
             }
 
-          
-            
+
+
         }
 
     }
 
     public function reply(Request $request){
 
-        
+
 
         $validator = Validator::make($request->all(), [
-            'conversation' => ['required'],
+
             'message' => ['required', 'string'],
-            'to' => ['required'],
+
 
         ]);
 
@@ -100,35 +111,26 @@ class ActionController extends Controller
 
         else{
 
-            $convo = Conversation::where('id', $request->input('conversation'))->first();
-            $convo->is_seen = false;
-            $convo->update();
+            $ticket = \App\Ticket::where('id', $request->input('ticket'))->first();
+            $ticket->is_new = 1;
+            $ticket->update();
 
-            $user = new \App\Message();
-            $user->conversation_id = $convo->id;
-            $user->to_user_id = User::where('name', $request->input('to'))->first()->id;
-            $user->from_user_id = $request->user()->id;
-            $user->message = $request->input('message');
-            $user->save();
+            $comment = new \App\Comment();
+            $comment->ticket_id = $ticket->id;
+            $comment->message = $request->input('message');
+            $comment->to_user_id = $request->input('to');
+            $comment->from_user_id = $request->input('from');
+            $comment->save();
 
-            $notify = new Notifications();
-            $notify->notification_type_id = NotificationTypes::where('name', 'Message')->first()->id;
-            $notify->message = 'You recieved a reply from "'. $user->from_user_id .'"';
-            $notify->resource = Route('admin.forms');
-            $notify->save();
-            $notify->users()->attach(User::where('name', $request->input('to'))->first());
-
-         
-        
-
-            if($request->user()->permissions()->first()->name == 'donor'){
-                return redirect('messages/message?id='. $user->conversation_id)->with('success','Message sent successfully!');
+            if($request->has('donor_message')){
+                return redirect('messages/message?id='.$ticket->id)->with('success','Message sent successfully!');
             }
-            return redirect('admin/message')->with('success','Message sent successfully!');
-            
 
-          
-            
+            return redirect('admin/message/view?id='.$ticket->id)->with('success','Message sent successfully!');
+
+
+
+
         }
 
     }
@@ -154,7 +156,7 @@ class ActionController extends Controller
             $user->name = $request->input('name');
             $user->active = $request->input('status') == 'on' ? true:false;
             $user->update();
-            
+
             return redirect()->route('admin.menu-item', ['id' => $user->id])->with('success','Menu updated successfully!');
         }
 
@@ -171,7 +173,7 @@ class ActionController extends Controller
         }
 
         return response()->json(['message' => "bad"]);
-       
+
     }
-  
+
 }

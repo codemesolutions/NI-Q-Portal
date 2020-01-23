@@ -2,13 +2,13 @@
 
 @section('content')
 
-<div class="bg-image h-100">
+<div class="bg-white h-100">
      <div class="bg-dark border-top px-3 py-1 row m-0 align-items-center">
         <p class="m-0 text-uppercase text-white" >{!!$title!!} </p>
         @if(isset($previous))
             <a class="ml-3 btn btn-primary btn-sm" href="{{$previous}}">Back</a>
         @endif
-        <button class="btn btn-primary btn-sm ml-auto small"><i class="fas fa-reply"></i> Reply</button>
+        <button class="btn btn-primary btn-sm ml-auto small" data-toggle="modal" data-target="#messageModal"><i class="fas fa-reply"></i> Reply</button>
         <button class="btn btn-danger btn-sm ml-1 small" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-trash"></i> Delete</button>
     </div>
     <div style="height: calc(100% - 36.2px);" class="overflow-auto">
@@ -27,18 +27,18 @@
                     <div class="col-12 p-0">
                         <div class="p-0">
                             @foreach($comments as $comment)
-                            <div class="bg-light border px-3 py-1  border-bottom-0 row m-0 align-items-center">
+                            <div class="bg-light px-3 py-2  border-bottom-0 row m-0 align-items-center">
                                 <p>{!!$ticket->subject!!}</p>
                                 <p class="ml-auto small text-muted">{{\App\User::where('id', $comment->from_user_id)->first()->first_name. ' ' . App\User::where('id', $comment->from_user_id)->first()->last_name}}</p>
-                                <p class="small text-muted ml-auto">{{$comment->created_at}}</p>
+                                <p class="small text-muted ml-auto">{{date('m-d-Y', strtotime($comment->created_at))}}</p>
                             </div>
-                            <table class="table bg-white border w-100 m-0">
+                            <table class="table bg-light border-0 w-100 m-0">
                                 <tbody>
 
                                     <tr>
 
                                         <td class="p-4 ">
-                                            <p class=" small text-muted front-weight-light m-0">{{$comment->message}}<p>
+                                            <p class=" front-weight-light m-0">{!!$comment->message!!}<p>
                                         </td>
                                     </tr>
 
@@ -46,18 +46,7 @@
                             </table>
 
                             @endforeach
-                            <form>
-                                <style>
-                                    .ck-editor__editable_inline {
-                                        min-height: 300px;
-                                    }
-                                </style>
-                                <div class="w-100">
-                                    <textarea  name="comment" id="editor"></textarea>
-                                    <div class=""><button class="btn btn-dark rounded-0 py-3 btn-block btn-sm small">Reply</button></div>
-                                </div>
 
-                            </form>
                         </div>
                     </div>
 
@@ -94,5 +83,41 @@
     </div>
   </div>
 </div>
+
+
+<div class="modal fade" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <form class="modal-dialog rounded-0 modal-lg shadow-lg" action="{{Route('admin.message.reply')}}" method="post" enctype="application/x-www-form-urlencoded">
+      <div class="modal-content rounded-0">
+        <div class="modal-header d-none border-bottom-0 align-items-center bg-light rounded-0 p-0 px-3 py-2">
+          <p class="modal-title m-0" id="exampleModalLabel">Reply</p>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body p-0">
+
+                <style>
+                    .ck-editor__editable_inline {
+                        min-height: 300px;
+                    }
+                </style>
+                <div class="" >
+                    @csrf
+                    <input type="hidden" name="ticket" value="{{$ticket->id}}">
+                    <input type="hidden" name="from" value="{{$request->user()->id}}">
+                    <input type="hidden" name="to" value="{{$ticket->from_user_id}}">
+                    <textarea  name="message" id="editor"></textarea>
+
+                </div>
+
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger small mr-auto" data-dismiss="modal"><i class="fas fa-times"></i> Cancel</button>
+          <button type="submit" class="btn btn-dark small"><i class="fas fa-reply"></i> Send</a>
+        </div>
+      </div>
+    </form>
+  </div>
 
 @endsection

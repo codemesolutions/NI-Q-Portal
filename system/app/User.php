@@ -44,7 +44,7 @@ class User extends Authenticatable
     }
 
     public function donors(){
-        return $this->hasOne(Donor::class);
+        return $this->hasOne(Donor::class, 'user_id', 'id');
     }
 
     public function conversations(){

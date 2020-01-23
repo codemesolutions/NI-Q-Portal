@@ -8,7 +8,7 @@
          @if(!isset($sidebarHide) || !$sidebarHide)
             <a class="btn btn-primary text-white mr-1 sidebar-toggle btn-sm small"><i class="fas fa-outdent"></i> Menu </a>
          @endif
-         <a class=" mr-4 btn btn-dark btn-sm small" href="/">Back To Portal </a>
+
         <div class="ml-5">
 
 
@@ -20,7 +20,7 @@
             <i class="fas fa-user mr-1"></i> {{ Auth::user()->name }} <span class="caret"></span>
         </a>
 
-        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+        <div class="dropdown-menu rounded-0 shadow dropdown-menu-right" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="{{ route('logout') }}"
                 onclick="event.preventDefault();
                                 document.getElementById('logout-form').submit();">

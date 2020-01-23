@@ -1,10 +1,10 @@
-<div class="navbar navbar-expand-md donor-nav bg-dark  p-0 py-3 ">
+<div class="navbar navbar-expand-md donor-nav bg-dark border-bottom  p-0 py-3 d-none ">
 
         <div class="container  py-1">
             <button class="btn btn-clean navbar-toggler" data-toggle="collapse" data-target="#navbarTogglerDemo01" ><i class="fas fa-bars"></i> MENU</button>
 
 
-                <ul class="navbar-nav d-none d-md-flex mr-auto">
+                <ul class="navbar-nav  mr-auto d-none">
 
                    @foreach($donor_menu->items()->orderBy('created_at')->get() as $item)
                         @foreach($userPermissions as $permmission)
@@ -16,6 +16,7 @@
                     @endforeach
 
                 </ul>
+
 
                 @if(!is_null(Auth::user()->donors()->first()) && Auth::user()->donors()->first()->bloodkits()->count() > 0)
 
@@ -29,13 +30,6 @@
                             </button>
                             <a href="{{Route('milkkit_pickup')}}" class="d-none btn btn-teal-sm-outline mt-1">Schedule A Pickup</a>
                         @endif
-
-
-
-
-
-
-
                 @endif
 
 

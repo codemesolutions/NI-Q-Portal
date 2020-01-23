@@ -25,7 +25,7 @@ class MessageController extends Controller
      */
     public function __construct()
     {
-        
+
     }
 
 
@@ -33,6 +33,7 @@ class MessageController extends Controller
     {
         $this->middleware('auth');
         $page = $this->getPage($request);
+        $page['messages'] = \App\Ticket::where('to_user_id', $request->user()->id)->orWhere('from_user_id', $request->user()->id)->get();
         return view($page['template'], $page);
     }
 
@@ -70,13 +71,13 @@ class MessageController extends Controller
             $user->parent_id = $request->input('parent');
             $user->save();
 
-          
+
             $_user = $request->input('user');
-            
+
             if(is_array($_user)){
                 foreach($request->input('user') as $key => $value){
                     $user->users()->attach(User::where('id', $key)->first());
-    
+
                     $notify = new Notifications();
                     $notify->notification_type_id = NotificationTypes::where('name', 'Message')->first()->id;
                     $notify->message = 'There was a new message sent to "'. User::where('id', $key)->first()->name .'"';
@@ -85,13 +86,13 @@ class MessageController extends Controller
                     $notify->users()->attach(User::where('id', $key)->first());
                 }
 
-                
+
                 return redirect('admin/messages')->with('success','Message sent successfully!');
             }
 
             else{
                 $user->users()->attach(User::where('id', $_user)->first());
-    
+
                 $notify = new Notifications();
                 $notify->notification_type_id = NotificationTypes::where('name', 'Message')->first()->id;
                 $notify->message = 'There was a new message sent to "'. User::where('id', $_user)->first()->name .'"';
@@ -99,8 +100,8 @@ class MessageController extends Controller
                 $notify->save();
                 $notify->users()->attach(User::where('id', $_user)->first());
 
-              
-                
+
+
                 if($request->path() === 'admin/messages/create'){
                     return redirect('/admin/messages')->with('success','Message sent successfully!');
                 }
@@ -108,11 +109,11 @@ class MessageController extends Controller
                 else{
                     return redirect('/messages')->with('success','Message sent successfully!');
                 }
-              
-            }
-           
 
-            
+            }
+
+
+
         }
 
     }
@@ -154,5 +155,5 @@ class MessageController extends Controller
     }
 
 
-  
+
 }

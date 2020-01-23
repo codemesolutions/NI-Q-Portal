@@ -3,10 +3,34 @@
 @section('content')
 
 
-<div class=" jumbotron jumbotron-fluid bg-image py-5">
-    <div class="container py-5 text-left">
-        <div class="py-5 text-white">
-                <h4 class="font-weight-light">Welcome, <span class=" font-weight-bold">{{Auth::user()->name}}</span></h4>
+<div class=" jumbotron jumbotron-fluid bg-light border-top border-bottom py-0 ">
+    <div class="container py-0 text-left">
+        <div class="py-3 d-block d-md-flex m-0 w-100 align-items-center justify-content-center">
+            <p class="font-weight-bold m-0 mr-md-auto mb-4 mb-md-0 d-none">Welcome, <span class=" font-weight-bold text-teal">{{Auth::user()->name}}</span></p>
+            @if(!is_null(Auth::user()->donors()->first()))
+            <p>Donor ID: <span class="text-muted">{{Auth::user()->donors()->first()->donor_number}}</span> </p>
+            @endif
+            @if(!is_null(Auth::user()->donors()->first()) && !is_null(Auth::user()->donors()->first()->bloodkits()->orderby('id', 'desc')->first()))
+                <p class="ml-md-3">Lab Results Status: {!!Auth::user()->donors()->first()->bloodkits()->orderby('id', 'desc')->first()->status === 1 ? "<span class='text-success'>Passed</span>": "<span class='text-danger'>Failed</span>"!!} </p>
+                <p class="ml-md-3">Lab Results Recieved Date: <span class="text-muted">{{date('m/d/Y', strtotime(Auth::user()->donors()->first()->bloodkits()->orderby('id', 'desc')->first()->recieve_date)) }} </span> </p>
+            @endif
+            <div class="col-12 col-md-auto ml-0 ml-md-auto p-0 mt-2 mt-md-0">
+                @if(!is_null(Auth::user()->donors()->first()) && Auth::user()->donors()->first()->bloodkits()->count() > 0)
+
+                    @if(!is_null(Auth::user()->donors()->first()->bloodkits()->first()->recieve_date) && Auth::user()->donors()->first()->bloodkits()->first()->status === 1)
+
+                        <button type="button" class=" btn btn-light small border text-uppercase font-weight-bold" data-toggle="modal" data-target="#request-milkkit">
+                            Request Milk Kit
+                        </button>
+                        <button type="button" class="btn btn-light small border text-uppercase font-weight-bold " data-toggle="modal" data-target="#pickup-message">
+                            Schedule A Pickup
+                        </button>
+
+                    @endif
+                @endif
+            </div>
+
+
         </div>
     </div>
 </div>
@@ -49,7 +73,7 @@
 
                         @if((is_null($form->submissions()->where('user_id', Auth::user()->id)->first()) || !$form->submissions()->where('user_id', Auth::user()->id)->first()->completed) && $form->questions()->count() > 0)
                             <div class="col-md-3 p-1">
-                                <div class="card border" style="">
+                                <div class="card border " style="">
                                     <div class="card-body">
                                         <div class="row m-0">
 
@@ -57,7 +81,7 @@
                                             <div class="col-9 p-0">
 
                                                 <a href="{{url('/donor/form?name='. $form->name) }}" class="row m-0 h-100 flex-column justify-content-center align-items-start">
-                                                    <h6 class="title mb-1">{{$form->name}}</h6>
+                                                    <h6 class="title mb-1 text-uppercase">{{$form->name}}</h6>
                                                     <span class="badge badge-danger rounded-0">Not Completed</span>
                                                 </a>
 
@@ -70,7 +94,7 @@
                             </div>
                          @elseif((!is_null($form->submissions()->first()) && $form->submissions()->first()->completed) && $form->questions()->count() > 0)
                             <div class="col-md-3 p-1">
-                                <div class="card border" data-toggle="modal" data-target="#form-{{$form->id}}">
+                                <div class="card border " data-toggle="modal" data-target="#form-{{$form->id}}">
                                     <div class="card-body">
                                         <div class="row m-0">
 
@@ -78,7 +102,7 @@
                                             <div class="col p-0">
 
                                                 <a >
-                                                    <h6 class="title mb-1">{{$form->name}}</h6>
+                                                    <h6 class="title mb-1 text-uppercase">{{$form->name}}</h6>
                                                     <span class="badge badge-success rounded-0">completed</span>
                                                 </a>
 
@@ -182,7 +206,7 @@
 
                 @endif
              </div>
-            <div class="col-md-6 p-1">
+            <div class="col-md-6 p-1 d-none">
                 <div class=" bg-white  border  p-5 row m-0 align-items-center justify-content-start">
                    <h6 class="font-weight-light m-0"> Your <span class="font-weight-bold">Notifications</span></h6>
                     <div class="w-100 mt-4 ">
@@ -198,7 +222,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 p-1">
+            <div class="col-md-6 p-1 d-none">
                 <div class=" bg-white text-dark border  p-5 row m-0 align-items-center justify-content-start">
                    <h6 class="font-weight-light m-0"> Your <span class="font-weight-bold">Messages</span></h6>
                     <div class="w-100 mt-4 ">
@@ -218,7 +242,14 @@
             @if(!is_null($request->user()->donors()->first()) && $request->user()->donors()->first()->milkkits()->whereNotNull('finalized_date')->count() > 0)
              <div class="col p-1">
                 <div class=" bg-white  border  p-5 row m-0 align-items-center justify-content-start">
-                   <h6 class="font-weight-light m-0"> Your <span class="font-weight-bold">Milk Kits</span></h6>
+
+                   <h6 class="font-weight-light m-0"><span class="font-weight-bold">Milk Kits</span></h6>
+                   <div class="col d-none p-0 row m-0 justify-content-end">
+                        <p class="ml-md-3">Milk Kits Request: <span class="text-muted">{{Auth::user()->donors()->first()->milkkits()->count()}}</span> </p>
+                        <p class="ml-md-3">Milk Kits Recieved: <span class="text-muted">{{Auth::user()->donors()->first()->milkkits()->count()}}</span> </p>
+                        <p class="ml-md-3">Total Volume: <span class="text-muted">{{Auth::user()->donors()->first()->milkkits()->count()}}</span> </p>
+                    </div>
+
                     <div class="w-100 mt-4 ">
 
                         <ul class="list-group ">
@@ -244,7 +275,7 @@
             </div>
             @endif
             @if(!is_null($request->user()->donors()->first()) && $request->user()->donors()->first()->bloodkits()->where('status', true)->count() > 0)
-            <div class="col p-1">
+            <div class="col p-1 d-none">
                 <div class=" bg-white  border  p-5 row m-0 align-items-center justify-content-start">
                    <h6 class="font-weight-light m-0"> Your <span class="font-weight-bold">Blood Kits</span></h6>
                     <div class="w-100 mt-4 ">
@@ -273,43 +304,6 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="pickup-message" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h6 class="modal-title font-weight-bold" id="exampleModalLabel">Schedule A Pickup Information</h6>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body p-4">
-            Please have your package ready by 1pm.  If Your Pickup Request is after 1pm your pickup will be scheduled before 1pm on the following day.
-        </div>
-        <div class="modal-footer">
-        <a class="btn btn-dark mt-3 btn-block btn-sm" href="{{Route('milkkit_pickup')}}">Schedule Pickup</a>
-        </div>
 
-      </div>
-    </div>
-  </div>
-  <div class="modal fade" id="request-milkkit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog model-center rounded-0 border-0" role="document">
-      <div class="modal-content rounded-0 border-0">
-        <div class="modal-header bg-teal rounded-0">
-          <h6 class="modal-title font-weight-bold " id="exampleModalLabel">How many milk kits would you like?</h6>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body p-4 border-right">
-            <form action="{{Route('milkkit_send')}}">
-                <label>Please enter the quantity of milk kits you would like sent to you?</label>
-                <input type="number" name="qty" class="form-control" value="1"/>
-                <button class="btn btn-dark mt-3 btn-block btn-sm">Request</button>
-            </form>
-        </div>
 
-      </div>
-    </div>
-  </div>
 @endsection

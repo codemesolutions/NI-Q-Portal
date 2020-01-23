@@ -83,38 +83,13 @@ class ViewController extends Controller
         $page = $this->getPage($request);
 
         $page['form_action_route'] = 'admin.message.create';
+        $page['users'] = User::orderBy('last_name', 'asc')->paginate(50);
 
-        $page['fields'][] = [
-            'name' => 'title',
-            'type' => 'text',
-            'label' => "Subject",
-            'helper' => 'The Subject of the message',
-            'value' => old('title')
-        ];
+        if($request->has('search')){
 
-        $page['fields'][] = [
-            'name' => 'body',
-            'type' => 'richtext',
-            'label' => "Body",
-            'helper' => 'The Body of the message',
-            'value' => old('body')
-        ];
+            dd($request->query('search'));
 
-
-        $page['fields']['users'] = [
-            'name' => 'users',
-            'type' => 'checkbox-select',
-            'label' => "To",
-            'helper' => 'The name you want the page to be titled',
-            'options' => []
-        ];
-
-        foreach(User::all() as $perm){
-            $page['fields']['users']['options'][] = [
-                'name' => $perm->name,
-                'value' => $perm->id,
-                'selected' => false
-            ];
+            $page['users'] = User::where('first_name', "LIKE", "%".$request->query('search')."%")->orWhere('last_name', "LIKE", "%".$request->query('search')."%")->orderBy('last_name', 'asc')->paginate(50);
         }
 
         return view($page['template'], $page);

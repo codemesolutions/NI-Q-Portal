@@ -436,6 +436,159 @@ $('button.export').on('click', function(){
     $('form.exports').submit();
 });
 
+autoComplete();
+function autoComplete(){
+    $('#SearchUsersForm').on('submit', function(e){
+
+        $('.auto-complete-search-btn').empty().attr('disabled', true).append('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>');
+        $('.auto-complete-search-input').attr('disabled', true);
+        $('.addUsersModal .results-footer').addClass('d-none');
+        e.preventDefault();
+
+        var input = $('.auto-complete-search-input').val();
+        if(input.length > 0){
+           
+            $('.auto-complete-list table tbody').empty();
+            $.get('/api/users/find', {'search': input}, function(response){
+                if(Object.keys(response).length > 0){
+                    $('.auto-complete-list').removeClass('d-none');
+                    response.map(function(value){
+                        var elExists = $('#tag-user-'+ value.id);
+                      
+                        if(value.permissions !== undefined && value.permissions.length > 0){
+                            if(elExists.length > 0){
+                                $('.auto-complete-list table tbody').append('<tr><td><label class="m-0"><input checked class="mr-1" type="checkbox" name="users[]" value="'+value.id+'"/>'+value.first_name+' '+value.last_name+'</label></td><td>'+value.permissions[0].name+'</td></tr>');
+                            }
+
+                            else{
+                                $('.auto-complete-list table tbody').append('<tr><td><label class="m-0"><input class="mr-1" type="checkbox" name="users[]" value="'+value.id+'"/>'+value.first_name+' '+value.last_name+'</label></td><td>'+value.permissions[0].name+'</td></tr>');
+                            }
+                           
+                        }else{
+                            if(elExists.length > 0){
+                                $('.auto-complete-list table tbody').append('<tr><td><label class="m-0"><input checked class="mr-1" type="checkbox" name="users[]" value="'+value.id+'"/>'+value.first_name+' '+value.last_name+'</label></td><td></td></tr>');
+                            }
+
+                            else{
+                                $('.auto-complete-list table tbody').append('<tr><td><label class="m-0"><input class="mr-1" type="checkbox" name="users[]" value="'+value.id+'"/>'+value.first_name+' '+value.last_name+'</label></td><td></td></tr>');
+                            }
+                        }
+                        
+                      
+                    });
+                    $('.auto-complete-search-input').attr('disabled', false);
+                    $('.auto-complete-search-btn').empty().attr('disabled', false).append('Search');
+                    $('.global-message-options').addClass('d-none');
+                    $('.addUsersModal .results-footer').removeClass('d-none');
+                    $('.addUsersModal .cancel-footer').addClass('d-none');
+
+                    
+                  
+                }
+
+                else{
+                    $('.auto-complete-search-input').attr('disabled', false);
+                    $('.auto-complete-search-btn').empty().attr('disabled', false).append('Search');
+                    $('.global-message-options').removeClass('d-none');
+                    $('.auto-complete-list table tbody').append('<tr><td>No Records Found!</td></tr>');
+                    $('.auto-complete-list').removeClass('d-none');
+                    $('.addUsersModal .cancel-footer').removeClass('d-none');
+                }
+            });
+
+        }
+
+        else{
+            $('.auto-complete-list').addClass('d-none');
+        }
+       
+
+    });
+
+    
+    $('.users-selected-save').on('click', function(){
+        var cb =  $('.auto-complete-list table tbody tr td input:checked');
+        
+        if(cb.length > 0){
+            for(i = 0; i < cb.length; i++){
+               
+                $.get('/api/users/get/' + cb[i].value, function(response){
+                    var elExists = $('#tag-user-'+ response.id);
+                    if(elExists.length === 0){
+                        $('.tags-container').append('<span id="tag-user-'+response.id+'" class="mr-3">'+response.first_name+' '+response.last_name +' <a href=""><i class="fas fa-times"></i></a></span>')
+                        $('.tags-container').append('<input id="tag-user-'+response.id+'" type="hidden" name="user[]" value="'+ response.id +'"/>')
+                        $('span#tag-user-'+response.id).on("click", function(e){
+                            e.preventDefault();
+                            $(this).remove();
+                            $('input#tag-user-'+response.id).remove();
+                        })
+                    }
+                  
+                });
+            }
+        }
+
+        $('.auto-complete-list table tbody').empty();
+        $('.auto-complete-list').addClass('d-none');
+        $('#exampleModal').modal('hide');
+        $('.global-message-options').removeClass('d-none');
+        $('.addUsersModal .modal-footer').addClass('d-none');
+        $('.auto-complete-search-input').val('');
+        $('.addUsersModal .cancel-footer').removeClass('d-none');
+    });
 
 
+    $('#exampleModal').on('hidden.bs.modal', function (e) {
+        $('.auto-complete-list table tbody').empty();
+        $('.auto-complete-list').addClass('d-none');
+       
+        $('.addUsersModal .modal-footer').addClass('d-none');
+        $('.auto-complete-search-input').val('');
+        $('.addUsersModal .cancel-footer').removeClass('d-none');
+    });
+
+    $('#exampleModal').on('show.bs.modal', function(){
+       
+        var allDonorsExists = $('#tag-user-donors');
+
+        if(allDonorsExists.length > 0){
+            $('.global-message-options').addClass('d-none');
+        }
+    });
+
+    $('button.message-all-users').on('click', function(){
+        $('.tags-container').append('<span id="tag-user-all" class="mr-3">All Users <a href=""><i class="fas fa-times"></i></a></span>')
+        $('.tags-container').append('<input id="tag-user-all" type="hidden" name="user[]" value="all"/>')
+        $('span#tag-user-all').on("click", function(e){
+            e.preventDefault();
+            $(this).remove();
+            $('input#tag-user-all').remove();
+            $('.add-users-modal-btn').removeClass('d-none');
+        });
+        
+        $('.add-users-modal-btn').addClass('d-none');
+        $('#exampleModal').modal('hide');
+    });
+
+    $('button.message-all-donors').on('click', function(){
+       
+      
+        $('.tags-container').append('<span id="tag-user-donors" class="mr-3">All Donors <a href=""><i class="fas fa-times"></i></a></span>')
+        $('.tags-container').append('<input id="tag-user-donors" type="hidden" name="user[]" value="donors"/>')
+        $('span#tag-user-donors').on("click", function(e){
+            e.preventDefault();
+            $(this).remove();
+            $('input#tag-user-donors').remove();
+            $('.global-message-options').removeClass('d-none');
+        });
+
+        $('.global-message-options').addClass('d-none');
+        $('#exampleModal').modal('hide');
+      
+       
+    })
+   
+
+   
+}
 

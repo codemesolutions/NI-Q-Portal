@@ -6,7 +6,7 @@
         @include('site.blocks.donor-heading')
         @include('site.blocks.donor-nav')
     @else
-         <div class=" jumbotron jumbotron-fluid bg-image py-5">
+         <div class=" jumbotron jumbotron-fluid bg-image py-5 d-none">
             <div class="container py-5 text-center">
                 <div class="py-5"></div>
             </div>
@@ -21,7 +21,7 @@
                     <p>Please answer each question to the best of your knowledge.  We take great pride in providing a simple but effective process to ensure we work with moms who understand our mission of providing high quality breast milk that is throughly tested and trusted.</p>
                 </div>
             <div style="background:#edf1f2;" class="col-md-8 mx-auto answer p-5">
-                
+
                 @if($errors->count() > 0)
                     <div class="alert alert-danger rounded-0 alert-dismissible fade show" role="alert">
                         <strong>Holy guacamole!</strong> You should check in on some of those fields below.
@@ -39,17 +39,17 @@
                     <input type="hidden" name="question" value="{{$question->id}}"/>
                     @php $conditions = []; @endphp
                    @foreach($question->fields()->orderBy('field_order')->get() as $k => $field)
-                        
+
                         @if($field->question_field_type_id->id == 1)
                             <div class="form-group">
                                 <label>{{$field->label}}</label>
                                 <input class="form-control {{$errors->has($field->name) ? 'is-invalid':''}}" type="text" name="{{$field->name}}" value=""/>
                                   @if($errors->has($field->name))
-                                    
+
                                     <span class="invalid-feedback  m-0" role="alert">
                                         <strong>{{ $errors->first($field->name) }}</strong>
                                     </span>
-                                    
+
                                 @endif
                             </div>
                         @elseif($field->question_field_type_id->id == 9)
@@ -57,11 +57,11 @@
                                 <label>{{$field->label}}</label>
                                 <input class="form-control {{$errors->has($field->name) ? 'is-invalid':''}}" type="password" name="{{$field->name}}" value=""/>
                                   @if($errors->has($field->name))
-                                    
+
                                     <span class="invalid-feedback  m-0" role="alert">
                                         <strong>{{ $errors->first($field->name) }}</strong>
                                     </span>
-                                    
+
                                 @endif
                             </div>
                         @elseif($field->question_field_type_id->id == 4)
@@ -69,24 +69,24 @@
                                 <label>{{$field->label}}</label>
                                 <textarea class="form-control {{$errors->has($field->name) ? 'is-invalid':''}}" name="{{$field->name}}"></textarea>
                                   @if($errors->has($field->name))
-                                    
+
                                     <span class="invalid-feedback  m-0" role="alert">
                                         <strong>{{ $errors->first($field->name) }}</strong>
                                     </span>
-                                    
+
                                 @endif
                             </div>
                         @elseif($field->question_field_type_id->id == 5)
                             <div class="form-group">
-                                @php      
+                                @php
                                     $_options = explode(",", rtrim($field->options, ','));
                                     $options = [];
                                     foreach($_options as $k => $v){
-                                       
+
                                         if(preg_match("/\:/", $v)){
                                             $v = str_replace(' ', '', $v);
                                             $p = explode(":", $v);
-                                            $options[$p[0]] = $p[1]; 
+                                            $options[$p[0]] = $p[1];
                                         }
 
                                         else{
@@ -94,10 +94,10 @@
                                             $options[$v] = $v;
                                         }
 
-                                       
+
                                     }
 
-                                    
+
                                 @endphp
                                 <label>{{$field->label}}</label>
                                 <select class="form-control {{$errors->has($field->name) ? 'is-invalid':''}}" name="{{$field->name}}">
@@ -106,11 +106,11 @@
                                   @endforeach
                                 </select>
                                   @if($errors->has($field->name))
-                                    
+
                                     <span class="invalid-feedback m-0" role="alert">
                                         <strong>{{ $errors->first($field->name) }}</strong>
                                     </span>
-                                    
+
                                 @endif
                             </div>
                         @elseif($field->question_field_type_id->id == 7)
@@ -125,11 +125,11 @@
                                 <label>{{$field->label}}</label>
                                 <input class="form-control {{$errors->has($field->name) ? 'is-invalid':''}}" type="file" name="{{$field->name}}" value=""/>
                                   @if($errors->has($field->name))
-                                    
+
                                     <span class="invalid-feedback  m-0" role="alert">
                                         <strong>{{ $errors->first($field->name) }}</strong>
                                     </span>
-                                    
+
                                 @endif
                             </div>
 
@@ -144,15 +144,15 @@
                                     <label class="custom-control-label " for="{{$field->name . $k}}'">{{$field->label}}</label>
                                     @endif
                                 </div>
-                              
+
                                  @if($errors->has($field->name))
-                                    
+
                                     <span class="invalid-feedback col m-0" role="alert">
                                         <strong>{{ $errors->first($field->name) }}</strong>
                                     </span>
-                                    
+
                                 @endif
-                                
+
                             </div>
                          @elseif($field->question_field_type_id->id == 3)
                             <div class="form-group row m-0 mb-2 align-items-center">
@@ -160,15 +160,15 @@
                                     <input type="checkbox" id="{{$field->name . $k}}'" name="{{$field->name}}" value="{{$field->value}}" class="custom-control-input {{$errors->has($field->name) ? 'is-invalid':''}} ">
                                     <label class="custom-control-label " for="{{$field->name . $k}}'">{{$field->label}}</label>
                                 </div>
-                              
+
                                  @if($errors->has($field->name))
-                                    
+
                                     <span class="invalid-feedback col m-0" role="alert">
                                         <strong>{{ $errors->first($field->name) }}</strong>
                                     </span>
-                                    
+
                                 @endif
-                                
+
                             </div>
                         @endif
 
@@ -186,11 +186,11 @@
                                         <label>If answer equals {{$con->label}} please enter the date</label>
                                         <input data-condition="{{$c->condition}}" class="form-control condition is-invalid" type="date" name="condition_date"/>
                                          @if($errors->has('condition_date'))
-                                    
+
                                             <span class="invalid-feedback col m-0" role="alert">
                                                 <strong>{{ $errors->first('condition_date') }}</strong>
                                             </span>
-                                            
+
                                         @endif
                                     </div>
                                 @else

@@ -87,7 +87,7 @@ select.form-control{
 
 .custom-control-label::before {
     position: absolute;
-   
+    top:0;
     left: -1.5rem;
     display: block;
     width: 1rem;
@@ -96,6 +96,10 @@ select.form-control{
     content: "";
     background-color: #fff;
     border: #adb5bd solid 2px;
+}
+
+.custom-control-label::after{
+    top:0;
 }
 
 .custom-control-input:focus ~ .custom-control-label::before {

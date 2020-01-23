@@ -96,18 +96,8 @@ class Controller extends BaseController
         $page['template'] = $savedPage->template;
         $page['content'] = $savedPage->content;
         $page['hideSidebar'] = false;
-        $page['donors'] = Donor::all();
-        $page['users'] = User::all();
-        $page['notifications'] = Notifications::all();
-        $page['latest_notifications'] = Notifications::orderBy('created_at', 'desc')->take(10)->get();
-        $page['forms'] = Form::all();
-        $page['types'] = FormType::all();
-        $page['roles'] = Permission::all();
-        //$page['requests'] = DonorRequest::all();
-        $page['pages'] = Page::all();
-        $page['documents'] = Document::all();
 
-        $page['menus'] = Menu::all();
+
         $page['fields'] = [];
         $page['datasets'] = [];
 
@@ -120,8 +110,7 @@ class Controller extends BaseController
         }
 
 
-        $page['pageTypes'] = PageType::all();
-        $page['notificationTypes'] = NotificationTypes::all();
+
 
 
 

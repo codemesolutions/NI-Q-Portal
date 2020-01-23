@@ -2,16 +2,40 @@
 
 @section('content')
 
-<div class=" jumbotron jumbotron-fluid bg-image py-5">
-    <div class="container py-5 text-left">
-        <div class="py-5 text-white">
-                <h4 class="font-weight-light">Welcome, <span class=" font-weight-bold">{{Auth::user()->name}}</span></h4>
+<div class=" jumbotron jumbotron-fluid bg-light border-top border-bottom py-0 ">
+    <div class="container py-0 text-left">
+        <div class="py-3 d-block d-md-flex m-0 w-100 align-items-center justify-content-center">
+            <p class="font-weight-bold m-0 mr-md-auto mb-4 mb-md-0 d-none">Welcome, <span class=" font-weight-bold text-teal">{{Auth::user()->name}}</span></p>
+            @if(!is_null(Auth::user()->donors()->first()))
+            <p>Donor ID: <span class="text-muted">{{Auth::user()->donors()->first()->donor_number}}</span> </p>
+            @endif
+            @if(!is_null(Auth::user()->donors()->first()) && !is_null(Auth::user()->donors()->first()->bloodkits()->orderby('id', 'desc')->first()))
+                <p class="ml-md-3">Lab Results Status: {!!Auth::user()->donors()->first()->bloodkits()->orderby('id', 'desc')->first()->status === 1 ? "<span class='text-success'>Passed</span>": "<span class='text-danger'>Failed</span>"!!} </p>
+                <p class="ml-md-3">Lab Results Recieved Date: <span class="text-muted">{{date('m/d/Y', strtotime(Auth::user()->donors()->first()->bloodkits()->orderby('id', 'desc')->first()->recieve_date)) }} </span> </p>
+            @endif
+            <div class="col-12 col-md-auto ml-0 ml-md-auto p-0 mt-2 mt-md-0">
+                @if(!is_null(Auth::user()->donors()->first()) && Auth::user()->donors()->first()->bloodkits()->count() > 0)
+
+                    @if(!is_null(Auth::user()->donors()->first()->bloodkits()->first()->recieve_date) && Auth::user()->donors()->first()->bloodkits()->first()->status === 1)
+
+                        <button type="button" class=" btn btn-light small border text-uppercase font-weight-bold" data-toggle="modal" data-target="#request-milkkit">
+                            Request Milk Kit
+                        </button>
+                        <button type="button" class="btn btn-light small border text-uppercase font-weight-bold " data-toggle="modal" data-target="#pickup-message">
+                            Schedule A Pickup
+                        </button>
+
+                    @endif
+                @endif
+            </div>
+
+
         </div>
     </div>
 </div>
 @include('site.blocks.donor-nav')
 <div class="py-5 bg-white">
-    <div class="container p-5 bg-light border">
+    <div class="container ">
         <div class=" mb-4 px-3 d-none">
             <div class="alert alert-danger alert-dismissible fade show rounded-0 mb-1 py-3" role="alert">
                 <strong>Urgent Update Needed!</strong> We have not recieved your blood lab kit.
@@ -25,31 +49,12 @@
 
 
 
-            <div class="col-12 p-0 mb-4">
-                <div class="row m-0 align-items-center">
-                    <h6 class = "ml-3 m-0 page-title border-bottom-thick-teal">Your Account</h6>
 
-                </div>
-            </div>
-            <div class="col-md-12 p-0 mb-4">
-                <div class="row m-0 align-items-center">
 
-                    <div class="col-12 p-0">
-                        <ul class="nav ml-auto justify-content-start">
-                            <li class="nav-item">
-                                <a class="btn btn-teal-sm ml-1 active " href="#">Account Information</a>
-                            </li>
-
-                        </ul>
-                    </div>
-
-                </div>
-
-            </div>
 
             <div class="col-md-12 p-0 mb-3 notifications">
                 <div class="row m-0">
-                    <form class="w-100 p-5 bg-white border" method="post" action="{{Route('admin.user.account.update')}}">
+                    <form class="w-100 p-3 p-md-5 bg-white border" method="post" action="{{Route('admin.user.account.update')}}">
                         <div class="row m-0">
                             <div class="col-12 mb-5 text-center text-md-left ">
                                 <h6 class="m-0 d-inline">Account Information</h6>
@@ -142,7 +147,7 @@
             @if(!is_null(Auth::user()->donors()->first()))
             <div class="col-md-12 p-0 mb-3 notifications">
                 <div class="row m-0">
-                    <form class="w-100 p-5 bg-white border" method="post" action="{{Route('admin.user.account.update.mailing')}}">
+                    <form class="w-100 p-3 p-md-5 bg-white border" method="post" action="{{Route('admin.user.account.update.mailing')}}">
                         <div class="row m-0">
                             <div class="col-12 mb-5 text-center text-md-left ">
                                 <h6 class="m-0 d-inline">Mailing Address Information</h6>
@@ -221,7 +226,7 @@
             @if(!is_null(Auth::user()->donors()->first()))
             <div class="col-md-12 p-0 mb-3 notifications">
                 <div class="row m-0">
-                    <form class="w-100 p-5 bg-white border" method="post" action="{{Route('admin.user.account.update.shipping')}}">
+                    <form class="w-100 p-3 p-md-5 bg-white border" method="post" action="{{Route('admin.user.account.update.shipping')}}">
                         <div class="row m-0">
                             <div class="col-12 mb-5 text-center text-md-left ">
                                 <h6 class="m-0 d-inline">Shipping Address Information</h6>

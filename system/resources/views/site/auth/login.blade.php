@@ -1,11 +1,11 @@
 @extends('site.layouts.app')
 
 @section('content')
-<div class="login-bg">
+<div class="login-bg p-0">
 
-    <div  class="container mt-5">
+    <div  class="container ">
         <div class="row justify-content-center">
-            <div class="col-md-4 mt-5">
+            <div class="col-md-4 my-5">
                 <div style="background:#fff;" class="card rounded-0 border-0 p-0 shadow">
 
                     <div  class="card-body  p-5">

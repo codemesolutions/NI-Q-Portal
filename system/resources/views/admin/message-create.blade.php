@@ -1,120 +1,87 @@
 @extends('admin.layouts.app')
 
 @section('content')
- 
+<style>
+    .ck-editor__editable_inline {
+        min-height: 300px;
+    }
+</style>
 <div class="bg-light h-100">
-     <div class="bg-teal border-bottom px-3 py-3">
+     <div class="bg-teal border-bottom border-top px-3 py-3 row m-0 align-items-center">
         <p class="m-0 text-uppercase" >{!!$title!!} </p>
+
     </div>
-    <div class="container-fluid p-0" style="height:calc(100% - 52.2px);">
-        <form class="row m-0 h-100" method="POST" action="{{Route($form_action_route)}}">
-            <div class="p-3 p-md-5 border-right bg-white col-7 " style="height:calc(100% - 53.2px);">
+    <div class="container-fluid p-0 overflow-auto p-5" style="height:calc(100% - 52.2px);">
 
-                
+        <form class=" p-5 border shadow" method="POST" action="{{Route($form_action_route)}}">
 
-                @foreach($fields as $field)
+           <div class="form-group row m-0 mb-4 align-items-center">
+               <label class="m-0">To</label>
+               <div class="tags-container row m-0 ml-2">
 
-                    @if($field['type'] == 'text')
-                        <div class="form-group mb-4">
-                            <label>{{$field['label']}}</label>
-                            <input type="text" name="{{$field['name']}}"  class="form-control form-control-lg {{$errors->has($field['name']) ? 'is-invalid':''}}" value="{{$field['value']}}"/>
-                            @if($errors->has($field['name']))
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $errors->first($field['name']) }}</strong>
-                                </span>
-                            @endif
-                            <p class="small text-muted">{{$field['helper']}}</p>
-                        </div>
-                    @elseif($field['type'] == 'password')
-                        <div class="form-group mb-4">
-                            <label>{{$field['label']}}</label>
-                            <input type="password" name="{{$field['name']}}"  class="form-control form-control-lg {{$errors->has($field['name']) ? 'is-invalid':''}}" value="{{$field['value']}}"/>
-                            @if($errors->has($field['name']))
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $errors->first($field['name']) }}</strong>
-                                </span>
-                            @endif
-                            <p class="small text-muted">{{$field['helper']}}</p>
-                        </div>
-                    @elseif($field['type'] == 'hidden')
-                        
-                        <input type="hidden" name="{{$field['name']}}" value="{{$field['value']}}"/>
-                        
-                    @elseif($field['type'] == 'select')
-                        <div class="form-group mb-4">
-                            <label>{{$field['label']}}</label>
-                            <select name="{{$field['name']}}"  class="form-control form-control-lg {{$errors->has($field['name']) ? 'is-invalid':''}}" >
-                               @foreach($field['options'] as $option)
-                                    <option value="{{$option['value']}}" {{$option['selected'] === true ? 'selected':null}}>{{$option['name']}}</option>
-                               @endforeach
-                            </select>
-                            <p class="small text-muted">{{$field['helper']}}</p>
-                        </div>
-                    @elseif($field['type'] == 'textarea')
-                        <div class="form-group mb-4">
-                            <label>{{$field['label']}}</label>
-                           
-                            <textarea  name="{{$field['name']}}" class="form-control form-control-lg {{$errors->has($field['name']) ? 'is-invalid':''}}">{!!$field['value']!!}</textarea>
-                            @if($errors->has($field['name']))
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $errors->first($field['name']) }}</strong>
-                                </span>
-                            @endif
-                            <p class="small text-muted">{{$field['helper']}}</p>
-                        </div>
-                     @elseif($field['type'] == 'richtext')
-                        <div class="form-group mb-4">
-                            <label>{{$field['label']}}</label>
-                           
-                            <textarea  name="{{$field['name']}}" id="editor">{{$field['value']}}</textarea>
-                            @if($errors->has($field['name']))
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $errors->first($field['name']) }}</strong>
-                                </span>
-                            @endif
-                            <p class="small text-muted">{{$field['helper']}}</p>
-                        </div>
-                    @elseif($field['type'] == 'checkbox')
-                        <div class="form-group mt-4">
-                             <div class="custom-control custom-checkbox">
-                                <input name="{{$field['name']}}" type="checkbox" class="custom-control-input" id="{{$field['name']}}" {{ $field['checked']  ? 'checked':''}}/>
-                                <label class="custom-control-label" for="{{$field['name']}}">{{$field['label']}}</label>
-                            </div>
-                        </div>
-                  
-                    @endif
-                @endforeach
-              
-            </div>
-            @csrf
-            <div class="col-12 col-md-5 bg-light p-0" style="height:calc(100% - 53.2px);">
-                  @if($fields['users']['type'] == 'checkbox-select')
-                        
-                        @if(count($field['options']) > 0)
-                         
-                         <div class="bg-light  p-5 h-100">
-                            <label>{{$field['label']}}</label>
-                            <input type="search" placeholder="search..." class="form-control mb-2"/>
-                            <div style="max-height: 300px; overflow:auto;" class="select-box border bg-white">
-                                @foreach($field['options'] as $option)
-                                    <div class="select-box-item  row m-0 border-bottom p-3 {{$option['selected'] ? 'select-box-item-active':''}}">
-                                        <div class="custom-control custom-checkbox ml-2">
-                                            <input name="{{$field['name']}}[{{$option['value']}}]" type="checkbox" class="custom-control-input" id="{{$field['name'].$option['value']}}" {{$option['selected'] ? 'checked':''}}>
-                                            <label class="custom-control-label" for=""></label>
-                                        </div> 
-                                        <p class="m-0 ml-4">{{$option['name']}}</p>
-                                    </div>
-                                @endforeach
-                            </div>
-                        </div>
-                        @endif
-                    @endif
-            </div>
-            <div class="row m-0 col-12 p-0">
-                <button type="submit" class="btn btn-primary btn-lg btn-block  py-3">Send Message</button>
-            </div>
+               </div>
+               <button type="button" class="btn btn-dark btn-sm small mr-1 add-users-modal-btn" data-toggle="modal" data-target="#exampleModal">
+                Add Users
+              </button>
+
+           </div>
+            <div class="form-group mb-4">
+               <label>Subject</label>
+               <input class="form-control" type="text" name="subject"/>
+           </div>
+            <div class="form-group mb-4">
+               <label>Message</label>
+               <textarea  name="message" id="editor"></textarea>
+                @csrf
+           </div>
+           <button type="submit" class="btn btn-dark btn-sm small">Send</button>
         </form>
     </div>
 </div>
-    
+<div class="modal fade addUsersModal" data-backdrop="static" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+            <h6 class="modal-title" id="exampleModalLabel">Add Users</h6>
+
+        </div>
+        <div class="modal-body p-0">
+
+
+                <form id="SearchUsersForm" class="row m-0 p-3">
+                    <input class="form-control auto-complete-search-input col" type="search" name="auto-complete"/>
+                    <button type="submit" class="btn btn-dark btn-sm small auto-complete-search-btn ml-1">Search</button>
+
+                </form>
+
+                <div class="auto-complete-list bg-light p-3 d-none border border-bottom-0 overflow-auto" style="max-height: 300px;">
+                    <table class="table  table-bordered m-0">
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="text-center global-message-options border p-3" >
+
+                    <div class="row m-0 justify-content-center">
+
+                        <p class="w-100 mb-2">Global Message Options</p>
+                        <button  class="btn btn-dark btn-sm small mr-2 message-all-users">Message To All Users</button>
+                        <button  class="btn btn-dark btn-sm small message-all-donors">Message To All Donors</button>
+                    </div>
+                </div>
+
+        </div>
+        <div class="modal-footer results-footer d-none">
+          <button type="button" class="btn btn-danger btn-sm small mr-auto" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary btn-sm small users-selected-save">Done</button>
+        </div>
+        <div class="modal-footer cancel-footer">
+            <button type="button" class="btn btn-danger btn-sm small mx-auto" data-dismiss="modal">Cancel</button>
+
+          </div>
+
+      </div>
+    </div>
+  </div>
 @endsection
