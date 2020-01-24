@@ -3,40 +3,34 @@
 
 @section('content')
     @if($type == 'donor')
-    <div class=" jumbotron jumbotron-fluid bg-light border-top border-bottom py-1 ">
-        <div class="container py-1 text-left">
-            <div class="py-2">
-                <h6 class="font-weight-light m-0">Welcome, <span class=" font-weight-bold">{{Auth::user()->name}}</span></h6>
-            </div><div class=" jumbotron jumbotron-fluid bg-light border-top border-bottom py-0 ">
-                <div class="container py-0 text-left">
-                    <div class="py-3 d-block d-md-flex m-0 w-100 align-items-center justify-content-center">
-                        <p class="font-weight-bold m-0 mr-md-auto mb-4 mb-md-0 d-none">Welcome, <span class=" font-weight-bold text-teal">{{Auth::user()->name}}</span></p>
-                        @if(!is_null(Auth::user()->donors()->first()))
-                        <p>Donor ID: <span class="text-muted">{{Auth::user()->donors()->first()->donor_number}}</span> </p>
+    <div class=" jumbotron jumbotron-fluid bg-light border-top border-bottom py-0 ">
+        <div class="container py-0 text-left">
+            <div class="py-3 d-block d-md-flex m-0 w-100 align-items-center justify-content-center">
+                <p class="font-weight-bold m-0 mr-md-auto mb-4 mb-md-0 d-none">Welcome, <span class=" font-weight-bold text-teal">{{Auth::user()->name}}</span></p>
+                @if(!is_null(Auth::user()->donors()->first()))
+                <p>Donor ID: <span class="text-muted">{{Auth::user()->donors()->first()->donor_number}}</span> </p>
+                @endif
+                @if(!is_null(Auth::user()->donors()->first()) && !is_null(Auth::user()->donors()->first()->bloodkits()->orderby('id', 'desc')->first()) && !is_null(Auth::user()->donors()->first()->bloodkits()->orderby('id', 'desc')->first()->recieve_date))
+                    <p class="ml-md-3">Lab Results Status: {!!Auth::user()->donors()->first()->bloodkits()->orderby('id', 'desc')->first()->status === 1 ? "<span class='text-success'>Passed</span>": "<span class='text-danger'>Failed</span>"!!} </p>
+                    <p class="ml-md-3">Lab Results Recieved Date: <span class="text-muted">{{date('m/d/Y', strtotime(Auth::user()->donors()->first()->bloodkits()->orderby('id', 'desc')->first()->recieve_date)) }} </span> </p>
+                @endif
+                <div class="col-12 col-md-auto ml-0 ml-md-auto p-0 mt-2 mt-md-0">
+                    @if(!is_null(Auth::user()->donors()->first()) && Auth::user()->donors()->first()->bloodkits()->count() > 0)
+
+                        @if(!is_null(Auth::user()->donors()->first()->bloodkits()->first()->recieve_date) && Auth::user()->donors()->first()->bloodkits()->first()->status === 1)
+
+                            <button type="button" class=" btn btn-light small border text-uppercase font-weight-bold" data-toggle="modal" data-target="#request-milkkit">
+                                Request Milk Kit
+                            </button>
+                            <button type="button" class="btn btn-light small border text-uppercase font-weight-bold " data-toggle="modal" data-target="#pickup-message">
+                                Schedule A Pickup
+                            </button>
+
                         @endif
-                        @if(!is_null(Auth::user()->donors()->first()) && !is_null(Auth::user()->donors()->first()->bloodkits()->orderby('id', 'desc')->first()))
-                            <p class="ml-md-3">Lab Results Status: {!!Auth::user()->donors()->first()->bloodkits()->orderby('id', 'desc')->first()->status === 1 ? "<span class='text-success'>Passed</span>": "<span class='text-danger'>Failed</span>"!!} </p>
-                            <p class="ml-md-3">Lab Results Recieved Date: <span class="text-muted">{{date('m/d/Y', strtotime(Auth::user()->donors()->first()->bloodkits()->orderby('id', 'desc')->first()->recieve_date)) }} </span> </p>
-                        @endif
-                        <div class="col-12 col-md-auto ml-0 ml-md-auto p-0 mt-2 mt-md-0">
-                            @if(!is_null(Auth::user()->donors()->first()) && Auth::user()->donors()->first()->bloodkits()->count() > 0)
-
-                                @if(!is_null(Auth::user()->donors()->first()->bloodkits()->first()->recieve_date) && Auth::user()->donors()->first()->bloodkits()->first()->status === 1)
-
-                                    <button type="button" class=" btn btn-light small border text-uppercase font-weight-bold" data-toggle="modal" data-target="#request-milkkit">
-                                        Request Milk Kit
-                                    </button>
-                                    <button type="button" class="btn btn-light small border text-uppercase font-weight-bold " data-toggle="modal" data-target="#pickup-message">
-                                        Schedule A Pickup
-                                    </button>
-
-                                @endif
-                            @endif
-                        </div>
-
-
-                    </div>
+                    @endif
                 </div>
+
+
             </div>
         </div>
     </div>
