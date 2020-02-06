@@ -39,11 +39,11 @@
 
     @endif
 <div class="bg-white py-5">
-    <div class="container border bg-light py-5">
-        <div class=" p-5">
+    <div class="container">
+        <div class=" ">
             <h6 class="m-0 mx-auto font-weight-bold  mb-3">{!!$title!!}</h6>
 
-            <div style="" class="border bg-white mx-auto answer p-5">
+            <div style="" class=" bg-white mx-auto answer">
 
                 @if($errors->count() > 0)
                     <div class="alert alert-danger rounded-0 alert-dismissible fade show" role="alert">

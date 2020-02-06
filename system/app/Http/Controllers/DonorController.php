@@ -191,7 +191,7 @@ class DonorController extends Controller
         try {
 
                 $_request = new PRequest();
-                //$_request->getSoapClient()->__setLocation(PRequest::PRODUCTION_URL);
+                $_request->getSoapClient()->__setLocation(PRequest::PRODUCTION_URL);
 
                 $trackingID = null;
 

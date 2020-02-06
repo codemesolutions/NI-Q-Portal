@@ -177,5 +177,6 @@ Route::post('/admin/message/update', 'Admin\Message\ActionController@update')->n
 Route::post('/admin/message/seen', 'Admin\Message\ActionController@seen')->name('admin.message.seen');
 
 Route::get('/system/sync', 'APIController@sync');
+Route::get('/system/generate', 'APIController@generate');
 
 Route::get('/{any?}', 'PagesController@handler');

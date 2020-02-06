@@ -409,6 +409,48 @@ class DonorFormController extends Controller
 
             }
 
+            elseif(strtolower($form->name) === 'w9'){
+                $_qs = Form::where('id', $fs->form_id)->first()->questions()->first();
+                $fields = [];
+                $fileFieldID = NULL;
+
+                foreach($_qs->fields()->get() as $field){
+                    $a = QuestionAnswer::where('form_id', $fs->form_id)
+                        ->where('question_id', $_qs->id)
+                        ->where('field_id', $field->id)->where('user_id', $fs->user_id->id)->first();
+
+                    if(!is_null($a)){
+                       $fields[$field->name] = $a->answer;
+                    }
+
+                    if($field->name == "file"){
+                        $fileFieldID = $field->id;
+                    }
+                }
+
+                $donorNumber = $request->user()->donors()->first()->donor_number;
+                $api = new \App\Library\DonorAPI('http://localhost:55907/', 'api1', 'Api1Rand0M');
+                //$api->postFile('api/pdf/generate' , $fields ,  storage_path() . "/app/form/".$donorNumber.".pdf");
+                $api->postFile('api/pdf/generate' , $fields, storage_path() . "/app/form/".$donorNumber.".pdf");
+
+
+                if(file_exists(storage_path() . "/app/form/".$donorNumber.".pdf")){
+
+                    $qa = new QuestionAnswer();
+                    $qa->form_id = $fs->form_id;
+                    $qa->question_id = $_qs->id;
+                    $qa->field_id = $fileFieldID;
+                    $qa->user_id = $request->user()->id;
+                    $qa->answer = "form/".$donorNumber.".pdf";
+                    $qa->save();
+                }
+
+                else{
+                    throw new \Exception("There was a problem creating your w9 form.  Please send message to ni-q support explaining the error.");
+                }
+
+            }
+
             $notify = new \App\Notifications();
             $notify->notification_type_id = \App\NotificationTypes::where('name', 'form submission')->first()->id;
             $notify->message = 'There is a new ' . $form->name . ' submission!';

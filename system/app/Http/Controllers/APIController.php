@@ -14,7 +14,7 @@ class APIController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+
     }
 
     /**
@@ -24,6 +24,8 @@ class APIController extends Controller
      */
     public function sync(Request $request)
     {
+        $this->middleware('auth');
+
         $api = new \App\Library\DonorAPI('https://donortrack.ni-q.com:443/', 'api1', 'Api1Rand0M');
         //$api = new \App\Library\DonorAPI('http://localhost:55907/', 'api1', 'Api1Rand0M');
         $milkKits = $api->get('api/MilkKit');
@@ -167,6 +169,11 @@ class APIController extends Controller
 
 
         return redirect()->route('admin')->with('Success', 'API SUCCESSFULLY PULLED');
+    }
+
+    public function generate(){
+        $api = new \App\Library\DonorAPI('http://localhost:55907/', 'api1', 'Api1Rand0M');
+        $api->getFile('api/pdf/generate' , storage_path() . "/app/form/track_w9.pdf");
     }
 
 }

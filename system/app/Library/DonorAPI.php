@@ -66,58 +66,107 @@ class DonorAPI
         return $this->get('api/donor');
     }
 
+    public function generate(){
+        return $this->get('api/pdf/generate');
+    }
+
     public function get($uri){
-        
+
         $this->authorize();
 
-        //dd($this->token);
+
         if(!is_null($this->token)){
             $res = $this->client->request('GET', $this->baseURL . $uri, [
                 'headers' =>  [
-                    'Authorization' => 'Bearer ' . $this->token,        
-                    
+                    'Authorization' => 'Bearer ' . $this->token,
+
                 ],
             ]);
-            
 
-            
+
+
             if ($res->getStatusCode() == 200) { // 200 OK
                 $response_data = $res->getBody()->getContents();
 
                 return  json_decode($response_data);
             }
 
+
             return $res->getStatusCode();
         }
 
-        throw new Exception("No Bearer token found");
+        throw new \Exception("No Bearer token found");
+    }
+
+
+    public function getFile($uri, $file){
+
+        $this->authorize();
+         // specify your path
+        $resource = fopen($file, 'w+');
+
+        if(!is_null($this->token)){
+            $res = $this->client->request('GET', $this->baseURL . $uri, [
+                'headers' =>  [
+                    'Authorization' => 'Bearer ' . $this->token,
+
+                ],
+                "sink" => $resource
+            ]);
+
+            return $res->getStatusCode();
+        }
+
+        throw new \Exception("No Bearer token found");
     }
 
     public function post($uri, Array $data){
-        
+
         $this->authorize();
 
         //dd($this->token);
         if(!is_null($this->token)){
             $res = $this->client->request('POST', $this->baseURL . $uri, [
                 'headers' =>  [
-                    'Authorization' => 'Bearer ' . $this->token,        
-                    
+                    'Authorization' => 'Bearer ' . $this->token,
                 ],
                 'form_params' => $data
             ]);
-            
 
-            
+
+
             if ($res->getStatusCode() == 200) { // 200 OK
                 $response_data = $res->getBody()->getContents();
-
+                dd($response_data);
                 return  json_decode($response_data);
             }
 
             return $res->getStatusCode();
         }
 
-        throw new Exception("No Bearer token found");
+        throw new \Exception("No Bearer token found");
+    }
+
+    public function postFile($uri, Array $data, $file){
+
+        $this->authorize();
+
+        //dd($this->token);
+        if(!is_null($this->token)){
+            $resource = fopen($file, 'w+');
+
+            $res = $this->client->request('POST', $this->baseURL . $uri, [
+                'headers' =>  [
+                    'Authorization' => 'Bearer ' . $this->token,
+
+                ],
+                'form_params' => $data,
+                'sink' => $resource
+            ]);
+
+            return $res->getStatusCode();
+        }
+
+        throw new \Exception("No Bearer token found");
     }
 }

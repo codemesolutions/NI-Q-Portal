@@ -545,3 +545,297 @@ p{
     background: #fafafa;
     border: #ddd 1px solid;
 }
+
+.w9-name{
+    position: relative; 
+    top: -1260px; 
+    width: 500px; 
+    margin-left: 120px;  
+}
+
+.w9-business{
+    position: relative; 
+    top: -1241px; 
+    width: 500px; 
+    margin-left: 120px;  
+}
+
+.w9-indsol{
+    position: relative; 
+    top: -1190px; 
+    margin: 0 0 0 119px;
+    display:block; 
+}
+
+.w9-ccorp{
+    position: relative; 
+    top: -1206px; 
+    margin: 0 0 0 324px;
+    display:block; 
+}
+
+.w9-scorp{
+    position: relative; 
+    top: -1219px;  
+    margin: 0 0 0 454px;
+    display:block; 
+}
+
+.w9-partnership{
+    position: relative; 
+    top: -1232px;  
+    margin: 0 0 0 583px;
+    display:block; 
+}
+
+.w9-trust{
+    position: relative; 
+    top: -1245px;  
+    margin: 0 0 0 713px;
+    display:block; 
+}
+
+.w9-llc{
+    position: relative; 
+    top: -1212px; 
+    margin: 0 0 0 119px;
+    display:block; 
+}
+
+.w9-llc-npt{
+    position: relative; 
+    top: -1236px; 
+    margin: 0 0 0 742px;
+    width: 60px;
+    display:block; 
+}
+
+.w9-other{
+    position: relative; 
+    top: -1166px; 
+    margin: 0 0 0 119px;
+    display:block; 
+}
+
+.w9-other-npt{
+    position: relative; 
+    top: -1189px; 
+    margin: 0 0 0 290px;
+    width: 500px;
+    display:block; 
+}
+
+.w9-excempt{
+    position: relative; 
+    top: -1321px; 
+    margin: 0 0 0 974px;
+    width: 60px;
+    display:block; 
+}
+
+.w9-FACTA{
+    position: relative; 
+    top: -1280px; 
+    margin: 0 0 0 910px;
+    width: 125px;
+    display:block; 
+}
+.w9-address{
+    position: relative; 
+    top: -1220px; 
+    margin: 0 0 0 110px;
+    width: 550px;
+    display:block; 
+}
+.w9-citystzip{
+    position: relative; 
+    top: -1203px; 
+    margin: 0 0 0 110px;
+    width: 550px;
+    display:block; 
+}
+.w9-requester{
+    position: relative; 
+    top: -1228px; 
+    margin: 0 0 0 705px;
+    width: 300px;
+    display:block; 
+}
+.w9-accounts{
+    position: relative; 
+    top: -1209px; 
+    margin: 0 0 0 110px;
+    width: 900px;
+    display:block; 
+}
+
+.w9-social-1{
+    position: relative; 
+    top: -1156px; 
+    margin: 0 0 0 750px;
+    width: 27px;
+    display:block; 
+}
+
+.w9-social-2{
+    position: relative; 
+    top: -1181px; 
+    margin: 0 0 0 776px;
+    width: 27px;
+    display:block; 
+}
+
+.w9-social-3{
+    position: relative; 
+    top: -1206px; 
+    margin: 0 0 0 802px;
+    width: 27px;
+    display:block; 
+}
+
+.w9-social-4{
+    position: relative; 
+    top: -1231px; 
+    margin: 0 0 0 854px;
+    width: 27px;
+    display:block; 
+}
+
+.w9-social-5{
+    position: relative; 
+    top: -1256px; 
+    margin: 0 0 0 880px;
+    width: 27px;
+    display:block; 
+}
+
+.w9-social-6{
+    position: relative; 
+    top: -1281px; 
+    margin: 0 0 0 931px;
+    width: 27px;
+    display:block; 
+}
+
+.w9-social-7{
+    position: relative; 
+    top: -1306px; 
+    margin: 0 0 0 957px;
+    width: 27px;
+    display:block; 
+}
+
+.w9-social-8{
+    position: relative; 
+    top: -1331px; 
+    margin: 0 0 0 983px;
+    width: 27px;
+    display:block; 
+}
+
+.w9-social-9{
+    position: relative; 
+    top: -1356px; 
+    margin: 0 0 0 1009px;
+    width: 27px;
+    display:block; 
+}
+
+.w9-ein-1{
+    position: relative; 
+    top: -1294px; 
+    margin: 0 0 0 750px;
+    width: 27px;
+    display:block; 
+}
+
+.w9-ein-2{
+    position: relative; 
+    top: -1319px; 
+    margin: 0 0 0 776px;
+    width: 27px;
+    display:block; 
+}
+
+.w9-ein-3{
+    position: relative; 
+    top: -1345px; 
+    margin: 0 0 0 827px;
+    width: 27px;
+    display:block; 
+}
+
+.w9-ein-4{
+    position: relative; 
+    top: -1370px; 
+    margin: 0 0 0 853px;
+    width: 27px;
+    display:block; 
+}
+
+.w9-ein-5{
+    position: relative; 
+    top: -1395px; 
+    margin: 0 0 0 879px;
+    width: 27px;
+    display:block; 
+}
+
+.w9-ein-6{
+    position: relative; 
+    top: -1420px; 
+    margin: 0 0 0 905px;
+    width: 27px;
+    display:block; 
+}
+
+.w9-ein-7{
+    position: relative; 
+    top: -1445px; 
+    margin: 0 0 0 931px;
+    width: 27px;
+    display:block; 
+}
+
+.w9-ein-8{
+    position: relative; 
+    top: -1470px; 
+    margin: 0 0 0 957px;
+    width: 27px;
+    display:block; 
+}
+
+.w9-ein-9{
+    position: relative; 
+    top: -1495px; 
+    margin: 0 0 0 983px;
+    width: 27px;
+    display:block; 
+}
+
+.w9-signature{
+    position: relative; 
+    top: -1232px; 
+    margin: 0 0 0 233px;
+    width: 400px;
+    border:none;
+    display:block; 
+    font-size: 16px;
+    font-weight: 600;
+    font-family: 'Homemade Apple', cursive !important;
+}
+
+
+
+.w9-date{
+    position: relative; 
+    top: -1257px; 
+    margin: 0 0 0 745px;
+    width: 250px;
+    display:block; 
+    font-size: 16px;
+    font-weight: 600;
+    font-family: 'Homemade Apple', cursive !important;
+}
+
+
