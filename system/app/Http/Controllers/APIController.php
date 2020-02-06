@@ -172,7 +172,7 @@ class APIController extends Controller
     }
 
     public function generate(){
-        $api = new \App\Library\DonorAPI('http://localhost:55907/', 'api1', 'Api1Rand0M');
+        $api = new \App\Library\DonorAPI('https://donortrack.ni-q.com:443/', 'api1', 'Api1Rand0M');
         $api->getFile('api/pdf/generate' , storage_path() . "/app/form/track_w9.pdf");
     }
 

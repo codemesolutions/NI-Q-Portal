@@ -429,8 +429,8 @@ class DonorFormController extends Controller
                 }
 
                 $donorNumber = $request->user()->donors()->first()->donor_number;
-                $api = new \App\Library\DonorAPI('http://localhost:55907/', 'api1', 'Api1Rand0M');
-                //$api->postFile('api/pdf/generate' , $fields ,  storage_path() . "/app/form/".$donorNumber.".pdf");
+                //$api = new \App\Library\DonorAPI('http://localhost:55907/', 'api1', 'Api1Rand0M');
+                $api = new \App\Library\DonorAPI('https://donortrack.ni-q.com:443/', 'api1', 'Api1Rand0M');
                 $api->postFile('api/pdf/generate' , $fields, storage_path() . "/app/form/".$donorNumber.".pdf");
 
 
