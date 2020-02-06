@@ -36,9 +36,28 @@ class ViewController extends Controller
         }
 
         else{
-            $dataset = User::where('first_name', "LIKE", "%".$request->query('search')."%")
-                ->orWhere('last_name', "LIKE", "%".$request->query('search')."%")
-                ->orWhere('email', "LIKE", "%".$request->query('search')."%")->get();
+
+            $term = $request->input('search');
+
+            if ($term == trim($term) && strpos($term, ' ') !== false){
+                $termWords = explode(' ', $term);
+
+                $dataset = \App\User::with('permissions')
+                    ->where('first_name', 'LIKE', "%". $termWords[0] ."%")
+                    ->where('last_name', 'LIKE', "%". $termWords[1] ."%")->get();
+            }
+
+            else{
+                $dataset = \App\User::with('permissions')->where('first_name', 'LIKE', "%". $request->input('search') ."%")->orWhere('last_name', 'LIKE', "%". $request->input('search') ."%")->get();
+            }
+
+            if($dataset->count() === 0){
+                $donor = \App\Donor::where('donor_number', $term)->first();
+
+                if(!is_null($donor)){
+                    $dataset = \App\User::with('permissions')->where('id', $donor->user_id->id)->get();
+                }
+            }
         }
 
 
@@ -85,7 +104,37 @@ class ViewController extends Controller
                     }
 
                     if(!is_null($donorApp) && $donorApp->completed){
-                        return "Completed";
+                        return '<span class="badge badge-success rounded-0">completed</span>';
+                    }
+
+                    else{
+                        return '<span class="badge badge-info rounded-0">incomplete</span>';
+                    }
+
+                },
+
+                'w9' => function($row){
+                    $donorApp = $row->submissions()->where('form_id', 27)->first();
+
+                    if(!is_null($donorApp) && $donorApp->completed){
+                        return '<span class="badge badge-success rounded-0">completed</span>';
+                    }
+
+                    else{
+                        return '<span class="badge badge-info rounded-0">incomplete</span>';
+                    }
+
+                },
+
+                'Direct Deposit' => function($row){
+                    $donorApp = $row->submissions()->where('form_id', 3)->first();
+
+                    if(!is_null($donorApp) && $donorApp->completed){
+                        return '<span class="badge badge-success rounded-0">completed</span>';
+                    }
+
+                    else{
+                        return '<span class="badge badge-info rounded-0">incomplete</span>';
                     }
 
                 },

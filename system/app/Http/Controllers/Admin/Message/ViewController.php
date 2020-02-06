@@ -87,7 +87,7 @@ class ViewController extends Controller
 
         if($request->has('search')){
 
-            dd($request->query('search'));
+
 
             $page['users'] = User::where('first_name', "LIKE", "%".$request->query('search')."%")->orWhere('last_name', "LIKE", "%".$request->query('search')."%")->orderBy('last_name', 'asc')->paginate(50);
         }
