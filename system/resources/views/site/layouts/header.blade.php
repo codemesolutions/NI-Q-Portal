@@ -38,14 +38,15 @@
             @endif
 
             @if(isset($messages))
-                <div class="dropdown ml-2 d-none">
+                <div class="dropdown ml-2 ">
                     <button class="btn  btn-light btn-sm  text-uppercase dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fas fa-bars text-teal mr-1 d-none"></i> <span class="small font-weight-bold ">Guidelines<span>
+                        <i class="fas fa-book text-teal mr-1 d-md-none "></i> <span class="small font-weight-bold d-none d-md-inline ">Guidelines<span>
                     </button>
-                    <div style="border-top: #12bdd0 5px solid;" class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item font-weight-bold" href="#">Action</a>
-                        <a class="dropdown-item font-weight-bold" href="#">Another action</a>
-                        <a class="dropdown-item font-weight-bold" href="#">Something else here</a>
+                    <div style="border-top: #12bdd0 3px solid;width: 250px; " class="dropdown-menu dropdown-menu-left p-3 rounded-0" aria-labelledby="dropdownMenuButton">
+                        <a style="font-size: 12px;" class="dropdown-item font-weight-bold border-bottom py-2" href="/Guidelines"><i class="fas fa-angle-right text-teal mr-1"></i> Collecting HDM & Storage</a>
+                        <a style="font-size: 12px;" class="dropdown-item font-weight-bold border-bottom py-2" href="/Remember"><i class="fas fa-angle-right text-teal mr-1"></i> Things to remember as a Donor</a>
+                        <a style="font-size: 12px;" class="dropdown-item font-weight-bold border-bottom py-2" href="/Milkkit"><i class="fas fa-angle-right text-teal mr-1"></i> Milk Kit Packing Instructions</a>
+                        <a style="font-size: 12px;" class="dropdown-item font-weight-bold  py-2" href="/Volumes"><i class="fas fa-angle-right text-teal mr-1"></i> Various volumes in a Milk Kit</a>
                     </div>
                 </div>
 

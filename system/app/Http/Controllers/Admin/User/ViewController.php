@@ -32,7 +32,7 @@ class ViewController extends Controller
         $page = $this->getPage($request);
 
         if(!$request->has('search')){
-            $dataset = User::orderBy('created_at', 'desc')->paginate(20);
+            $dataset = User::orderBy('created_at', 'desc')->paginate(15);
         }
 
         else{
@@ -97,44 +97,88 @@ class ViewController extends Controller
                 },
 
                 'Consent Form' => function($row){
-                    $donorApp = $row->submissions()->where('form_id', 2)->first();
 
-                    if(is_null($donorApp)){
-                        $donorApp = $row->submissions()->where('form_id', 105)->first();
+                    $donorApp = null;
+                    $form = $row->forms()->where('forms.id', 2)->first();
+
+                    if(!is_null($form)){
+                        $donorApp = $row->submissions()->where('form_id',  $form->id)->first();
+                    }
+
+
+                    if(is_null($donorApp) && is_null($form)){
+                        $form = $row->forms()->where('forms.id', 105)->first();
+                        if(!is_null($form)){
+                            $donorApp = $row->submissions()->where('form_id',  $form->id)->first();
+                        }
                     }
 
                     if(!is_null($donorApp) && $donorApp->completed){
                         return '<span class="badge badge-success rounded-0">completed</span>';
                     }
 
-                    else{
+                    elseif(!is_null($donorApp) && !$donorApp->completed){
                         return '<span class="badge badge-info rounded-0">incomplete</span>';
+                    }
+
+                    elseif(!is_null($form) && is_null($donorApp)){
+                        return '<span class="badge badge-info rounded-0">incomplete</span>';
+                    }
+
+                    elseif(is_null($form)){
+                        return '<span class="badge badge-danger rounded-0">Not Assigned!</span>';
                     }
 
                 },
 
                 'w9' => function($row){
-                    $donorApp = $row->submissions()->where('form_id', 27)->first();
+                    $donorApp = null;
+                    $form = $row->forms()->where('forms.id', 17)->first();
+
+                    if(!is_null($form)){
+                        $donorApp = $row->submissions()->where('form_id',  $form->id)->first();
+                    }
 
                     if(!is_null($donorApp) && $donorApp->completed){
                         return '<span class="badge badge-success rounded-0">completed</span>';
                     }
 
-                    else{
+                    elseif(!is_null($donorApp) && !$donorApp->completed){
                         return '<span class="badge badge-info rounded-0">incomplete</span>';
+                    }
+
+                    elseif(!is_null($form) && is_null($donorApp)){
+                        return '<span class="badge badge-info rounded-0">incomplete</span>';
+                    }
+
+                    elseif(is_null($form)){
+                        return '<span class="badge badge-danger rounded-0">Not Assigned!</span>';
                     }
 
                 },
 
                 'Direct Deposit' => function($row){
-                    $donorApp = $row->submissions()->where('form_id', 3)->first();
+                    $donorApp = null;
+                    $form = $row->forms()->where('forms.id', 3)->first();
+
+                    if(!is_null($form)){
+                        $donorApp = $row->submissions()->where('form_id',  $form->id)->first();
+                    }
 
                     if(!is_null($donorApp) && $donorApp->completed){
                         return '<span class="badge badge-success rounded-0">completed</span>';
                     }
 
-                    else{
+                    elseif(!is_null($donorApp) && !$donorApp->completed){
                         return '<span class="badge badge-info rounded-0">incomplete</span>';
+                    }
+
+                    elseif(!is_null($form) && is_null($donorApp)){
+                        return '<span class="badge badge-info rounded-0">incomplete</span>';
+                    }
+
+                    elseif(is_null($form)){
+                        return '<span class="badge badge-danger rounded-0">Not Assigned!</span>';
                     }
 
                 },
