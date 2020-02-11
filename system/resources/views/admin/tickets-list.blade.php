@@ -6,16 +6,12 @@
      <div class="bg-gradient-dark border-bottom-dark px-3 py-1 border-top row m-0 align-items-center">
         <p class="m-0 text-uppercase text-white" >{!!$title!!} </p>
         <div class="col p-0 form row m-0 ml-auto pl-5">
-            <form class="col row m-0 align-items-center">
-            <input type="search" name="search" class="form-control form-control-dark col form-control-sm" placeholder="search" value="{{$request->query('search')}}"/>
-            <button class="btn btn-primary  ml-1 btn-sm small">Search</button>
-            </form>
 
-            <div class="row align-items-center pl-5 m-0">
+            <div class="row align-items-center pl-5 m-0 ml-auto">
                 @if(isset($show_map) && $show_map && isset($map_route))
                 <a class="btn btn-warning text-white btn-sm ml-auto mr-1 small" href="{{$map_route}}"><i class="fas fa-sitemap"></i> map</a>
                 @endif
-                <a class="btn btn-primary btn-sm ml-auto small" href="{{$create_route}}"><i class="fas fa-plus"></i> create</a>
+                <a class="btn btn-primary btn-sm ml-auto small" href="{{$create_route}}"><i class="fas fa-plus"></i> Create Message</a>
                 @if($request->path() == "donors")
                 <a class="btn btn-warning btn-sm ml-3 small" href="/admin/donors/export">Export</a>
                 @endif
@@ -46,46 +42,24 @@
                 </button>
             </div>
         @endif
-        <div class="table-responsive  bg-white">
+        <div class="table-responsive  bg-white p-0">
 
-           <table id="example" class="table table-fixed w-100  searchable m-0" style="width:100%">
-                <thead>
-                    <tr>
-                        <th  class="py-1 px-5">
-                            <div class="custom-control custom-checkbox select-all">
-                                <input type="checkbox" class="custom-control-input " id="customCheck1">
-                                <label class="custom-control-label " for="customCheck1"></label>
-                            </div>
-                        </th>
-                        @php $count = 1; @endphp
-                        @foreach($datasets as $dataset)
-                            @foreach ($dataset['columns'] as $column => $row)
-                                <th onclick="sortable({{$count++}}, 'table.searchable')" class="py-1">{{$column}} <i class="fas fa-sort"></i></th>
-                            @endforeach
-                        @endforeach
+           <table id="example" class="table table-fixed w-100  border-left border-right m-0 shadow" style="width:100%">
 
-
-                    </tr>
-                </thead>
                 <tbody>
 
                     @foreach($datasets as $dataset)
                         @if(isset($dataset['rows']))
-                            @foreach($dataset['rows'] as $user)
+                            @foreach($dataset['rows'] as $msg)
 
-                            <tr class="hover " data-href="{{$view_route}}?id={{$user->id}}">
-                                <td class="px-5 clickable">
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="{{$user->id}}">
-                                        <label class="custom-control-label" for="{{$user->id}}"></label>
-                                    </div>
-                                </td>
+                            <tr class="hover " data-href="{{$view_route}}?id={{$msg->id}}">
+
 
                                 @foreach($dataset['columns'] as $col => $row)
                                      @if(is_callable($row))
-                                        <td class="clickable">{!!$row($user)!!}</td>
+                                        <td class="clickable py-3 text-center">{!!$row($msg)!!}</td>
                                     @else
-                                        <td class="clickable">{!!$user[$row]!!}</td>
+                                        <td class="clickable py-3 text-center">{!!$msg[$row]!!}</td>
                                     @endif
                                 @endforeach
 

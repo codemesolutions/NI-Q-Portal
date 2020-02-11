@@ -27,23 +27,23 @@
                     <div class="col-12 p-0">
                         <div class="p-0">
                             @foreach($comments as $comment)
-                            <div class="bg-light px-3 py-2  border-bottom-0 row m-0 align-items-center">
-                                <p>{!!$ticket->subject!!}</p>
-                                <p class="ml-auto small text-muted">{{\App\User::where('id', $comment->from_user_id)->first()->first_name. ' ' . App\User::where('id', $comment->from_user_id)->first()->last_name}}</p>
-                                <p class="small text-muted ml-auto">{{date('m-d-Y', strtotime($comment->created_at))}}</p>
-                            </div>
-                            <table class="table bg-light border-0 w-100 m-0">
-                                <tbody>
+                                <div class="bg-light px-3 py-2  border-bottom-0 row m-0 align-items-center">
+                                    <p>{!!$ticket->subject!!}</p>
+                                    <p class="ml-auto small text-muted">{{\App\User::where('id', $comment->from_user_id)->first()->first_name. ' ' . App\User::where('id', $comment->from_user_id)->first()->last_name}}</p>
+                                    <p class="small text-muted ml-auto">{{date('m-d-Y', strtotime($comment->created_at))}}</p>
+                                </div>
+                                <table class="table bg-light border-0 w-100 m-0">
+                                    <tbody>
 
-                                    <tr>
+                                        <tr>
 
-                                        <td class="p-4 ">
-                                            <p class=" front-weight-light m-0">{!!$comment->message!!}<p>
-                                        </td>
-                                    </tr>
+                                            <td class="p-4 ">
+                                                <p class=" front-weight-light m-0">{!!$comment->message!!}<p>
+                                            </td>
+                                        </tr>
 
-                                </tbody>
-                            </table>
+                                    </tbody>
+                                </table>
 
                             @endforeach
 

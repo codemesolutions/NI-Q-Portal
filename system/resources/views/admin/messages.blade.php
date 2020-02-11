@@ -1,7 +1,7 @@
 @extends('admin.layouts.app')
 
 @section('content')
- 
+
 <div class="bg-light">
      <div class="bg-white border-bottom px-3 py-3">
         <p class="m-0 text-uppercase" >{!!$title!!} </p>
@@ -10,15 +10,15 @@
         @if($messages->count() > 0)
         <div class="form row m-0 mb-5">
             <input type="search" name="search" class="form-control form-control-lg col table-search " placeholder="search"/>
-           
-                
+
+
             <div class="row pl-5 m-0">
                 <button class="btn btn-primary px-4 ml-auto" data-toggle="modal" data-target="#createuser"><i class="fas fa-plus"></i></button>
                 <button class="btn btn-danger px-4 ml-1 delete d-none " data-toggle="modal" data-target="#create-form"><i class="fas fa-trash"></i></button>
             </div>
         </div>
         @if(Session::has('success'))
-           
+
             <div class="alert alert-success alert-dismissible fade show mb-4 rounded-0 " role="alert">
                 {{ Session::get('success') }}
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -38,19 +38,19 @@
                             </div>
                         </th>
                         <th onclick="sortable(1, 'table.searchable')" class="py-4">From <i class="fas fa-sort"></i></th>
-                        
+
                         <th onclick="sortable(2, 'table.searchable')" class="py-4">To <i class="fas fa-sort"></i></th>
                         <th onclick="sortable(2, 'table.searchable')" class="py-4">Title <i class="fas fa-sort"></i></th>
-                        
-                        
-                      
+
+
+
                         <th onclick="sortable(4, 'table.searchable')" class="py-4">Created Date <i class="fas fa-sort"></i></th>
-                       
+
                         <th onclick="" class="py-4">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                   
+
                     @foreach($messages as $user)
                     <tr>
                         <td class="px-5">
@@ -61,14 +61,14 @@
                         </td>
                         <td>{{\App\User::where('id', $user->user_id)->first()->name}}</td>
                         <td>
-                        
+
                             @foreach($user->users()->get() as $donor)
                                 <p>{{$donor->name}}</p>
                             @endforeach
                         </td>
-                        
+
                         <td>{{$user->title}}</td>
-                       
+
                         <td>{{$user->created_at}}</td>
 
                         <td>
@@ -81,9 +81,9 @@
                     <div class="modal fade" id="modal-{{$user->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                             <div class="modal-content rounded-0 border-0">
-                            
+
                             <div class="modal-body  border p-3 p-md-5 bg-white shadow-lg">
-                            
+
                                 <form class="" method="POST" action="{{Route('admin.users.update')}}">
                                     <div class="row m-0">
                                         <h6 class="m-0 text-uppercase" > <i class="fas fa-users p-3 bg-primary text-white"></i> Update User</h6>
@@ -124,15 +124,15 @@
                                             @endif
                                             <p class="small text-muted">Your name you want to have displayed on the system.</p>
                                         </div>
-                                        
+
                                         <div class="form-group">
                                             <label>Confirm Password</label>
                                             <input type="password" name="password_confirmation"  class="form-control form-control-lg" value="{{old('password')}}"/>
                                             <p class="small text-muted">Your name you want to have displayed on the system.</p>
                                         </div>
-                                        
+
                                         <div class="form-group">
-                                           
+
                                            <div class="custom-control custom-checkbox">
                                                 <input name="status" type="checkbox" class="custom-control-input" id="active" {{$user->active ? 'checked':''}}>
                                                 <label class="custom-control-label" for="active">Active</label>
@@ -149,30 +149,30 @@
                                                 Edit Permissions
                                             </button>
                                             <div class="collapse w-100 mt-4" id="collapseExample">
-                                                
+
                                                 <div style="max-height: 300px; overflow:auto;" class="select-box border">
-                                                    
+
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     @csrf
-                                    
+
                                     <div class="row m-0">
-                                        
+
                                         <button type="submit" class="btn btn-primary btn-lg btn-block  py-3">Save changes</button>
                                     </div>
                                 </form>
-                                
+
                             </div>
-                            
+
                             </div>
                         </div>
                     </div>
                      <div class="modal fade" id="modal-info-{{$user->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                             <div class="modal-content rounded-0 border-0 bg-white">
-                                
+
                                 <div class="modal-body  border p-3 p-md-5 bg-white shadow-lg">
                                     <div class="row m-0">
                                         <h6 class="m-0 text-uppercase" > <i class="fas fa-comment p-3 bg-primary text-white"></i> Message</h6>
@@ -180,7 +180,7 @@
                                         <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
-                                     
+
                                      <div class="info-container bg-white border p-5 mt-4">
                                         <div class="row m-0 border-bottom py-3">
                                             <p style="font-weight: 700;" class="m-0 col-4 text-uppercase">From</p>
@@ -192,7 +192,7 @@
                                                                     <p>{{$donor->name}}</p>
                                                                 @endforeach</p>
                                         </div>
-                                        
+
                                         <div class="row m-0 border-bottom py-3">
                                             <p style="font-weight: 700;" class="m-0 col-4 text-uppercase">Title</p>
                                             <p class="m-0 ml-4">{{$user->title}}</p>
@@ -205,13 +205,13 @@
                                             <p style="font-weight: 700;" class="m-0 col-4 text-uppercase">Created Date</p>
                                             <p class="m-0 ml-4 col">{{$user->created_at}}</p>
                                         </div>
-                                       
-                                        
-                                       
-                                          
+
+
+
+
                                      </div>
                                      @foreach($user->children()->get() as $child)
-                                    
+
                                     <div class="info-container bg-white border p-5 mt-4">
                                         <div class="row m-0 border-bottom py-3">
                                             <p style="font-weight: 700;" class="m-0 col-4 text-uppercase">From</p>
@@ -223,7 +223,7 @@
                                                                     <p>{{$donor->name}}</p>
                                                                 @endforeach</p>
                                         </div>
-                                        
+
                                         <div class="row m-0 border-bottom py-3">
                                             <p style="font-weight: 700;" class="m-0 col-4 text-uppercase">Title</p>
                                             <p class="m-0 ml-4">{{$user->title}}</p>
@@ -239,20 +239,20 @@
 
                                      </div>
                                 @endforeach
-                                      
-                                    
+
+
 
                                 </div>
 
-                               
-                                
+
+
                             </div>
                         </div>
                     </div>
 
                     @endforeach
-                    
-                    
+
+
                 </tbody>
             </table>
         </div>
@@ -270,9 +270,9 @@
 <div class="modal fade" id="createuser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
     <div class="modal-content rounded-0 border-0">
-      
+
       <div class="modal-body  border p-3 p-md-5 bg-white shadow-lg">
-       
+
         <form class="" method="POST" action="{{Route('admin.messages.create')}}">
              <div class="row m-0">
                 <h6 class="m-0 text-uppercase" > <i class="fas fa-users p-3 bg-primary text-white"></i> Create Message</h6>
@@ -302,7 +302,7 @@
                     @endif
                     <p class="small text-muted">Your name you want to have displayed on the system.</p>
                 </div>
-               
+
                  <div class="col-12 mt-4 p-0 ">
                     <label>To</label>
                     <div style="max-height: 300px; overflow:auto;" class="select-box border">
@@ -311,11 +311,11 @@
                                 <div class="custom-control custom-checkbox ml-2">
                                     <input name="user[{{$role->id}}]" type="checkbox" class="custom-control-input" id="{{$role->name}}">
                                     <label class="custom-control-label" for="{{$role->name}}"></label>
-                                </div> 
+                                </div>
                                 <p class="m-0 ml-4">{{$role->name}}</p>
                             </div>
                         @endforeach
-                        
+
                     </div>
                 </div>
                 <div class=" col-12 p-0 mt-4">
@@ -333,16 +333,16 @@
                                     <div class="custom-control custom-checkbox ml-2">
                                         <input name="form[{{$role->id}}]" type="checkbox" class="custom-control-input" id="{{$role->name}}">
                                         <label class="custom-control-label" for="{{$role->name}}"></label>
-                                    </div> 
+                                    </div>
                                     <p class="m-0 ml-4">{{$role->name}}</p>
                                 </div>
                             @endforeach
-                            
+
                         </div>
                     </div>
                 </div>
                  <div class=" col-12 p-0">
-                   
+
                     <div class="collapse w-100 mt-4" id="collapdocs">
                         <h6>Documents</h6>
                         <div style="max-height: 300px; overflow:auto;" class="select-box border">
@@ -351,27 +351,27 @@
                                     <div class="custom-control custom-checkbox ml-2">
                                         <input name="document[{{$role->id}}]" type="checkbox" class="custom-control-input" id="{{$role->name}}">
                                         <label class="custom-control-label" for="{{$role->name}}"></label>
-                                    </div> 
+                                    </div>
                                     <p class="m-0 ml-4">{{$role->name}}</p>
                                 </div>
                             @endforeach
-                            
+
                         </div>
                     </div>
                 </div>
-               
+
             </div>
             @csrf
             <div class="row m-0">
-                
+
                 <button type="submit" class="btn btn-primary btn-lg btn-block  py-3">Save changes</button>
             </div>
         </form>
-        
+
       </div>
-     
+
     </div>
   </div>
 </div>
-    
+
 @endsection

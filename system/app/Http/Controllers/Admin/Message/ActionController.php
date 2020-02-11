@@ -55,14 +55,14 @@ class ActionController extends Controller
                         $ticket = new \App\Ticket();
                         $ticket->subject = $request->input('subject');
                         $ticket->from_user_id = $request->user()->id;
-                        $ticket->to_user_id = 1;
+                        $ticket->to_user_id = 5568;
                         $ticket->is_new = 1;
                         $ticket->save();
 
                         $comment = new \App\Comment();
                         $comment->ticket_id = $ticket->id;
                         $comment->from_user_id = $request->user()->id;
-                        $comment->to_user_id = 1;
+                        $comment->to_user_id = 5568;
                         $comment->message = $request->input('message');
                         $comment->save();
                         return redirect('messages')->with('success','Message sent successfully!');
@@ -70,14 +70,14 @@ class ActionController extends Controller
 
                     $ticket = new \App\Ticket();
                     $ticket->subject = $request->input('subject');
-                    $ticket->from_user_id = $request->user()->id;
+                    $ticket->from_user_id = 5568;
                     $ticket->to_user_id = $id;
                     $ticket->is_new = 1;
                     $ticket->save();
 
                     $comment = new \App\Comment();
                     $comment->ticket_id = $ticket->id;
-                    $comment->from_user_id = $request->user()->id;
+                    $comment->from_user_id = 5568;
                     $comment->to_user_id = $id;
                     $comment->message = $request->input('message');
                     $comment->save();
@@ -115,15 +115,25 @@ class ActionController extends Controller
             $ticket->is_new = 1;
             $ticket->update();
 
-            $comment = new \App\Comment();
-            $comment->ticket_id = $ticket->id;
-            $comment->message = $request->input('message');
-            $comment->to_user_id = $request->input('to');
-            $comment->from_user_id = $request->input('from');
-            $comment->save();
-
             if($request->has('donor_message')){
+                $comment = new \App\Comment();
+                $comment->ticket_id = $ticket->id;
+                $comment->message = $request->input('message');
+                $comment->to_user_id = 5568;
+                $comment->from_user_id = $request->input('from');
+                $comment->save();
+
                 return redirect('messages/message?id='.$ticket->id)->with('success','Message sent successfully!');
+            }
+
+            else{
+                $comment = new \App\Comment();
+                $comment->ticket_id = $ticket->id;
+                $comment->message = $request->input('message');
+                $comment->to_user_id = $request->input('to');
+                $comment->from_user_id = 5568;
+                $comment->save();
+
             }
 
             return redirect('admin/message/view?id='.$ticket->id)->with('success','Message sent successfully!');

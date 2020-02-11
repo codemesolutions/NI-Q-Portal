@@ -7,6 +7,7 @@ use Gufy\PdfToHtml\Config;
 use setasign\Fpdi\Fpdi;
 use setasign\Fpdi\PdfReader;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Validator;
 use App\Form;
 use App\Notifications;
@@ -15,6 +16,7 @@ use App\Menu;
 use App\Message;
 use App\User;
 use App\Conversation;
+use App\Donor;
 
 class ViewController extends Controller
 {
@@ -34,15 +36,33 @@ class ViewController extends Controller
 
         $page['datasets']['list'] = [
             'columns' => [
-                'Subject' => 'subject',
-                'From' => function($row){
-                    $comment =  \App\Comment::where('ticket_id', $row->id)->orderBy('created_at')->first();
-                    $from = User::where('id', $comment->from_user_id)->first();
-                    return $from->first_name . ' ' . $from->last_name;
+                'Status' => function($row){
+                    $comments = $row->comments()->orderBy('created_at', 'desc')->first();
+                    if(!is_null($comments) && $row->is_new && $comments->from_user_id === 5568){
+                       return '<i class="fas fa-comment text-dark mr-1"></i><span class="small text-muted"></span>';
+                    }
+
+                    else{
+                        return '<i class="fas fa-comment text-primary mr-1"></i><span class="small text-success"></span>';
+                    }
+
                 },
+                'Subject' => 'subject',
+                'Donor' => function($row){
+                    $donor = Donor::where('user_id', $row->from_user_id)->orWhere('user_id', $row->to_user_id)->first();
+                    if(!is_null($donor)){
+                        return $donor->user_id->first_name . ' ' . $donor->user_id->last_name;
+                    }
+
+                    return "";
+
+                },
+                'Sent Date' => function($row){
+                    return date('m-d-Y h:i:s:A', strtotime($row->created_at));
+                }
 
             ],
-            'rows' => \App\Ticket::all()
+            'rows' => \App\Ticket::where('is_new', 1)->where('updated_at', '>', Carbon::now()->subdays(7))->orderBy('updated_at', 'desc')->get()
         ];
 
         $page['list_actions'] = 'admin.sections.message-list-actions';
@@ -57,22 +77,17 @@ class ViewController extends Controller
 
     public function view(Request $request){
         $ticket = \App\Ticket::where('id', $request->query('id'))->first();
-        if(!is_null($ticket)){
-            $comments = \App\Comment::where('ticket_id', $ticket->id)->get();
-        }
 
 
-        if(isset($comments) && !is_null($comments)){
-            $page = $this->getPage($request);
-            $page['ticket'] = $ticket;
 
-            $page['view_route'] = Route('admin.message.view');
-            $page['delete_route'] = Route('admin.message.view');
-            $page['comments'] = $comments;
-            return view('admin.tickets-single', $page);
-        }
 
-        abort(404);
+        $page = $this->getPage($request);
+        $page['ticket'] = $ticket;
+
+        $page['view_route'] = Route('admin.message.view');
+        $page['delete_route'] = Route('admin.message.view');
+        $page['comments'] = $ticket->comments()->orderBy('created_at', 'asc')->get();
+        return view('admin.tickets-single', $page);
 
 
 

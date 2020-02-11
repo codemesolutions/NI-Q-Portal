@@ -25,7 +25,7 @@
 </head>
 <body>
 
-<div class="loader">
+<div class="loader text-white text-center">
     <h1>Loading...</h1>
 </div>
 <div class="page h-100">

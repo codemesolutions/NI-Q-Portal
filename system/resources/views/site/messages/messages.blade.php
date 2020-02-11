@@ -63,10 +63,45 @@
 
                         <ul class="list-group ">
                             @foreach($messages as $k => $convo)
-                                @if($messages->count() > 1 && $k === 0)
-                                    <a class="list-group-item rounded-0 text-dark row m-0 w-100 d-flex border-bottom-0 align-items-center" href="{{url('/messages/message')}}?id={{$convo->id}}"><span><i class="fas fa-comment text-teal mr-1"></i> {{$convo->subject}}</span> <span class="text-success small ml-1"> New</span> <span class="ml-auto">{{\App\User::where('id',$convo->from_user_id)->first()->first_name}} {{\App\User::where('id',$convo->from_user_id)->first()->last_name}}</span></a>
+                                @if(Auth::user()->id == $convo->from_user_id && $convo->is_new_from_user == 1)
+                                    @if($messages->count() > 1 && $k === 0)
+                                        <a class="list-group-item rounded-0 text-dark row m-0 w-100 d-flex border-bottom-0 align-items-center" href="{{url('/messages/message')}}?id={{$convo->id}}">
+                                            <span><i class="fas fa-comment text-teal mr-1"></i> {{$convo->subject}}</span>
+
+                                            <span class="ml-auto">{{\App\User::where('id',$convo->from_user_id)->first()->first_name}} {{\App\User::where('id',$convo->from_user_id)->first()->last_name}}</span>
+                                        </a>
+                                    @else
+                                        <a class="list-group-item rounded-0 text-dark row m-0 w-100 d-flex " href="{{url('/messages/message')}}?id={{$convo->id}}">
+                                            <span><i class="fas fa-comment text-teal mr-1"></i> {{$convo->subject}}</span>
+                                            <span class="ml-auto">{{\App\User::where('id',$convo->from_user_id)->first()->first_name}} {{\App\User::where('id',$convo->from_user_id)->first()->last_name}}</span>
+                                        </a>
+                                    @endif
+                                @elseif(Auth::user()->id == $convo->to_user_id && $convo->is_new_to_user == 1)
+                                    @if($messages->count() > 1 && $k === 0)
+                                        <a class="list-group-item rounded-0 text-dark row m-0 w-100 d-flex border-bottom-0 align-items-center" href="{{url('/messages/message')}}?id={{$convo->id}}">
+                                            <span><i class="fas fa-comment text-teal mr-1"></i> {{$convo->subject}}</span>
+
+                                            <span class="ml-auto">{{\App\User::where('id',$convo->from_user_id)->first()->first_name}} {{\App\User::where('id',$convo->from_user_id)->first()->last_name}}</span>
+                                        </a>
+                                    @else
+                                        <a class="list-group-item rounded-0 text-dark row m-0 w-100 d-flex " href="{{url('/messages/message')}}?id={{$convo->id}}">
+                                            <span><i class="fas fa-comment text-teal mr-1"></i> {{$convo->subject}}</span>
+                                            <span class="ml-auto">{{\App\User::where('id',$convo->from_user_id)->first()->first_name}} {{\App\User::where('id',$convo->from_user_id)->first()->last_name}}</span>
+                                        </a>
+                                    @endif
                                 @else
-                                    <a class="list-group-item rounded-0 text-dark row m-0 w-100 d-flex " href="{{url('/messages/message')}}?id={{$convo->id}}"> <span><i class="fas fa-comment text-teal mr-1"></i> {{$convo->subject}}</span> <span class="ml-auto">{{\App\User::where('id',$convo->from_user_id)->first()->first_name}} {{\App\User::where('id',$convo->from_user_id)->first()->last_name}}</span></a>
+                                    @if($messages->count() > 1 && $k === 0)
+                                        <a class="list-group-item rounded-0 text-dark row m-0 w-100 d-flex border-bottom-0 align-items-center" href="{{url('/messages/message')}}?id={{$convo->id}}">
+                                            <span><i class="fas fa-comment  mr-1"></i> {{$convo->subject}}</span>
+
+                                            <span class="ml-auto">{{\App\User::where('id',$convo->from_user_id)->first()->first_name}} {{\App\User::where('id',$convo->from_user_id)->first()->last_name}}</span>
+                                        </a>
+                                    @else
+                                        <a class="list-group-item rounded-0 text-dark row m-0 w-100 d-flex " href="{{url('/messages/message')}}?id={{$convo->id}}">
+                                            <span><i class="fas fa-comment  mr-1"></i> {{$convo->subject}}</span>
+                                            <span class="ml-auto">{{\App\User::where('id',$convo->from_user_id)->first()->first_name}} {{\App\User::where('id',$convo->from_user_id)->first()->last_name}}</span>
+                                        </a>
+                                    @endif
                                 @endif
                             @endforeach
 
