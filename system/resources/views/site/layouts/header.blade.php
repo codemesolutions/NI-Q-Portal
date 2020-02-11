@@ -68,7 +68,7 @@
                                      $comments = $convo->comments()->orderBy('created_at', 'desc')->first();
                                 @endphp
 
-                                @if(!is_null($comments) && $convo->is_new && $comments->from_user_id === 5568)
+                                @if(!is_null($comments) && $convo->is_new && $comments->from_user_id === 6421)
                                     <i class="fas fa-comment text-teal mr-2"></i>
                                 @else
                                     <i class="fas fa-comment text-muted mr-2"></i>

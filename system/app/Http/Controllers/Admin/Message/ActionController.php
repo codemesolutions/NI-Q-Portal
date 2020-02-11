@@ -55,14 +55,14 @@ class ActionController extends Controller
                         $ticket = new \App\Ticket();
                         $ticket->subject = $request->input('subject');
                         $ticket->from_user_id = $request->user()->id;
-                        $ticket->to_user_id = 5568;
+                        $ticket->to_user_id = 6421;
                         $ticket->is_new = 1;
                         $ticket->save();
 
                         $comment = new \App\Comment();
                         $comment->ticket_id = $ticket->id;
                         $comment->from_user_id = $request->user()->id;
-                        $comment->to_user_id = 5568;
+                        $comment->to_user_id = 6421;
                         $comment->message = $request->input('message');
                         $comment->save();
                         return redirect('messages')->with('success','Message sent successfully!');
@@ -70,14 +70,14 @@ class ActionController extends Controller
 
                     $ticket = new \App\Ticket();
                     $ticket->subject = $request->input('subject');
-                    $ticket->from_user_id = 5568;
+                    $ticket->from_user_id = 6421;
                     $ticket->to_user_id = $id;
                     $ticket->is_new = 1;
                     $ticket->save();
 
                     $comment = new \App\Comment();
                     $comment->ticket_id = $ticket->id;
-                    $comment->from_user_id = 5568;
+                    $comment->from_user_id = 6421;
                     $comment->to_user_id = $id;
                     $comment->message = $request->input('message');
                     $comment->save();
@@ -119,7 +119,7 @@ class ActionController extends Controller
                 $comment = new \App\Comment();
                 $comment->ticket_id = $ticket->id;
                 $comment->message = $request->input('message');
-                $comment->to_user_id = 5568;
+                $comment->to_user_id = 6421;
                 $comment->from_user_id = $request->input('from');
                 $comment->save();
 
@@ -131,7 +131,7 @@ class ActionController extends Controller
                 $comment->ticket_id = $ticket->id;
                 $comment->message = $request->input('message');
                 $comment->to_user_id = $request->input('to');
-                $comment->from_user_id = 5568;
+                $comment->from_user_id = 6421;
                 $comment->save();
 
             }

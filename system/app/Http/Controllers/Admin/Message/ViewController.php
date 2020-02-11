@@ -38,7 +38,7 @@ class ViewController extends Controller
             'columns' => [
                 'Status' => function($row){
                     $comments = $row->comments()->orderBy('created_at', 'desc')->first();
-                    if(!is_null($comments) && $row->is_new && $comments->from_user_id === 5568){
+                    if(!is_null($comments) && $row->is_new && $comments->from_user_id === 6421){
                        return '<i class="fas fa-comment text-dark mr-1"></i><span class="small text-muted"></span>';
                     }
 
