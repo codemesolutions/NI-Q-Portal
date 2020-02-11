@@ -142,7 +142,7 @@
                                                     <td><a href="/admin/forms/submissions/submission?form={{$data_item->name}}&id={{$val->id}}">{{strip_tags($val->user_id->first_name)}}, {{strip_tags($val->user_id->last_name)}}</a></td>
 
 
-                                                    <td>{{strip_tags($val->user_id->created_at)}}</td>
+                                                    <td>{{strip_tags($val->created_at)}}</td>
                                                 </tr>
                                             @endif
 
