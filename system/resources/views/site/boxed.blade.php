@@ -251,7 +251,7 @@
                     </div>
                 </div>
             </div>
-            @if(!is_null($request->user()->donors()->first()) && $request->user()->donors()->first()->milkkits()->whereNotNull('finalized_date')->count() > 0)
+            @if(!is_null($request->user()->donors()->first()) && $request->user()->donors()->first()->milkkits()->whereNotNull('received_date')->count() > 0)
              <div class="col p-1">
                 <div class=" bg-white  border  p-5 row m-0 align-items-center justify-content-start">
 
@@ -263,7 +263,7 @@
                     </div>
 
                     <div class="w-100 mt-4 ">
-                        {{dd($request->user()->donors()->first()->milkkits()->get())}}
+
                         <ul class="list-group ">
                             @foreach($request->user()->donors()->first()->milkkits()->get() as $k => $mk)
                                 @if(!is_null($mk->received_date))
