@@ -64,6 +64,18 @@
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
+        <div class="alert alert-info alert-dismissible fade show mb-4 rounded-0 " role="alert">
+            Ni-Q waiting for Shipping Supplies. The milk kit request tab will remain unavailable until supplies are replenished. Thank you for your patience.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="alert alert-info alert-dismissible fade show mb-4 rounded-0 " role="alert">
+            We have updated our W9 form process and we need everyone to please re-complete your w9 form.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
         <div class="row m-0 justify-content-center">
 
              <div class="col-12 row m-0 p-0">
@@ -251,7 +263,7 @@
                     </div>
 
                     <div class="w-100 mt-4 ">
-
+                        {{dd($request->user()->donors()->first()->milkkits()->get());}}
                         <ul class="list-group ">
                             @foreach($request->user()->donors()->first()->milkkits()->get() as $k => $mk)
                                 @if(!is_null($mk->received_date))
