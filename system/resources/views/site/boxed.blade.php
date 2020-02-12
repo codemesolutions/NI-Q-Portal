@@ -263,7 +263,7 @@
                     </div>
 
                     <div class="w-100 mt-4 ">
-                        {{dd($request->user()->donors()->first()->milkkits()->get());}}
+                        {{dd($request->user()->donors()->first()->milkkits()->get())}}
                         <ul class="list-group ">
                             @foreach($request->user()->donors()->first()->milkkits()->get() as $k => $mk)
                                 @if(!is_null($mk->received_date))
