@@ -254,13 +254,17 @@
 
                         <ul class="list-group ">
                             @foreach($request->user()->donors()->first()->milkkits()->get() as $k => $mk)
-                                @if(!is_null($mk->finalized_date))
+                                @if(!is_null($mk->received_date))
                                 <a class="p-2 rounded-0 mk border" data-toggle="collapse" href="#mk-{{$k}}">
                                     <i class="fas fa-angle-right mr-2"></i>Milk Kit #{{$mk->barcode}} - {{date('m-d-Y', strtotime($mk->received_date))}}
                                 </a>
                                 <div class="collapse w-100 bg-light p-3 border" id="mk-{{$k}}">
-                                    <p><span class="font-weight-bold">Volume:  </span> {{$mk->volume}}</p>
-                                    <p><span class="font-weight-bold">Received Date:  </span> {{date('m-d-Y', strtotime($mk->received_date))}} </p>
+                                    @if(!is_null($mk->finalized_date))
+                                        <p><span class="font-weight-bold">Volume:  </span> {{$mk->volume}}</p>
+                                    @endif
+                                    @if(!is_null($mk->received_date))
+                                        <p><span class="font-weight-bold">Received Date:  </span> {{date('m-d-Y', strtotime($mk->received_date))}} </p>
+                                    @endif
                                     @if(!is_null($mk->paid_date))
                                     <p><span class="font-weight-bold">Paid Date:  </span> {{date('m-d-Y', strtotime($mk->paid_date))}} </p>
                                     @endif

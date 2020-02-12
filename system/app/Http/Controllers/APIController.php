@@ -53,6 +53,7 @@ class APIController extends Controller
                     $m->pallet = $mk->Pallet;
                     $m->shipping_service = $mk->ShippingService;
                     $m->tracking_number = $mk->TrackingNumber;
+
                     if(!is_null($mk->Lot)){
                         $m->lot_barcode = $mk->Lot->Barcode;
                         $m->best_by_date = $mk->Lot->BestByDate;
@@ -66,7 +67,18 @@ class APIController extends Controller
 
                     $m->save();
 
-
+                    if($mk->active == 1 && !is_null($m->received_date)){
+                        mail(
+                            $donor->user_id->email,
+                            'We have received your milk kit!',
+                            "Your Milk Kit was received on "+ date('m-d-Y', strtotime($m->received_date)) + ".<br /> <a href='https://portal.ni-q.com'>Click here to login into your donor account!</a>",
+                            'From: erica@ni-q.com' . "\r\n" .
+                            'Reply-To: erica@ni-q.com' . "\r\n" .
+                            'X-Mailer: PHP/' . phpversion()."\r\n".
+                            'MIME-Version: 1.0' . "\r\n".
+                            'Content-type: text/html; charset=iso-8859-1' . "\r\n"
+                        );
+                    }
                 }
 
                 else{
@@ -84,6 +96,7 @@ class APIController extends Controller
                     $m->pallet = $mk->Pallet;
                     $m->shipping_service = $mk->ShippingService;
                     $m->tracking_number = $mk->TrackingNumber;
+
                     if(!is_null($mk->Lot)){
                         $m->lot_barcode = $mk->Lot->Barcode;
                         $m->best_by_date = $mk->Lot->BestByDate;
@@ -93,6 +106,7 @@ class APIController extends Controller
                         $m->cases_remaining = is_null($mk->Lot->CasesRemaining) ? 0 : $mk->Lot->CasesRemaining;
                         $m->sample_pouches = is_null($mk->Lot->SamplePouches) ? 0 : $mk->Lot->SamplePouches;
                     }
+
                     $m->update();
                 }
 
