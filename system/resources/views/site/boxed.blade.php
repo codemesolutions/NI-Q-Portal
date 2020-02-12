@@ -277,6 +277,17 @@
                                     @if(!is_null($mk->received_date))
                                         <p><span class="font-weight-bold">Received Date:  </span> {{date('m-d-Y', strtotime($mk->received_date))}} </p>
                                     @endif
+                                    @if(!is_null($mk->finalized_date))
+                                        @if( $mk->genetic_test_results == 1 && $mk->microbial_test_results == 1 && $mk->toxicology_test_result == 1)
+                                            <p><span class="font-weight-bold">Testing:  </span> <span class="text-success">Passed </span></p>
+                                        @else
+                                            <p><span class="font-weight-bold">Testing: </span> <span class="text-danger">Failed </span></p>
+                                        @endif
+                                    @endif
+                                    @if(!is_null($mk->finalized_date))
+                                        <p><span class="font-weight-bold">Finalized Date:  </span> {{$mk->finalized_date}}</p>
+                                    @endif
+
                                     @if(!is_null($mk->paid_date))
                                     <p><span class="font-weight-bold">Paid Date:  </span> {{date('m-d-Y', strtotime($mk->paid_date))}} </p>
                                     @endif
