@@ -107,6 +107,19 @@ class APIController extends Controller
                         $m->sample_pouches = is_null($mk->Lot->SamplePouches) ? 0 : $mk->Lot->SamplePouches;
                     }
 
+                    if($mk->active == 1 && !is_null($m->finalized_date) && $m->genetic_test_results === 1 && $m->microbial_test_results === 1 && $m->toxicology_test_result === 1){
+                        mail(
+                            $donor->user_id->email,
+                            'Your milk kit passed!',
+                            "Your milk has passed testing and has been approved for payment. Ni-Q sincerely appreciate all that you have done.  Your efforts will go a long way to help save the lives of infants in need across the country. Ni-Q is making every effort to process your payment on the upcoming payment cycle. Ni-Q runs payments on milk kits that have passed testing on or prior to the 20th of the current month. Ni-Q payments are made on the 25th of the month. Ni-Q will notify you as soon as payment is made.  Ni-Q will notify you as soon as payment is made. Please visit the portal for your milk kit details. Thank you again for all that you do in helping, Ni-Q to provide the highest safety and nutritional standards in the industry.<br /> <a href='https://portal.ni-q.com'>Click here to login into your donor account!</a>",
+                            'From: erica@ni-q.com' . "\r\n" .
+                            'Reply-To: erica@ni-q.com' . "\r\n" .
+                            'X-Mailer: PHP/' . phpversion()."\r\n".
+                            'MIME-Version: 1.0' . "\r\n".
+                            'Content-type: text/html; charset=iso-8859-1' . "\r\n"
+                        );
+                    }
+
                     $m->update();
                 }
 
