@@ -67,7 +67,7 @@ class APIController extends Controller
 
                     $m->save();
 
-                    if($mk->active == 1 && !is_null($m->received_date)){
+                    if($m->active == 1 && !is_null($m->received_date)){
                         mail(
                             $donor->user_id->email,
                             'We have received your milk kit!',
@@ -107,7 +107,7 @@ class APIController extends Controller
                         $m->sample_pouches = is_null($mk->Lot->SamplePouches) ? 0 : $mk->Lot->SamplePouches;
                     }
 
-                    if($mk->active == 1 && !is_null($m->finalized_date) && $m->genetic_test_results === 1 && $m->microbial_test_results === 1 && $m->toxicology_test_result === 1){
+                    if($m->active == 1 && !is_null($m->finalized_date) && $m->genetic_test_results === 1 && $m->microbial_test_results === 1 && $m->toxicology_test_result === 1){
                         mail(
                             $donor->user_id->email,
                             'Your milk kit passed!',

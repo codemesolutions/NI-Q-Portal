@@ -59,7 +59,7 @@
 
         @php $q = $question->question;  @endphp
 
-        <div class="overflow-auto w-100 " style="margin-bottom: -800px;">
+        <div class="overflow-auto w-100 " style="margin-bottom: -800px; position:relative;z-index:1;">
             <div  style="display:block; width: 1100px; max-height: 80%;"  id="viewport" role="main"></div>
 
             <input class="w9-name" type="text" name="name"/>
@@ -121,11 +121,11 @@
             @endforeach
             {!!$q!!}
             @csrf
-
+            <input type="hidden" name="form" value="{{$title}}"/>
+            <input type="hidden" name="question" value="{{$question->id}}"/>
+            <button class="btn btn-dark m-4" style="position: relative; z-index: 3;" type="submit">Submit</button>
         </div>
-        <input type="hidden" name="form" value="{{$title}}"/>
-        <input type="hidden" name="question" value="{{$question->id}}"/>
-        <button class="btn btn-dark m-4" type="submit">Submit</button>
+
     </form>
 </div>
 
