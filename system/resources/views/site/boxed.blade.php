@@ -64,7 +64,7 @@
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
-        <div class="alert alert-info alert-dismissible fade show mb-4 rounded-0 " role="alert">
+        <div class="d-none alert alert-info alert-dismissible fade show mb-4 rounded-0 " role="alert">
             Ni-Q waiting for Shipping Supplies. The milk kit request tab will remain unavailable until supplies are replenished. Thank you for your patience.
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
