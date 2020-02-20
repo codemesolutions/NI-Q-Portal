@@ -70,6 +70,14 @@ class Controller extends BaseController
                     return Setting::where('name', 'Register Redirect')->first()->value;
                 }
             }
+
+            elseif($accessGranted){
+                $submission = FormSubmission::where('user_id', $request->user()->id)->where('form_id', 1)->first();
+
+                if(!$submission->completed){
+                    return Setting::where('name', 'Register Redirect')->first()->value;
+                }
+            }
         }
 
         else{
