@@ -74,7 +74,7 @@ class Controller extends BaseController
             elseif($accessGranted){
                 $submission = FormSubmission::where('user_id', $request->user()->id)->where('form_id', 1)->first();
 
-                if(!$submission->completed){
+                if(!is_null($submission) && !$submission->completed){
                     return Setting::where('name', 'Register Redirect')->first()->value;
                 }
             }
