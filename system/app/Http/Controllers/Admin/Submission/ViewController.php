@@ -419,7 +419,7 @@ class ViewController extends Controller
 
             $donor = $submission->user_id->donors()->first();
             $api = new DonorAPI('https://donortrack.ni-q.com:443/', 'api1', 'Api1Rand0M');
-            $api->post('api/donor', [
+            $_response = $api->post('api/donor', [
                 "Url"=> "",
                 "DonorId"=> $donor->donor_number,
                 "FirstName"=> $donor->user_id->first_name,
@@ -434,25 +434,33 @@ class ViewController extends Controller
                 "Notes"=> ""
             ]);
 
-            $api->post('api/donor/'.$donor->donor_number.'/mailingaddress', [
-                "DonorId"=> $donor->donor_number,
-                "DonorUrl"=> null,
-                "Address1"=> $donor->mailing_address,
-                "Address2"=> $donor->mailing_address2,
-                "City"=> $donor->mailing_city,
-                "State"=> $donor->mailing_state,
-                "Zipcode"=> $donor->mailing_zipcode
-            ]);
+            if($_response !== 400){
+                $api->post('api/donor/'.$donor->donor_number.'/mailingaddress', [
+                    "DonorId"=> $donor->donor_number,
+                    "DonorUrl"=> null,
+                    "Address1"=> $donor->mailing_address,
+                    "Address2"=> $donor->mailing_address2,
+                    "City"=> $donor->mailing_city,
+                    "State"=> $donor->mailing_state,
+                    "Zipcode"=> $donor->mailing_zipcode
+                ]);
 
-            $api->post('api/donor/'.$donor->donor_number.'/shippingaddress', [
-                "DonorId"=> $donor->donor_number,
-                "DonorUrl"=> null,
-                "Address1"=> $donor->shipping_address,
-                "Address2"=> $donor->shipping_address2,
-                "City"=> $donor->shipping_city,
-                "State"=> $donor->shipping_state,
-                "Zipcode"=> $donor->shipping_zipcode
-            ]);
+                $api->post('api/donor/'.$donor->donor_number.'/shippingaddress', [
+                    "DonorId"=> $donor->donor_number,
+                    "DonorUrl"=> null,
+                    "Address1"=> $donor->shipping_address,
+                    "Address2"=> $donor->shipping_address2,
+                    "City"=> $donor->shipping_city,
+                    "State"=> $donor->shipping_state,
+                    "Zipcode"=> $donor->shipping_zipcode
+                ]);
+            }
+
+            elseif($_response === 400){
+                throw new \Exception("Unable to create donor in donor track!  Please contact IT!");
+            }
+
+
 
         }
 
