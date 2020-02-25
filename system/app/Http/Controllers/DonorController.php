@@ -130,9 +130,7 @@ class DonorController extends Controller
         $dateTime = $time;
 
 
-        if(!is_null($request->user()->donors()->first()) && !is_null(\App\Shipping::where('donor_id', $request->user()->donors()->first()->id)->where('type', 'pickup')->first())){
-            return redirect()->back()->with('error', "You already have a request for pickup currently active");
-        }
+
         $createPickupRequest = new PComplexType\CreatePickupRequest();
 
         // Authentication & client details.
