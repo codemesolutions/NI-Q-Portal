@@ -238,7 +238,7 @@ class ViewController extends Controller
         $csv = [];
 
 
-
+        $csv[0] = "DONOR ID, FIRST NAME, LAST NAME, EMAIL, PHONE, ADDRESS, ADDRESS LINE 2, CITY, STATE, ZIP CODE, QTY";
         foreach($request->input('exports') as $donor){
             $shipRecord = \App\Shipping::where('id', $donor)->first();
             $d = Donor::where('id', $shipRecord->donor_id)->first();
@@ -251,13 +251,12 @@ class ViewController extends Controller
                         $d->user_id->last_name,
                         $d->user_id->email,
                         $d->user_id->home_phone,
-
                         $d->shipping_address,
                         $d->shipping_address2,
                         $d->shipping_city,
                         $d->shipping_state,
                         $d->shipping_zipcode,
-
+                        1
                     ];
 
                 }
@@ -270,13 +269,12 @@ class ViewController extends Controller
                     $d->user_id->last_name,
                     $d->user_id->email,
                     $d->user_id->home_phone,
-
                     $d->shipping_address,
                     $d->shipping_address2,
                     $d->shipping_city,
                     $d->shipping_state,
                     $d->shipping_zipcode,
-
+                    1
                 ];
 
             }
