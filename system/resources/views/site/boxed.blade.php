@@ -71,6 +71,12 @@
             </button>
         </div>
         <div class="alert alert-info alert-dismissible fade show mb-4 rounded-0 " role="alert">
+            Latest update to breast feeding information and the corona virus! <a href="https://www.cdc.gov/coronavirus/2019-ncov/specific-groups/pregnancy-guidance-breastfeeding.html">Read More!</a>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="alert alert-info alert-dismissible fade show mb-4 rounded-0 " role="alert">
             We have updated our W9 form process and we need everyone to please re-complete your w9 form.
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>

@@ -243,20 +243,44 @@ class ViewController extends Controller
             $shipRecord = \App\Shipping::where('id', $donor)->first();
             $d = Donor::where('id', $shipRecord->donor_id)->first();
 
-            $csv[] = [
-                $d->donor_number,
-                $d->user_id->first_name,
-                $d->user_id->last_name,
-                $d->user_id->email,
-                $d->user_id->home_phone,
-                $d->user_id->cell_phone,
-                $d->shipping_address,
-                $d->shipping_address2,
-                $d->shipping_city,
-                $d->shipping_state,
-                $d->shipping_zipcode,
-                $shipRecord->qty
-            ];
+            if($shipRecord->qty > 1){
+                for($i = 0; $i < $shipRecord->qty; $i++){
+                    $csv[] = [
+                        $d->donor_number,
+                        $d->user_id->first_name,
+                        $d->user_id->last_name,
+                        $d->user_id->email,
+                        $d->user_id->home_phone,
+
+                        $d->shipping_address,
+                        $d->shipping_address2,
+                        $d->shipping_city,
+                        $d->shipping_state,
+                        $d->shipping_zipcode,
+
+                    ];
+
+                }
+            }
+
+            else{
+                $csv[] = [
+                    $d->donor_number,
+                    $d->user_id->first_name,
+                    $d->user_id->last_name,
+                    $d->user_id->email,
+                    $d->user_id->home_phone,
+
+                    $d->shipping_address,
+                    $d->shipping_address2,
+                    $d->shipping_city,
+                    $d->shipping_state,
+                    $d->shipping_zipcode,
+
+                ];
+
+            }
+
 
             \App\Shipping::where('id', $donor)->delete();
         }
