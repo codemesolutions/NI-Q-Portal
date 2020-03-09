@@ -238,7 +238,7 @@ class ViewController extends Controller
         $csv = [];
 
 
-        $csv[0] = "DONOR ID, FIRST NAME, LAST NAME, EMAIL, PHONE, ADDRESS, ADDRESS LINE 2, CITY, STATE, ZIP CODE, QTY";
+        $csv[0] = ["DONOR ID", "FIRST NAME", "LAST NAME", "EMAIL", "PHONE", "ADDRESS", "ADDRESS LINE 2", "CITY", "STATE", "ZIP CODE", "QTY"];
         foreach($request->input('exports') as $donor){
             $shipRecord = \App\Shipping::where('id', $donor)->first();
             $d = Donor::where('id', $shipRecord->donor_id)->first();
