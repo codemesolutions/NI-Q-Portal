@@ -137,7 +137,7 @@ class DonorAPI
 
             if ($res->getStatusCode() == 200) { // 200 OK
                 $response_data = $res->getBody()->getContents();
-                dd($response_data);
+
                 return  json_decode($response_data);
             }
 
@@ -163,6 +163,33 @@ class DonorAPI
                 'form_params' => $data,
                 'sink' => $resource
             ]);
+
+            return $res->getStatusCode();
+        }
+
+        throw new \Exception("No Bearer token found");
+    }
+
+    public function put($uri, Array $data){
+
+        $this->authorize();
+
+        //dd($this->token);
+        if(!is_null($this->token)){
+            $res = $this->client->request('PUT', $this->baseURL . $uri, [
+                'headers' =>  [
+                    'Authorization' => 'Bearer ' . $this->token,
+                ],
+                'form_params' => $data
+            ]);
+
+
+
+            if ($res->getStatusCode() == 200) { // 200 OK
+                $response_data = $res->getBody()->getContents();
+
+                return  json_decode($response_data);
+            }
 
             return $res->getStatusCode();
         }

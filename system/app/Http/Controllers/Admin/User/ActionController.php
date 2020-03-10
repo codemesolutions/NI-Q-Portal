@@ -206,6 +206,19 @@ class ActionController extends Controller
             $donor->shipping_zipcode= $request->input('shipping_zipcode');
             $donor->update();
 
+             $api = new \App\Library\DonorAPI('https://donortrack.ni-q.com:443/', 'api1', 'Api1Rand0M');
+             //$api = new \App\Library\DonorAPI('http://localhost:55907/', 'api1', 'Api1Rand0M');
+
+            $api->put('api/donor/'.$donor->donor_number.'/shippingaddress', [
+                "DonorId"=> $donor->donor_number,
+                "DonorUrl"=> null,
+                "Address1"=> $donor->shipping_address,
+                "Address2"=> $donor->shipping_address2,
+                "City"=> $donor->shipping_city,
+                "State"=> $donor->shipping_state,
+                "Zipcode"=> $donor->shipping_zipcode
+            ]);
+
             return redirect('/account')->with('success','User updated successfully!');
         }
 
@@ -244,6 +257,20 @@ class ActionController extends Controller
             $donor->mailing_state= $request->input('mailing_state');
             $donor->mailing_zipcode= $request->input('mailing_zipcode');
             $donor->update();
+
+            $api = new \App\Library\DonorAPI('https://donortrack.ni-q.com:443/', 'api1', 'Api1Rand0M');
+            //$api = new \App\LiDonorAPIbrary\('http://localhost:55907/', 'api1', 'Api1Rand0M');
+
+            $api->put('api/donor/'.$donor->donor_number.'/mailingaddress', [
+                "DonorId"=> $donor->donor_number,
+                "DonorUrl"=> null,
+                "Address1"=> $donor->mailing_address,
+                "Address2"=> $donor->mailing_address2,
+                "City"=> $donor->mailing_city,
+                "State"=> $donor->mailing_state,
+                "Zipcode"=> $donor->mailing_zipcode
+            ]);
+
 
             return redirect('/account')->with('success','User updated successfully!');
         }
