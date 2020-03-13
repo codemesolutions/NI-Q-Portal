@@ -52,7 +52,9 @@
 
             @endif
 
-            @if(isset($messages))
+            @if(isset($messages) && Auth::user()->id !== 2329 &&
+            Auth::user()->id !== 1083 &&
+            Auth::user()->id !== 2707)
                 <div class="dropdown ml-2">
                     <button class="btn  btn-light btn-sm  text-uppercase btn-clear dropdown-toggle " type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-comment text-teal mr-1 d-md-none"></i> <span class="small font-weight-bold d-none d-md-inline">Messages</span>({{$messages->count()}})

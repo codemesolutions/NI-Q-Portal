@@ -15,7 +15,11 @@
                 <p class="ml-md-3">Lab Results Recieved Date: <span class="text-muted">{{date('m/d/Y', strtotime(Auth::user()->donors()->first()->bloodkits()->orderby('id', 'desc')->first()->recieve_date)) }} </span> </p>
             @endif
             <div class="col-12 col-md-auto ml-0 ml-md-auto p-0 mt-2 mt-md-0">
-                @if(!is_null(Auth::user()->donors()->first()) && Auth::user()->donors()->first()->bloodkits()->count() > 0)
+                @if(!is_null(Auth::user()->donors()->first()) &&
+                    Auth::user()->donors()->first()->bloodkits()->count() > 0 &&
+                    Auth::user()->id !== 2329 &&
+                    Auth::user()->id !== 1083 &&
+                    Auth::user()->id !== 2707)
 
                     @if(!is_null(Auth::user()->donors()->first()->bloodkits()->first()->recieve_date) && Auth::user()->donors()->first()->bloodkits()->first()->status === 1)
 
