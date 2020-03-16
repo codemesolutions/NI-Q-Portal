@@ -19,7 +19,8 @@
                     Auth::user()->donors()->first()->bloodkits()->count() > 0 &&
                     Auth::user()->id !== 2329 &&
                     Auth::user()->id !== 1083 &&
-                    Auth::user()->id !== 2707)
+                    Auth::user()->id !== 2707 &&
+                    Auth::user()->id !== 2181)
 
                     @if(!is_null(Auth::user()->donors()->first()->bloodkits()->first()->recieve_date) && Auth::user()->donors()->first()->bloodkits()->first()->status === 1)
 
