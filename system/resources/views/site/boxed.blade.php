@@ -75,7 +75,13 @@
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
-        <div class="alert alert-info alert-dismissible fade show mb-4 rounded-0 " role="alert">
+        <div class="alert alert-info alert-dismissible fade show mb-1 rounded-0 " role="alert">
+            Thank you for being a donor, Ni-Q is maintaining business as usual. Ni-Q will be shipping out milk kits and receiving donations. Ni-Q asks that you take extra precaution to making sure you and your equipment is cleaned on a regular basis. Ni-Q thanks all of you for your efforts during this time.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="alert alert-info alert-dismissible fade show mb-1 rounded-0 " role="alert">
             Latest update to breast feeding information and the corona virus! <a href="https://www.cdc.gov/coronavirus/2019-ncov/specific-groups/pregnancy-guidance-breastfeeding.html">Read More!</a>
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
